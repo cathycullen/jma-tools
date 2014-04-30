@@ -1,0 +1,60 @@
+body {
+  color: #252525;
+  font-family: "Open Sans";
+}
+
+.scroll-panel {
+padding-top: 109px;
+background-color: white;
+}
+
+
+.navbar {
+border-radius: 0;
+position: fixed;
+width: 100%;
+background: white;
+}
+
+#logo {
+float: left;
+margin-left: 50px;
+letter-spacing: 3px;
+margin-top: 10px;
+margin-bottom: 10px;
+}
+
+@media (min-width: 768px)
+.navbar-collapse .navbar-nav.navbar-right:last-child {
+margin-top: 1em;
+margin-right: 2em;
+}
+.navbar .nav {
+  margin-right: 0;
+  display: inline-block;
+  float: left;
+  margin-top: 1em;
+  margin-right: 2em;
+}
+
+.navbar .nav > li > a {
+color: #252525;
+display: inline-block;
+font-weight: 300;
+font-size: 1.4em;
+line-height: 28px;
+padding: 22px 20px;
+}
+
+
+.navbar .nav > li  {
+color: #252525;
+  padding-left: 1em;
+  padding-right: 1em;
+  }
+  
+  .navbar .nav > li > a:hover, .navbar .nav > li > a:focus {
+color: orange;
+background-color: transparent;
+}
+

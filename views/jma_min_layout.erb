@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+ <head>
+    <meta charset="utf-8">
+    <title>Career Cheetah Payment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="css/nav.css" rel="stylesheet">
+    <link href="css/payment.css" rel="stylesheet">
+    <link href="css/faq.css" rel="stylesheet">
+    <link href="css/jma.css" rel="stylesheet">
+    <link href="http://github-proxy.kodono.info/?q=https://raw.github.com/Aymkdn/Datepicker-for-Bootstrap/master/datepicker.css" rel="stylesheet"> 
+    <!-- Responsive stuff -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+      <!--<a href="http://www.jodymichael.com"><img src="http://www.jodymichael.com/filebin/images/logo.png" style="margin-top: 2% margin-left: 5% margin-bottom: 2%;" alt="<= @reference %>" ></a>-->
+      <a href="http://www.jodymichael.com"><img src="http://www.jodymichael.com/filebin/images/logo.png" style="margin-top: 2%;margin-bottom: 2%;margin-left: 5%;" alt="&lt;= @reference %&gt;"></a>
+  <%= yield %>
+</body>
+  <!-- include javascript, jQuery FIRST -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <!-- <script src="js/jquery-1.7.1.min.js"></script> -->
+  <script src="http://github-proxy.kodono.info/?q=https://raw.github.com/Aymkdn/Datepicker-for-Bootstrap/master/bootstrap-datepicker.js"></script>
+	<script>
+		$(function(){
+			window.prettyPrint && prettyPrint();
+			$('#dp1').datepicker();
+			$('#dp2').datepicker();
+			$('#dp3').datepicker();
+			
+			
+			var startDate = new Date(2012,1,20);
+			var endDate = new Date(2012,1,25);
+			$('#dp4').datepicker()
+				.on('changeDate', function(ev){
+					if (ev.date.valueOf() > endDate.valueOf()){
+						$('#alert').show().find('strong').text('The start date can not be greater then the end date');
+					} else {
+						$('#alert').hide();
+						startDate = new Date(ev.date);
+						$('#startDate').text($('#dp4').data('date'));
+					}
+					$('#dp4').datepicker('hide');
+				});
+			$('#dp5').datepicker()
+				.on('changeDate', function(ev){
+					if (ev.date.valueOf() < startDate.valueOf()){
+						$('#alert').show().find('strong').text('The end date can not be less then the start date');
+					} else {
+						$('#alert').hide();
+						endDate = new Date(ev.date);
+						$('#endDate').text($('#dp5').data('date'));
+					}
+					$('#dp5').datepicker('hide');
+				});
+		});
+	</script>
+  <script>
+  $(".dropdown-menu li a").click(function(){
+
+    $(this).parents(".btn-group").find('.selection').text($(this).text());
+    $(this).parents(".btn-group").find('.selection').val($(this).text());
+
+  });
+  </script>
+</html>

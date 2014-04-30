@@ -1,0 +1,22 @@
+.wrapper {
+max-width: 940px;
+margin: auto;
+margin-top: 50px;
+}
+h1, h2, h3, h4, h5, legend, p {
+color: #5e605d;
+}
+h2 {
+margin-top: 20px;
+margin-bottom: 20px;
+color: #5e605d;
+}
+
+.table {
+width: 62%;
+}
+
+.dropdown-menu {
+  top: 0;
+  left: 100%;
+}
