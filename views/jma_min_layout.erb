@@ -2,7 +2,7 @@
 <html>
  <head>
     <meta charset="utf-8">
-    <title>Career Cheetah Payment</title>
+    <title>Jody Michael Associates</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap.css" rel="stylesheet">
     <!-- <link href="css/bootstrap.min.css" rel="stylesheet">-->
@@ -22,9 +22,39 @@
     <![endif]-->
   </head>
   <body>
-      <!--<a href="http://www.jodymichael.com"><img src="http://www.jodymichael.com/filebin/images/logo.png" style="margin-top: 2% margin-left: 5% margin-bottom: 2%;" alt="<= @reference %>" ></a>-->
-      <a href="http://www.jodymichael.com"><img src="http://www.jodymichael.com/filebin/images/logo.png" style="margin-top: 2%;margin-bottom: 2%;margin-left: 5%;" alt="&lt;= @reference %&gt;"></a>
-  <%= yield %>
+  
+<nav class="navbar navbar-default" role="navigation" style="background-color: white; border-color: white; margin-left:5%;">
+  <div class="container-fluid" >
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+			<a href="http://www.jodymichael.com">
+			<img src="http://www.jodymichael.com/filebin/images/logo.png" style="margin-right:100px; height: 65px; margin-left: 5%;margin-top: 2%;margin-right: 200px;margin-top: 5% margin-left: 5% margin-bottom: 2%;"> </a>
+
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		<ul class="nav navbar-nav" style="margin-top: 1%;">
+         <li class="active"><a href="/send_payment_email">Home</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Payments <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="http://jma-weekly-payments.herokuapp.com/">Upload Weekly Payments</a></li>
+              <li><a href="/jma_payment_form">Add Client Credit Card</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Clients <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="/send_client_welcome_email">Send Welcome Email</a></li>
+              <li><a href="/send_payment_email">Send Payment Link</a></li>
+            </ul>
+          </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+   <%= yield %>
 </body>
   <!-- include javascript, jQuery FIRST -->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>

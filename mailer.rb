@@ -100,19 +100,23 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
       
     def format_date(a_date)
     @end_str = {'1' => 'st', '2' => 'nd', '3' => 'rd', '4' =>'th', '5' =>'th', '6' => "th", '7' => "th", '8' => "th", '9' => "th", '0' => "th" }
-  
+    puts "datepicker #{a_date}"
       retval = ""
       if(a_date != nil)
-        date_arr = a_date.split(/\\|-/)
-        rev_date = Date.parse("#{date_arr[1]}/#{date_arr[0]}/#{date_arr[2]}")
-        puts "in formate_date a_date #{a_date}"
-        puts "in formate_date rev_date #{rev_date}"
-        retval = rev_date.strftime('%A, %B') + " " +rev_date.strftime('%d').to_i.to_s+ @end_str[rev_date.strftime('%d').to_i.to_s]
+        #date_arr = a_date.split(/\\|-/)
+        date_arr = a_date.split("/")
+        if date_arr[0] != nil && date_arr[1] != nil && date_arr[2] != nil then
+          rev_date = Date.parse("#{date_arr[1]}/#{date_arr[0]}/#{date_arr[2]}")
+           puts "in formate_date  a_date #{a_date} rev_date #{rev_date}"
+          retval = rev_date.strftime('%A, %B') + " " +rev_date.strftime('%d').to_i.to_s+ @end_str[rev_date.strftime('%d').to_i.to_s[-1,1]]
+        else
+          puts "invalid date #{a_date}  date_arr #{date_arr}"
+        end
       end
       retval
     end
-      
-    def send_welcome_email(name, email, amount, appt_date, payment_date, coach_name, coach_email, coach_phone, location)
+    
+    def send_welcome_email(name, email, amount, appt_date, payment_date, appt_start, appt_end, coach_name, coach_email, coach_phone, location)
       @name = name
       @email = email
       @amount = amount
@@ -127,9 +131,13 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
       if payment_date != nil
         @payment_date_s = format_date(payment_date)
       end
+      @appt_start = appt_start
+      @appt_end = appt_end
       time = Time.new
       @date = Time.local(time.year, time.month, time.day) 
       @date = Time.now.strftime("%b %d, %Y")
+      
+      puts "start time #{@appt_start} end time #{@appt_end}"
     
       ActionMailer::Base.smtp_settings = {
         :address   => ENV['JMA_ADDRESS'],
@@ -140,7 +148,7 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
         :password       => ENV['JMA_PASS'],
         :enable_starttls_auto => true,
       }
-      puts "send_welcome_email coach #{coach_name} amount #{amount} date #{@appt_date} payment date #{@payment_date}"
+      puts "send_welcome_email coach #{coach_name} amount #{amount} date #{@appt_date} payment date #{@payment_date} start #{@appt_start} end #{@appt_end}"
       mail( 
         :to      =>  @email,
         :from    => ENV['JMA_FROM_ADDRESS'],

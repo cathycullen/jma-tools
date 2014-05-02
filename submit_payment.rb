@@ -126,13 +126,13 @@ post '/send_welcome_email' do
   
   @appt_date = params[:appt_date]
   @payment_date = params[:payment_date]
+  @appt_start = params[:appt_start][0..-4]
+  @appt_end = params[:appt_end]
   coach_name = params[:coach]
-  puts "coach name #{coach_name}"
+  puts "coach name #{coach_name} start time #{@appt_start} end time #{@appt_end}"
   @location = params[:location]
   
-  puts "call get_coach_by_name"
   @coach = get_coach_by_name(coach_name)
-  puts "I found the coach #{@coach.name}"
     
   email = Mailer.send_welcome_email(
   @payment.name,
@@ -140,6 +140,8 @@ post '/send_welcome_email' do
   @payment.amount,
   @appt_date,
   @payment_date,
+  @appt_start,
+  @appt_end,
   @coach.name,
   @coach.email,
   @coach.phone,

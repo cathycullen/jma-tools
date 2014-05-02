@@ -8,6 +8,9 @@ gem "shotgun"
 gem 'arrow_payments'
 gem 'json'
 gem 'actionmailer'
+gem 'faraday'
+gem 'faraday_middleware'
+gem 'hashie'
 
 gem 'data_mapper'
 gem 'dm-postgres-adapter'
