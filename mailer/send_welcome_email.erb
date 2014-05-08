@@ -49,12 +49,16 @@
             </div>
          </div>
           <br>
-           <p style="color: #5e605d;"><b>Coach: </b><%= @coach_name%>; (p) <%= @coach_phone%>, (e) <a href="mailto:<%= @coach_email%>" style="color: #8bc129;"><%= @coach_email%></a></p>
-           <% if @amount > 0  && @payment_date_s.size > 0%>
-            <p><b>Payment: </b>If you with to pay with a credit card, please enter your information on  our <a href=" https://accept-payment.herokuapp.com/jma_payment_form?amount=<%= @amount %>" style="color: #8bc129;">Secure Payment Page</a> by <%= @payment_date_s %>.</a></p>
-            <p>*If you do not submit by the above date, you must pay with cash or a check at the beginning of your appointment.</p>
+          <% if @amount > 0 %>
+            <% if @payment_date_s.size > 0 %>
+              <p><b>Payment: </b>If you wish to pay with a credit card, please enter your information on  our <a href=" https://accept-payment.herokuapp.com/jma_payment_form?amount=<%= @amount %>" style="color: #8bc129;">Secure Payment Page</a> by <%= @payment_date_s %> size <%= payment_date_s.size%> .</p>
+              <p>*If you do not submit by the above date, you must pay with cash or a check at the beginning of your appointment.</p>
+            <% else %>
+              <p><b>Payment: </b>If you wish to pay with a credit card, please enter your information on  our <a href=" https://accept-payment.herokuapp.com/jma_payment_form?amount=<%= @amount %>" style="color: #8bc129;">Secure Payment Page</a>.</p>
+              <p>*If you do not submit by the above date, you must pay with cash or a check at the beginning of your appointment.</p>
+            <% end %>
           <% else %>
-            <p><b>Payment: </b>If you with to pay with a credit card, please enter your information on  our <a href=" https://accept-payment.herokuapp.com/jma_payment_form" style="color: #8bc129;">Secure Payment Page</a> by <%= @payment_date_s %>.</a></p>
+            <p><b>Payment: </b>If you wish to pay with a credit card, please enter your information on  our <a href=" https://accept-payment.herokuapp.com/jma_payment_form" style="color: #8bc129;">Secure Payment Page</a>.</p>
             <p>*If you do not submit by the above date, you must pay with cash or a check at the beginning of your appointment.</p>
                      <% end %>
           <br>
