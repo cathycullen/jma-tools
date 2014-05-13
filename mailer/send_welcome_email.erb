@@ -51,7 +51,7 @@
           <br>
           <% if @amount > 0 %>
             <% if @payment_date_s.size > 0 %>
-              <p><b>Payment: </b>If you wish to pay with a credit card, please enter your information on  our <a href=" https://accept-payment.herokuapp.com/jma_payment_form?amount=<%= @amount %>" style="color: #8bc129;">Secure Payment Page</a> by <%= @payment_date_s %> size <%= payment_date_s.size%> .</p>
+              <p><b>Payment: </b>If you wish to pay with a credit card, please enter your information on  our <a href=" https://accept-payment.herokuapp.com/jma_payment_form?amount=<%= @amount %>" style="color: #8bc129;">Secure Payment Page</a> by <%= @payment_date_s %>.</p>
               <p>*If you do not submit by the above date, you must pay with cash or a check at the beginning of your appointment.</p>
             <% else %>
               <p><b>Payment: </b>If you wish to pay with a credit card, please enter your information on  our <a href=" https://accept-payment.herokuapp.com/jma_payment_form?amount=<%= @amount %>" style="color: #8bc129;">Secure Payment Page</a>.</p>
