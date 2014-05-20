@@ -134,6 +134,8 @@ DEPENDENCIES
   dm-postgres-adapter
   dm-sqlite-adapter
   dotenv
+  faraday (= 0.8.9)
+  hashie
   json
   shotgun
   sinatra

@@ -5,11 +5,10 @@ ruby "1.9.3"
 gem "sinatra"
 gem "dotenv"
 gem "shotgun"
+gem 'faraday', "0.8.9"
 gem 'arrow_payments'
 gem 'json'
 gem 'actionmailer'
-gem 'faraday'
-gem 'faraday_middleware'
 gem 'hashie'
 
 gem 'data_mapper'
