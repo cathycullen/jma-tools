@@ -55,6 +55,10 @@ get '/send_client_welcome_email' do
     erb :send_client_welcome_email, :layout => :jma_min_layout
 end
 
+get '/send_interview_email' do
+    erb :send_interview_email, :layout => :jma_min_layout
+end
+
 get '/send_payment_email' do
     erb :send_jma_payment_form, :layout => :jma_min_layout
 end
@@ -151,6 +155,48 @@ post '/send_welcome_email' do
   #redirect to some thank you page
   erb :welcome_email_sent, :layout => :jma_min_layout
 end
+
+post '/send_interview_email' do
+  # send payment form.   read parameters, generate html, and send email.
+  puts "post /send_interview_email params #{params}"
+  @payment = Payment.new
+  @payment.name=params[:name]
+  @payment.email=params[:email]
+  if params[:amount].size > 0
+    @payment.amount=params[:amount]
+  else 
+    @payment.amount = 0
+  end
+  
+  @appt_date = params[:appt_date]
+  @payment_date = params[:payment_date]
+  @appt_start = params[:appt_start][0..-4]
+  @appt_end = params[:appt_end]
+  coach_name = params[:coach]
+  puts "coach name #{coach_name} start time #{@appt_start} end time #{@appt_end}"
+  @location = params[:location]
+  
+  @coach = get_coach_by_name(coach_name)
+    
+  email = Mailer.send_interview_email(
+  @payment.name,
+  @payment.email,
+  @payment.amount,
+  @appt_date,
+  @payment_date,
+  @appt_start,
+  @appt_end,
+  @coach.name,
+  @coach.email,
+  @coach.phone,
+  @location
+  )
+  email.deliver
+  #redirect to some thank you page
+  erb :welcome_email_sent, :layout => :jma_min_layout
+end
+
+
 
 
 get '/career_cheetah_payment_form' do

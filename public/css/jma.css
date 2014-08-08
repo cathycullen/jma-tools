@@ -3,7 +3,7 @@ max-width: 940px;
 margin: auto;
 margin-top: 50px;
 }
-h1, h2, h3, h4, h5, legend, p {
+h1, h2, h3, h4, h5, legend, p, li {
 color: #5e605d;
 }
 h2 {

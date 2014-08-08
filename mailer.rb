@@ -167,6 +167,57 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
       end
     end
     
+    def send_interview_email(name, email, amount, appt_date, payment_date, appt_start, appt_end, coach_name, coach_email, coach_phone, location)
+      @name = name
+      @email = email
+      @amount = amount
+      @coach_name = coach_name
+      @coach_email = coach_email
+      @coach_phone = coach_phone
+      @location = location
+      @appt_date_s = ''
+      @payment_date_s = ''
+      
+      begin
+        if appt_date != nil 
+          @appt_date_s = format_date(appt_date)
+        end
+        if payment_date != nil
+          @payment_date_s = format_date(payment_date)
+        end
+        @appt_start = appt_start
+        @appt_end = appt_end
+        time = Time.new
+        @date = Time.local(time.year, time.month, time.day) 
+        @date = Time.now.strftime("%b %d, %Y")
+        
+        puts "start time #{@appt_start} end time #{@appt_end}"
+      
+        ActionMailer::Base.smtp_settings = {
+          :address   => ENV['JMA_ADDRESS'],
+          :port      => ENV['JMA_PORT'],
+          :domain    => ENV['JMA_DOMAIN'],
+          :authentication => :"login",
+          :user_name      => ENV['JMA_USER'],
+          :password       => ENV['JMA_PASS'],
+          :enable_starttls_auto => true,
+        }
+        puts "send_interview_email coach #{coach_name} amount #{amount} date #{@appt_date} payment date #{@payment_date} start #{@appt_start} end #{@appt_end}"
+        mail( 
+          :to      =>  @email,
+          :from    => ENV['JMA_FROM_ADDRESS'],
+          :subject => "Welcome To Jody Michael Associates",
+        ) do |format|
+          format.html
+          format.text
+        end
+      rescue Exception => e
+        puts "rescue caught in send_interview_email #{e.message}"
+        @error_message = e.message
+        puts e.backtrace 
+      end
+    end
+    
     
     
     def credit_card_charged_email_to_jma_support(name, amount)
