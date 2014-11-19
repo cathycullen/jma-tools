@@ -6,9 +6,9 @@
         <p  >Dear <%=@name%>,</p>
         <p  >Welcome to Jody Michael Associates. We are delighted to have the opportunity to work with you.  The purpose of this email is to confirm your session date/time and provide you with our office location details.</p>
         <% if @amount > 0 %>
-          <p  >Please follow this link to our <a href=" https://accept-payment.herokuapp.com/jma_payment_form?amount=<%= @amount %>" style="color: #8bc129;">Secure Payment Page</a> where you can enter your credit card information.  Please note we do not accept American Express. If you do not submit your credit card information prior to XYZ date, we will assume you will bring cash or a check made out to Jody Michael Associates with you to your appointment(s).<p>
+          <p  >Please follow this link to our <a href=" https://ajma-tools.herokuapp.com/jma_payment_form?amount=<%= @amount %>" style="color: #8bc129;">Secure Payment Page</a> where you can enter your credit card information.  Please note we do not accept American Express. If you do not submit your credit card information prior to XYZ date, we will assume you will bring cash or a check made out to Jody Michael Associates with you to your appointment(s).<p>
         <% else %>
-          <p  >Please follow this link to our <a href=" https://accept-payment.herokuapp.com/jma_payment_form" style="color: #8bc129;">Secure Payment Page</a> where you can enter your credit card information.  Please note we do not accept American Express. If you do not submit your credit card information prior to XYZ date, we will assume you will bring cash or a check made out to Jody Michael Associates with you to your appointment(s).<p>
+          <p  >Please follow this link to our <a href=" https://jma-tools.herokuapp.com/jma_payment_form" style="color: #8bc129;">Secure Payment Page</a> where you can enter your credit card information.  Please note we do not accept American Express. If you do not submit your credit card information prior to XYZ date, we will assume you will bring cash or a check made out to Jody Michael Associates with you to your appointment(s).<p>
         <% end %>
         <br>
         <div class="row">

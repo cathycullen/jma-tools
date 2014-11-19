@@ -39,12 +39,12 @@
           <br>
           <% if @amount > 0 %>
             <% if @payment_date_s.size > 0 %>
-              <p><b>To hold your appointment* </b>please enter your credit card information on our <a href=" https://accept-payment.herokuapp.com/jma_payment_form?amount=<%= @amount %>" style="color: #8bc129;">Secure Payment Page</a>&nbsp<b>within 24 hours of receipt of this email.</b></p>
+              <p><b>To hold your appointment* </b>please enter your credit card information on our <a href=" https://jma-tools.herokuapp.com/jma_payment_form?amount=<%= @amount %>" style="color: #8bc129;">Secure Payment Page</a>&nbsp<b>within 24 hours of receipt of this email.</b></p>
             <% else %>
-              <p><b>To hold your appointment* </b>please enter your credit card information on our <a href=" https://accept-payment.herokuapp.com/jma_payment_form?amount=<%= @amount %>" style="color: #8bc129;">Secure Payment Page</a>&nbsp<b>within 24 hours of receipt of this email.</b></p>
+              <p><b>To hold your appointment* </b>please enter your credit card information on our <a href=" https://jma-tools.herokuapp.com/jma_payment_form?amount=<%= @amount %>" style="color: #8bc129;">Secure Payment Page</a>&nbsp<b>within 24 hours of receipt of this email.</b></p>
             <% end %>
           <% else %>
-            <p><b>To hold your appointment* </b>please enter your credit card information on our <a href=" https://accept-payment.herokuapp.com/jma_payment_form" style="color: #8bc129;">Secure Payment Page</a>&nbsp<b>within 24 hours of receipt of this email.</b></p>  
+            <p><b>To hold your appointment* </b>please enter your credit card information on our <a href=" https://jma-tools.herokuapp.com/jma_payment_form" style="color: #8bc129;">Secure Payment Page</a>&nbsp<b>within 24 hours of receipt of this email.</b></p>  
           <% end %>
           <br>
           <div class="row">

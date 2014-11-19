@@ -210,11 +210,11 @@ class ArrowPayment
         :expiration_month => month,
         :expiration_year  => year
       )
+      
 
       # Step 1: Provide payment method customer and billing address
       url = @arrow.start_payment_method(client.id, 
                                         address)
-
       # Step 2: Add credit card information
       token = @arrow.setup_payment_method(url, 
                                           payment)
@@ -223,7 +223,6 @@ class ArrowPayment
       @payment_method = @arrow.complete_payment_method(token)
       if @payment_method 
         client.payment_methods << @payment_method
-        puts "PaymentMethod #{@payment_method} id #{@payment_method.id}"
       end
 
     rescue Exception => e
