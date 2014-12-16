@@ -280,6 +280,7 @@ end
 
 post '/jma_submit_payment' do
   
+  puts "/jma_submit_payment"
   @payment = Payment.new
   @payment.name=params[:name]
   @payment.email=params[:email]
@@ -305,7 +306,9 @@ post '/jma_submit_payment' do
    
 
     description='Jody Michael Associates'
+    puts "call ArrowPayment.new"
     arrow_payment = ArrowPayment.new()
+    puts "call submit_online_payment"
     payment_error = arrow_payment.submit_online_payment(
       @payment,
       description

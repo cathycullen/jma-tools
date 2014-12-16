@@ -18,8 +18,74 @@ class ArrowPayment
     )
   end
 
+def submit_new_client_payment(payment, description)
+
+    name_arr = payment.name.split(/\W+/)
+    first = name_arr.first.downcase
+    last = name_arr.last.downcase
+    code = payment.name
+
+    begin 
+    # create client and payment_method
+      puts "Create New Customer #{payment.name}"
+
+      client = @arrow.create_customer(  
+        :name => payment.name,
+        :contact => payment.name,
+        :code => code
+      )
+      puts "Create New PaymentMethod For Client #{payment.name}"
+  
+      create_payment_method_for_client( 
+        client, 
+        first, 
+        last, 
+        payment.cc_number, 
+        payment.ccv, 
+        payment.exp_month, 
+        payment.exp_year, 
+        payment.address, 
+        payment.city, 
+        payment.state, 
+        payment.zip
+      )
+
+      # at this point if payment_method is nil then there was an error creating it.
+      if @payment_method then
+
+        # Create a new transaction for an existing customer and payment method.
+        # Returns a new Transaction instance if request was successful, otherwise
+        # raises ArrowPayments::Error exception with error message.
+        if payment.amount > 0 then 
+          begin
+            transaction = @arrow.create_transaction(  
+              :customer_id        => client.id, 
+              :payment_method_id  => @payment_method.id,
+              :transaction_type   => 'sale',
+              :total_amount       => payment.amount,
+              :tax_amount         => 0,
+              :shipping_amount    => 0,
+              :description        => description
+            )
+          rescue Exception => e
+            puts "Exception caught in submit_online_payment @arrow.create_transaction #{e.message}"
+            @error_message = e.message
+          end
+        end
+      else
+        puts "transaction could not be completed because no valid payment method exists"
+      end
+    rescue Exception => e
+      puts "rescue caught in submit_online_payment #{e.message}"
+      @error_message = e.message
+      puts e.backtrace 
+    end
+    @error_message
+  end
+    
   def submit_online_payment(payment, description)
 
+    puts "submit_online_payment called"
     name_arr = payment.name.split(/\W+/)
     first = name_arr.first.downcase
     last = name_arr.last.downcase
