@@ -4,10 +4,19 @@ require './payment'
 class ArrowPayment
 
   def initialize()
-    @arrow = app_config()
-    @error_message = nil
-    @payment_method = nil
+    begin
+      puts "initialize called"
+      @arrow = app_config()
+      @error_message = nil
+      @payment_method = nil
+      @customers = @arrow.customers
+      puts "initialize done"
+    rescue Exception => e
+      puts "ArrowPayment:  rescue caught in initialize #{e.message}"
+      puts e.backtrace 
+    end
   end
+
 
   def app_config()
 
@@ -302,7 +311,7 @@ def submit_new_client_payment(payment, description)
 
     #match first and last name.  ignore case and middle initial
     client = nil
-    @arrow.customers.each do |a_client|
+    @customers.each do |a_client|
       if a_client.name.split(/\W+/).first.downcase == first &&
         a_client.name.split(/\W+/).last.downcase == last then
         client = a_client
