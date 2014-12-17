@@ -309,7 +309,7 @@ post '/jma_submit_payment' do
     puts "call ArrowPayment.new"
     arrow_payment = ArrowPayment.new()
     puts "call submit_online_payment"
-    payment_error = arrow_payment.submit_online_payment(
+    payment_error = arrow_payment.submit_new_client_payment(
       @payment,
       description
     )
