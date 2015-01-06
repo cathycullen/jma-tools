@@ -209,17 +209,17 @@ end
 
 post '/career_cheetah_submit_payment' do
   @payment = Payment.new
-  @payment.name=params[:name]
-  @payment.email=params[:email]
-  @payment.phone=params[:phone]
-  @payment.cc_number=params[:cc_number]
+  @payment.name=params[:name].strip()
+  @payment.email=params[:email].strip()
+  @payment.phone=params[:phone].strip()
+  @payment.cc_number=params[:cc_number].strip()
   @payment.exp_month= params[:cc_month]
   @payment.exp_year=params[:cc_year]
-  @payment.ccv=params[:ccv]
-  @payment.address=params[:address]
-  @payment.city=params[:city]
-  @payment.state= params[:state]
-  @payment.zip=params[:zip]
+  @payment.ccv=params[:ccv].strip()
+  @payment.address=params[:address].strip()
+  @payment.city=params[:city].strip()
+  @payment.state= params[:state].strip()
+  @payment.zip=params[:zip].strip()
   @payment.amount=params[:amount]
 
   if !@payment.valid?
@@ -259,6 +259,7 @@ post '/career_cheetah_submit_payment' do
 
       redirect to("http://www.careercheetah.net/signup-thank-you")
     else
+      puts "payment error received.   We should try to redisplay payment form"
       @payment.errors = [payment_error]
       erb :payment_form
     end
@@ -282,17 +283,17 @@ post '/jma_submit_payment' do
   
   puts "/jma_submit_payment"
   @payment = Payment.new
-  @payment.name=params[:name]
-  @payment.email=params[:email]
-  @payment.phone=params[:phone]
-  @payment.cc_number=params[:cc_number]
+  @payment.name=params[:name].strip()
+  @payment.email=params[:email].strip()
+  @payment.phone=params[:phone].strip()
+  @payment.cc_number=params[:cc_number].strip()
   @payment.exp_month= params[:cc_month]
   @payment.exp_year=params[:cc_year]
-  @payment.ccv=params[:ccv]
-  @payment.address=params[:address]
-  @payment.city=params[:city]
-  @payment.state= params[:state]
-  @payment.zip=params[:zip]
+  @payment.ccv=params[:ccv].strip()
+  @payment.address=params[:address].strip()
+  @payment.city=params[:city].strip()
+  @payment.state= params[:state].strip()
+  @payment.zip=params[:zip].strip()
   if params[:amount] != nil 
     @payment.amount=params[:amount]
   else 

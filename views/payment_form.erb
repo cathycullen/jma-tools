@@ -90,16 +90,14 @@
       
       <div  style="position:relative;">
       <label class="control-label" style="width:35%; text-align:left">State</label>
-      <input type="text" class="span3" name="state"  title="Please Enter Your State" pattern="[A-Z][A-Z]" value="<%= @payment.state %>" style="width: 15%!important;" required>
+      <input type="text" class="span3" name="state"  title="Please Enter Your State" value="<%= @payment.state %>" style="width: 15%!important;" >
         <script>
-        document.getElementById('state').validity.patternMismatch; 
         </script>
       </div>
       <div  style="position:relative;">
       <label class="control-label" style="width:35%; text-align:left">Zip</label>
-        <input type="text" class="span3" name="zip"  pattern="[0-9]{5}" value="<%= @payment.zip %>" style="width: 25%!important;required">
+        <input type="text" class="span3" name="zip"  value="<%= @payment.zip %>" style="width: 25%!important;required">
         <script>
-        document.getElementById('zip').validity.patternMismatch; 
         </script>
       </div>
     </fieldset>
