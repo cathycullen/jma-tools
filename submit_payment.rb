@@ -47,20 +47,20 @@ include CCDateHelper
 Payment.auto_upgrade!
 
 get '/' do
-    erb :send_jma_payment_form, :layout => :jma_min_layout
+    erb :send_jma_payment_form
 end
 
 
 get '/send_client_welcome_email' do
-    erb :send_client_welcome_email, :layout => :jma_min_layout
+    erb :send_client_welcome_email
 end
 
 get '/send_interview_email' do
-    erb :send_interview_email, :layout => :jma_min_layout
+    erb :send_interview_email
 end
 
 get '/send_payment_email' do
-    erb :send_jma_payment_form, :layout => :jma_min_layout
+    erb :send_jma_payment_form
 end
 
 post '/send_payment_email' do
@@ -82,7 +82,7 @@ post '/send_payment_email' do
   )
   email.deliver
   #redirect to some thank you page
-  erb :payment_email_sent, :layout => :jma_min_layout
+  erb :payment_email_sent
 end
 
  def format_date(a_date)
@@ -113,7 +113,7 @@ post '/show_send_welcome_email_format' do
   @payment_date_s = format_date(@payment_date)
   
   puts "call test_send_welcome_email @amount #{@amount}"
-  erb :test_send_welcome_email, :layout => :jma_min_layout
+  erb :test_send_welcome_email
 end
 
 post '/send_welcome_email' do
@@ -153,7 +153,7 @@ post '/send_welcome_email' do
   )
   email.deliver
   #redirect to some thank you page
-  erb :welcome_email_sent, :layout => :jma_min_layout
+  erb :welcome_email_sent
 end
 
 post '/send_interview_email' do
@@ -193,77 +193,7 @@ post '/send_interview_email' do
   )
   email.deliver
   #redirect to some thank you page
-  erb :welcome_email_sent, :layout => :jma_min_layout
-end
-
-
-
-
-get '/career_cheetah_payment_form' do
-
-  #fill in default values for testing
-  @payment = Payment.cheetah_template_payment
-  @submit_callback = '/career_cheetah_submit_payment'
-  erb :payment_form, :layout => :cheetah_layout
-end
-
-post '/career_cheetah_submit_payment' do
-  @payment = Payment.new
-  @payment.name=params[:name].strip()
-  @payment.email=params[:email].strip()
-  @payment.phone=params[:phone].strip()
-  @payment.cc_number=params[:cc_number].strip()
-  @payment.exp_month= params[:cc_month]
-  @payment.exp_year=params[:cc_year]
-  @payment.ccv=params[:ccv].strip()
-  @payment.address=params[:address].strip()
-  @payment.city=params[:city].strip()
-  @payment.state= params[:state].strip()
-  @payment.zip=params[:zip].strip()
-  @payment.amount=params[:amount]
-
-  if !@payment.valid?
-    @submit_callback = '/career_cheetah_submit_payment'
-    erb :payment_form, :layout => :cheetah_layout
-  else
-    description='Career Cheetah Payment'
-    arrow_payment = ArrowPayment.new()
-    payment_error = arrow_payment.submit_online_payment(
-      @payment,
-      description
-    )
-
-    if payment_error.nil?
-      puts "Payment submitted successfully for #{@payment.name} amount: #{@payment.amount} "
-      
-      @payment.created_at = Time.now
-      @payment.save!
-
-      # send confirmation email to the credit card client
-      print "$ " + @payment.amount.to_s
-      email = Mailer.send_career_cheetah_email_confirm(
-        @payment.name,
-        "$ " + @payment.amount.to_s,
-        @payment.email
-       )
-      email.deliver
-      
-       # send email to jma staff
-      print "$ " + @payment.amount.to_s
-      email = Mailer.credit_card_charged_email_to_jma_support(
-        @payment.name,
-        "$ " + @payment.amount.to_s,
-        @payment.email
-       )
-      email.deliver
-
-      redirect to("http://www.careercheetah.net/signup-thank-you")
-    else
-      puts "payment error received.   We should try to redisplay payment form"
-      @payment.errors = [payment_error]
-      erb :payment_form
-    end
-  end
+  erb :welcome_email_sent
 end
                                      
 get '/jma_payment_form' do
@@ -358,7 +288,7 @@ end
   post '/done' do
   puts "/done called done:  #{params[:done]}   params: #{params}"
     if params[:done] == 'Continue'
-      erb :send_jma_payment_form, :layout => :jma_min_layout
+      erb :send_jma_payment_form
     end
   end
   

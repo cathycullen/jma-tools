@@ -8,38 +8,6 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
 
   class Mailer < ActionMailer::Base
   
-  
-    def send_career_cheetah_email_confirm(name, amount, email)
-      @name = name
-      @amount = amount
-      @email = email
-      time = Time.new
-      @date = Time.local(time.year, time.month, time.day) 
-      @date = Time.now.strftime("%b %d, %Y")
-
-           
-    ActionMailer::Base.smtp_settings = {
-      :address   => ENV['CAREER_CHEETAH_ADDRESS'],
-      :port      => ENV['CAREER_CHEETAH_PORT'],
-      :domain    => ENV['CAREER_CHEETAH_DOMAIN'],
-      :authentication => :plain,
-      :user_name      => ENV['CAREER_CHEETAH_USER'],
-      :password       => ENV['CAREER_CHEETAH_PASS'],
-      :enable_starttls_auto => true,
-    }
-
-      # add to_address to parameters and fudge for now.
-
-      mail( 
-        :to      =>  @email,
-        :from    => ENV['CAREER_CHEETAH_FROM_ADDRESS'],
-        :subject => "Thank You For Your Payment",
-      ) do |format|
-        format.html
-        format.text
-      end
-    end
-
     def send_jma_email_confirm(name, amount, email)
       @name = name
       @amount = amount

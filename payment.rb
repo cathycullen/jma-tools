@@ -29,26 +29,6 @@ class Payment
   def initialize
     @errors = []
   end
-
-  def self.cheetah_template_payment
-    p = Payment.new
-    if ENV['RACK_ENV'] == 'development' then
-      p.name='John Doe'
-      p.email='john@johndoe.com'
-      p.phone='7737849897'
-      p.cc_number='4408 0412 3456 7893'
-      p.exp_month='06'
-      p.exp_year='2016'
-      p.ccv='1234'
-      p.address='4860 N Hermitage St'
-      p.city='Chicago'
-      p.state='IL'
-      p.zip='60640'
-      p.amount='1250'
-    end
-    p
-  end
-  
   
   def self.jma_template_payment
     p = Payment.new 
