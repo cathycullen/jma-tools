@@ -34,7 +34,7 @@ class Payment
     p = Payment.new 
     if ENV['RACK_ENV'] == 'development' then
       p.name='John Doe'
-      p.email='john@johndoe.com'
+      p.email='cathy@softwareoptions.com'
       p.phone='7737849897'
       p.cc_number='4408 0412 3456 7893'
       p.exp_month='06'
@@ -61,10 +61,6 @@ class Payment
       @errors << "Please Enter a Valid Email Address"
     end
 
-    if @phone.size < 10 then
-      @errors << "Please Enter a Valid Telephone Number"
-    end
-
     if @exp_month.length == 0 or @exp_month.to_i < 1 or @exp_month.to_i > 12 then
       @errors << "Please Enter a Valid Expiration Month"
     end
@@ -76,10 +72,6 @@ class Payment
     # check expiration date has not passed
     if @exp_year.to_i == Time.new.year  && @exp_month.to_i < Time.new.month then
       @errors << "Credit Card is Expired"
-    end
-
-    if @ccv.length > 0 && @ccv.length != 3 then
-      @errors << "Please Enter a Valid Credit Card Code"
     end
 
     if @address.length == 0 then

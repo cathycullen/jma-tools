@@ -215,11 +215,20 @@ post '/jma_submit_payment' do
   @payment = Payment.new
   @payment.name=params[:name].strip()
   @payment.email=params[:email].strip()
-  @payment.phone=params[:phone].strip()
+  if params[:phone] != nil 
+    @payment.phone=params[:phone].strip()
+  else 
+    @payment.phone=''
+  end
   @payment.cc_number=params[:cc_number].strip()
   @payment.exp_month= params[:cc_month]
   @payment.exp_year=params[:cc_year]
-  @payment.ccv=params[:ccv].strip()
+  if params[:ccv] != nil 
+    @payment.ccv=params[:ccv].strip()
+  else 
+    @payment.ccv=''
+  end
+
   @payment.address=params[:address].strip()
   @payment.city=params[:city].strip()
   @payment.state= params[:state].strip()
