@@ -1,0 +1,51 @@
+
+        
+<section id="forms" style="margin-left: 5%;">
+  <div class="row">
+    <div class="col-md-4">
+      <!-- <a href="http://www.jodymichael.com"><img src="http://www.jodymichael.com/filebin/images/logo.png" alt="<= @reference %>" style=" margin-bottom: 30px;"></a>
+      -->
+      <br>
+
+      <form class="form-horizontal well" action="/send_payment_email" method="post"  style="margin-top:20%;">
+        <fieldset>
+          <legend>Generate Client Credit Card Email</legend>
+          <div class="control-group" >
+            <div class="col-md-8">
+              <label class="control-label" for="textarea">Name</label> 
+              <input type="text" class="form-control" name="name" title="Enter Recipients Name" placeholder="Name" required >
+              <label class="control-label" for="textarea">Email</label>
+              <input type="text" class="form-control" name="email"  title="Enter Recipients Email" placeholder="Email" required >
+              <label class="control-label" for="textarea">Payment Amount</label>
+              <input type="text" class="form-control" name="amount"  title="Enter Payment Amount" placeholder="Optional Amount" >
+              <!--
+              <label class="control-label" for="textarea">Textarea</label>
+              <textarea class="form-control input-xlarge" id="textarea" rows="5"  placeholder="Body"></textarea>
+              <label class="control-label" for="textarea">Formatted Results</label>
+              <textarea class="form-control input-xlarge" id="textarea" rows="8"  placeholder="Can We Show Formatted Results Here?"></textarea>
+              -->
+              <hr>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-success" title="Select to Send Payment Link to Client">Send Email</button>
+                <button type="reset" class="btn">Cancel</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</section>
+<!--
+  <script type='text/javascript' src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type='text/javascript' src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+  <script type='text/javascript'>
+  $(document).ready(function() {
+  
+  });
+  </script>
+        
+    </body>
+</html>
+
+-->

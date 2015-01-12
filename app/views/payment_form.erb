@@ -1,0 +1,159 @@
+
+<div class="payment-border">
+  <ul class="list-group">
+    <form action="<%= @submit_callback %>" method="post">
+    <!-- <form action="/submit_payment" method="post"> -->
+
+    <% if !@payment_details.errors.empty? %>
+      <legend style="color: red;  font-weight: bold; font-size: 14px;"
+        <p>The Following Errors Were Encountered: </p>
+        <% @payment_details.errors.each do |e| %>
+          <p><%=e%></p>
+        <% end %>
+      </legend>
+    <% end %>
+    <fieldset>
+      <div >
+        <legend >Customer Information</legend>
+      </div>
+    <div class="control-group" style="display:block;">
+      <div  style="position:relative;">
+      <label class="control-label" style="width:35%; text-align:left">Name</label>
+      <input type="text" class="span3" name="name" value="<%= @payment_details.name %>" required >
+      </div>
+      <div  style="position:relative;">
+      <label class="control-label" style="width:35%; text-align:left">Email</label>
+      <input type="text" class="span3" name="email" value="<%= @payment_details.email %>" required >
+      </div>
+      <div  style="position:relative;">
+      <label class="control-label" style="width:35%; text-align:left">Phone</label>
+        <input type="text" class="span3" name="phone"  value="<%= @payment_details.phone %>" >
+      </div>
+    </div>
+    </fieldset>
+    <fieldset>
+      <div >
+        <legend >Credit Card Information</legend>
+      </div>
+    <div class="control-group" style="display:block;">
+      <div  style="position:relative;">
+      <label class="control-label" style="width:35%; text-align:left">Card Number</label>
+      <input type="text" class="span3" name="cc_number"  value="<%= @payment_details.cc_number %>" required >
+      </div>
+      <div  style="position:relative;">
+      <label class="control-label" style="width:35%; text-align:left">Exp Month</label>
+      <select class="span2" name="cc_month" value="<%= @payment_details.exp_month %>">
+        <% CCDateHelper.months.each do |month|%>
+          <% if month[:month_num] == @payment_details.exp_month %>
+            <option value="<%=month[:month_num] %>" selected ><%=month[:month_name] %></option>
+          <% else %>
+            <option value="<%=month[:month_num] %>"><%=month[:month_name] %></option>
+          <% end %>
+        <% end %>
+        </select>
+      </div>
+      <div  style="position:relative;">
+      <label class="control-label" style="width:35%; text-align:left">Exp Year</label>
+      <select class="span2" name="cc_year" value="<%= @payment_details.exp_year %>">
+        <% CCDateHelper.years.each do |year|%>
+          <% if year == @payment_details.exp_year %>
+            <option value="<%= year %>" selected ><%=year %></option>
+          <% else %>
+            <option value="<%= year %>"><%=year %></option>
+          <% end %>
+        <% end %>
+        </select>
+      </div>
+      <div  style="position:relative;">
+      <label class="control-label" style="width:35%; text-align:left">CCV</label>
+        <input type="text" class="span3" name="ccv" title="Please enter your CCV" pattern="[0-9][0-9][0-9]" value="<%= @payment_details.ccv %>" style="width: 15%!important;">
+        <script>
+        document.getElementById('ccv').validity.patternMismatch; 
+        </script>
+      </div>
+  
+    </div>
+    </fieldset>
+    <fieldset>
+      <div >
+        <legend >Billing  Address</legend>
+      </div>
+    <div class="control-group" style="display:block;">
+      <div  style="position:relative;">
+      <label class="control-label" style="width:35%; text-align:left">Address</label>
+      <input type="text" class="span3" name="address" value="<%= @payment_details.address %>"required >
+      </div>
+      <div  style="position:relative;">
+      <label class="control-label" style="width:35%; text-align:left">City</label>
+      <input type="text" class="span3" name="city" value="<%= @payment_details.city %>"required>
+      </div>
+      
+      <div  style="position:relative;">
+      <label class="control-label" style="width:35%; text-align:left">State</label>
+      <input type="text" class="span3" name="state"  title="Please Enter Your State" value="<%= @payment_details.state %>" style="width: 15%!important;" >
+        <script>
+        </script>
+      </div>
+      <div  style="position:relative;">
+      <label class="control-label" style="width:35%; text-align:left">Zip</label>
+        <input type="text" class="span3" name="zip"  value="<%= @payment_details.zip %>" style="width: 25%!important;required">
+        <script>
+        </script>
+      </div>
+    </fieldset>
+    <fieldset>
+      <div >
+        <% if @payment_details.amount > 0 %>
+          <legend >Submit Payment</legend>
+        <% else %>
+          <legend >Submit Payment Information</legend>
+        <% end %>
+      </div>
+      <% if @payment_details.amount > 0 %>
+        <div class="control-group" style="display:block;">
+          <div  style="position:relative;">
+            <label class="control-label" style="width:35%; text-align:left">Amount</label>
+            <input type="text" class="span3" name="amount"  value="<%= @payment_details.amount %>" style="width: 25%!important;" required value="250">
+          </div>
+          <div  style="position:relative;">
+            <label class="control-label" style="width:35%; text-align:left">Category</label>
+            <% if !@payment_details.category.nil?  %>
+              <select class="span2" name="category" value="<%= @payment_details.category  %>">
+            <% else %>
+              <select class="span2" name="category" %>">
+            <% end %>
+            <% categories.each do |category|%>
+              <% if !@payment_details.category.nil? && category == @payment_details.category %>
+                <option value="<%= category.name %>" selected ><%= category.name %></option>
+              <% else %>
+                <option value="<%= category.name %>"><%= category.name %></option>
+              <% end %>
+            <% end %>
+            </select>
+          </div> 
+
+
+
+          <% if @payment_details.coach.nil? %>
+            <label class="control-label" for="textarea" style="width:35%; text-align:left">Coach</label>  
+            <select name="coach_name" >
+              <% coaches.each do |coach|%>         
+                <option value="<%= coach.name %>"><%= coach.name %></option>
+              <% end %>
+            </select>
+          <% else %>
+            <div  style="position:relative;">
+              <input type="hidden" class="span3" name="coach_id"  value="<%= @payment_details.coach.id%>" style="width: 25%">
+            </div>
+          <% end %>
+        </div>
+       <% end %>
+      <div class="control-group">
+        <div >
+          <button class="btn btn-success" style="margin-top: 15px;">Submit</button>
+        </div>
+      </div>
+    </fieldset>
+    </form>
+  </ul>
+</div>

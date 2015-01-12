@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Jma Welcome Email</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Responsive stuff -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	
+  <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+  <link href="css/jma.css" rel="stylesheet">
+  <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> 
+  <script src="js/jquery.progressTimer.js"></script>
+
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+  <style>
+  h1, h2, h3, h4, h5, legend, p {
+  color: #5e605d;
+}
+  </style>
+  </head>
+
+  <body>
+    <div class="thumbnail" style="width: 600px; margin-left: 10%; margin-top: 2%;">
+       <a href="http://www.jodymichael.com"><img src="http://www.jodymichael.com/filebin/images/logo.png" alt="<= @reference %>"  style="display: block; margin-left: auto;margin-right: auto;"></a>
+				<br>
+          <img src="http://www.jodymichael.com/filebin/images/dotted-border-img.png" style="margin-top: 10px; margin-bottom: 20px;">
+          <br>
+          <p>Dear <%=@name%>,</p>
+          <p>Welcome to Jody Michael Associates. We are delighted to have the opportunity to work with you.  You are scheduled for the below appointment(s).</p>
+          <br>
+          <% if @amount > 0 %>
+            <% if @payment_date_s.size > 0 %>
+              <p><b>To hold your appointment* </b>please enter your credit card information on our <a href=" https://jma-tools.herokuapp.com/jma_payment_form?amount=<%= @amount %>" style="color: #8bc129;">Secure Payment Page</a>&nbsp<b>within 24 hours of receipt of this email.</b></p>
+            <% else %>
+              <p><b>To hold your appointment* </b>please enter your credit card information on our <a href=" https://jma-tools.herokuapp.com/jma_payment_form?amount=<%= @amount %>" style="color: #8bc129;">Secure Payment Page</a>&nbsp<b>within 24 hours of receipt of this email.</b></p>
+            <% end %>
+          <% else %>
+            <p><b>To hold your appointment* </b>please enter your credit card information on our <a href=" https://jma-tools.herokuapp.com/jma_payment_form" style="color: #8bc129;">Secure Payment Page</a>&nbsp<b>within 24 hours of receipt of this email.</b></p>  
+          <% end %>
+          <br>
+          <div class="row">
+            <div class="col-lg-10">
+              <div class="well">
+                 <% if @appt_date_s.size > 0 %>
+                  <p><b>Date/Time:</b> <%= @appt_date_s %>, at <%= @appt_start %> - <%= @appt_end %> CST</p>
+                <% end %>
+                <p><b>Location: </b><%= @location %> office (See more details below)</p>
+                <p><b>Coach: </b><%= @coach_name%>; (p) <%= @coach_phone%>, (e) <a href="mailto:<%= @coach_email%>" style="color: #8bc129;"><%= @coach_email%></a></p>
+              </div>
+            </div>
+         </div>
+         <br>
+         <p>*If you do not submit your credit card to hold your session within 24 hours, we will release your time slot. Payment for your sessions will be processed on Mondays only for the sessions you have scheduled for that week. If you prefer not to pay with the credit card on file, please confirm within 24 hours. If that is your preference, your card will only be charged if you fail to provide 48-hours notice of a cancellation or reschedule.</p>
+         <p><b>Office Locations:</b></p>
+        <br>
+        <div class="row">
+          <div class="col-lg-10">
+            <div class="well">
+              <p><b><u>Downtown Office</u></b></p>
+              <p>405 N. Wabash, Suite 2615</p>
+              <p>Chicago, IL  60611</p>
+             </div>
+           </div>
+         </div>
+        <p>Please sign in with the building's concierge and take the elevators up to the 26th floor. Please let yourself in and have a seat in the waiting area.  </p>
+        <p>Parking is available for JMA clients - pull all the way up the circle drive and ask the concierge for the Jody Michael Associates garage keys. The parking instructions are in the black leather pouch. If the keys are not available, the client in the time slot before you may have parked – you can wait for the keys and may need to cut into your session time 5-10 minutes to park. </p>
+        <br>
+        <div class="row">
+          <div class="col-lg-10">
+            <div class="well">
+              <p><b><u>North Side Office</u></b></p>
+              <p>4860 N Paulina St</p>
+              <p>Chicago, IL  60640</p>
+             </div>
+           </div>
+         </div>
+         
+        <p>Please note that this is a residential building with two main entrances. Please let yourself in the door at the top of the stairs and have a seat in the waiting area.</p>
+        <p>This is also the location of JMA's career exploration center. You will receive more information if this applies to your coaching process.</p>
+        <p>Free street parking is available most times.  If you need a temporary permit, please let us know when you arrive. </p>
+         
+        <p>We look forward to the opportunity to work with you!</p>
+         
+        <p>Best regards,</p>
+        <p>Kelly</p>
+  </div>
+  
+</body>
+</html>

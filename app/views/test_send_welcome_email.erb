@@ -1,0 +1,62 @@
+ <div class="thumbnail" style="width: 600px; margin-left: 10%; margin-top: 2%;">
+     <a href="http://www.jodymichael.com"><img src="http://www.jodymichael.com/filebin/images/logo.png" alt="<= @reference %>"></a>
+      <br>
+        <img src="http://www.jodymichael.com/filebin/images/dotted-border-img.png" style="margin-top: 10px; margin-bottom: 20px;">
+        <br>
+        <p  >Dear <%=@name%>,</p>
+        <p  >Welcome to Jody Michael Associates. We are delighted to have the opportunity to work with you.  The purpose of this email is to confirm your session date/time and provide you with our office location details.</p>
+        <% if @amount > 0 %>
+          <p  >Please follow this link to our <a href=" https://ajma-tools.herokuapp.com/jma_payment_form?amount=<%= @amount %>" style="color: #8bc129;">Secure Payment Page</a> where you can enter your credit card information.  Please note we do not accept American Express. If you do not submit your credit card information prior to XYZ date, we will assume you will bring cash or a check made out to Jody Michael Associates with you to your appointment(s).<p>
+        <% else %>
+          <p  >Please follow this link to our <a href=" https://jma-tools.herokuapp.com/jma_payment_form" style="color: #8bc129;">Secure Payment Page</a> where you can enter your credit card information.  Please note we do not accept American Express. If you do not submit your credit card information prior to XYZ date, we will assume you will bring cash or a check made out to Jody Michael Associates with you to your appointment(s).<p>
+        <% end %>
+        <br>
+        <div class="row">
+          <div class="col-lg-10">
+            <div class="well">
+               <% if @appt_date_s.size > 0 %>
+                <p ><b>Appointment Date:</b> <%= @appt_date_s %>
+              <% end %>
+              <p>Appointment time: 9:45 - 11:15 AM CST</p>
+              <p>Appointment location:  Downtown office (please see below)</p>
+              <p>Coach/Therapist: Jody Michael</p>
+              <p>Coach Contact Info:  312-307-3031, jody@jodymichael.com</p>
+             </div>
+           </div>
+         </div>
+         <p ><b>Office Locations:</b></p>
+        <p >Please note, whether you are arriving at the downtown office or the north side office, you should let yourself in without knocking or ringing the doorbell. Don't worry, you are not being rude!  The reason we ask you to let yourself in is because your coach or therapist will likely be in session with another client when you arrive, and will not be able to open the door for you</p>
+        <p>Your coach or therapist will greet you in the waiting area at the beginning of your scheduled time.</p>
+        <br>
+        <div class="row">
+          <div class="col-lg-10">
+            <div class="well">
+              <p><b><u>Downtown Office</u></b></p>
+              <p>405 N. Wabash, Suite 2615</p>
+              <p>Chicago, IL  60611</p>
+             </div>
+           </div>
+         </div>
+        <p>Upon arrival at our downtown office, please sign in with the building's concierge and take the elevators up to the 26th floor. Please let yourself into the office and have a seat in the waiting area directly to the right.  </p>
+        <p>Parking is available for JMA clients.  Please pull all the way up and ask for the garage keys for Jody Michael Associates at the building’s concierge.  Open the black leather pouch and all the instructions will be there for you.  If the keys are not available, the client in the time slot before you may have parked – you can wait for the keys and may need to cut into your session time 5-10 minutes to park.</p>
+        <br>
+        <div class="row">
+          <div class="col-lg-10">
+            <div class="well">
+              <p><b><u>North Side Office</u></b></p>
+              <p>4860 N Paulina St</p>
+              <p>Chicago, IL  60640</p>
+             </div>
+           </div>
+         </div>
+        <p  style="color: #656769;">Upon arrival at our north side office, you will note that this is a residential building with two main entrances.  Please let yourself in to the door to your right.  Once inside, walk up the stairs and have a seat in the waiting area directly to the left.  This is also the location of JMA's career exploration center. You will receive more information if this applies to your services.</p>
+        <p  style="color: #656769;">Free street parking is available most times.  If you need a temporary permit, please let us know when you arrive. </p>
+         
+        <p  style="color: #656769;">Please note: There are pets at the north side location - if you have any concerns, please let us know in advance of your session.</p>
+         
+        <p  style="color: #656769;">We look forward to the opportunity to work with you!</p>
+         
+        <p  style="color: #656769;">Best regards,</p>
+        <p  style="color: #656769;">Kelly</p>
+     <img src="http://www.jodymichael.com/filebin/images/texture/light-grey-texture.jpg"  style="width: 590;" >
+  </div>

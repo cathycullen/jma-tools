@@ -13,7 +13,7 @@ class FormatDate
   
   
   def self.jma_template_payment
-    p = PaymentDetails.new 
+    p = Payment.new 
     if ENV['RACK_ENV'] == 'development' then
       p.name='John Doe'
       p.email='john@johndoe.com'

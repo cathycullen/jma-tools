@@ -1,0 +1,22 @@
+Summary of Weekly Recurring Payments
+<%= @date %>
+
+<% if @results != nil %>
+  <% @results.each do |entry| %>
+    <%= entry[:name] %>:		$<%=entry[:amount] %>
+  <% end %>
+<% end %>
+Total Payments Processed: $<%@total_payments %>
+
+----------------------------------------------------------------
+Exception Report
+<%= @date %>
+
+<% if @errors != nil %>
+  <% @errors.each do |error| %>
+    <%= error[:name] %>:		<%=error[:error] %>
+  <% end %>
+<% end %>
+
+
+

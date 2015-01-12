@@ -1,0 +1,72 @@
+<div class="wrapper">
+  <div >
+<h3>Summary of Weekly Recurring Payments for <%= @date %></h3>
+  <table class="table table-condensed table-bordered table-striped table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Coach</th>
+        <th>Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if Payment.paid_entries != nil && Payment.paid_entries.size > 0 %>
+        <% i = 1 %>
+        <% total_amount=0 %>
+        <% Payment.paid_entries.each do |entry| %>
+          <tr>
+            <td><%= i %></td>
+            <td><%= entry[:name] %></td>
+            <td>$<%= entry[:amount] %></td>
+          <td><%= Coach.find_by_id(entry[:coach]).name %></td>
+          <td><%= entry[:category] %></td>
+          </tr>
+        <% i = i + 1 %>			
+      <% end %>	
+      <tr>
+        <td>Total Amount:</td>
+        <td></td>
+        <td>$<%= Payment.total_payments %></td>
+        <td></td>
+        <td></td>
+      </tr>	
+      <% end %>	
+    </tbody>
+  </table>	
+	<br>
+  <% if Payment.invalid_entries != nil && Payment.invalid_entries.size > 0 %>
+    <h3>Exception Report</h3>
+    <table class="table table-condensed table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Error</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if Payment.invalid_entries != nil && Payment.invalid_entries.size > 0 %>
+          <% i = 1 %>
+          <% Payment.invalid_entries.each do |error| %>
+            <tr>
+              <td><%= i %></td>
+              <td><%= error[:name] %></td>
+              <td><%= error[:msg] %></td>
+            </tr>
+            <% i = i + 1 %>			
+          <% end %>		
+        <% end %>		
+      </tbody>
+    </table>		
+  <% end %>		
+
+<br>  
+
+  <form action="/done_weekly_payments" method="post">
+    <input type="submit" value="Done" name="done" class="btn btn-success"  >
+  </form>
+  <br> 
+</div>
+</div>

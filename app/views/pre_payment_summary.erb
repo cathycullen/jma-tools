@@ -1,0 +1,78 @@
+<div class="wrapper">
+  <div >
+  <h2>The Following Payments Will be Made:</h2>
+  <h2><%= @date %></h2>
+  <form action="/process_weekly_payments" method="post">
+
+  <table class="table table-condensed table-bordered table-striped table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Coach</th>
+        <th>Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% i = 1 %>
+      <% total_amount=0 %>
+      <% Payment.pending_entries.each do |entry| %>
+        <tr>
+          <td><%= i %></td>
+          <td><%= entry[:name] %></td>
+          <td>$<%= entry[:amount] %></td>
+          <% total_amount=total_amount + entry[:amount].to_f %>
+          <td><%= Coach.find_by_id(entry[:coach]).name %></td>
+          <td><%= entry[:category] %></td>
+        </tr>
+        <% i = i + 1 %>			
+        <% end %>	
+        <tr>
+          <td>Total Amount:</td>
+          <td></td>
+          <td>$<%= total_amount %></td>
+          <td></td>
+          <td></td>
+        </tr>
+    </tbody>
+  </table>
+  <br>  
+  <% if Payment.invalid_entries.each.count > 0 %>
+    <h2>The Following Errors Were Encountered</h2>
+      <table class="table table-condensed table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Error</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% i = 1 %>
+        <% Payment.valid_entries.each do |entry| %>	
+          <tr>
+            <td><%= i %></td>
+            <td><%= entry[:name] %></td>
+            <td><%= entry[:msg] %></td>
+          </tr>
+          <% i = i + 1 %>		
+          <% end %> 
+        </tbody>
+      </table>
+  <% end %>
+
+<br>  
+<input type="submit" id="startProgressTimer" value="Submit" name="commit" class="btn btn-success"  >
+<input type="submit" value="Cancel" name="cancel" class="btn btn-danger">
+</form>
+<br> 
+
+<div id="progressTimer" style="width: 62%; margin-top: 20px;"></div>
+
+<br>  
+</div>
+</div>
+
+
+

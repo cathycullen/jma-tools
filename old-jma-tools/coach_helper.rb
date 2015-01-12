@@ -1,5 +1,5 @@
 module CoachHelper
-require './coach_old'
+require './coach'
 
   def initialize
     puts "initialize coach helper"
@@ -7,7 +7,7 @@ require './coach_old'
     yml = YAML.load_file("coach.yml") 
     yml.each do |k|
       puts "coach #{k['coach']} #{k['email']} #{k['phone']}"
-      coach = CoachOld.new(k['coach'], 
+      coach = Coach.new(k['coach'], 
       k['email'], 
       k['phone'])
       @coaches << coach

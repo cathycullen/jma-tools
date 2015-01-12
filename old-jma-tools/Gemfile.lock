@@ -1,41 +1,28 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    actionmailer (4.1.1)
-      actionpack (= 4.1.1)
-      actionview (= 4.1.1)
+    actionmailer (4.0.3)
+      actionpack (= 4.0.3)
       mail (~> 2.5.4)
-    actionpack (4.1.1)
-      actionview (= 4.1.1)
-      activesupport (= 4.1.1)
+    actionpack (4.0.3)
+      activesupport (= 4.0.3)
+      builder (~> 3.1.0)
+      erubis (~> 2.7.0)
       rack (~> 1.5.2)
       rack-test (~> 0.6.2)
-    actionview (4.1.1)
-      activesupport (= 4.1.1)
-      builder (~> 3.1)
-      erubis (~> 2.7.0)
-    activemodel (4.1.1)
-      activesupport (= 4.1.1)
-      builder (~> 3.1)
-    activerecord (4.1.1)
-      activemodel (= 4.1.1)
-      activesupport (= 4.1.1)
-      arel (~> 5.0.0)
-    activesupport (4.1.1)
-      i18n (~> 0.6, >= 0.6.9)
-      json (~> 1.7, >= 1.7.7)
-      minitest (~> 5.1)
+    activesupport (4.0.3)
+      i18n (~> 0.6, >= 0.6.4)
+      minitest (~> 4.2)
+      multi_json (~> 1.3)
       thread_safe (~> 0.1)
-      tzinfo (~> 1.1)
+      tzinfo (~> 0.3.37)
     addressable (2.3.5)
-    arel (5.0.1.20140414130214)
     arrow_payments (0.1.3)
       faraday (< 0.9)
       faraday_middleware (~> 0.8)
       hashie (~> 2.0)
       json (~> 1.8)
     atomic (1.1.15)
-    backports (3.6.0)
     bcrypt-ruby (3.1.2)
     bcrypt-ruby (3.1.2-x86-mingw32)
     builder (3.1.4)
@@ -111,30 +98,21 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
-    minitest (5.4.0)
+    minitest (4.7.5)
     multi_json (1.8.4)
     multipart-post (1.2.0)
-    pg (0.17.1)
     polyglot (0.3.4)
     rack (1.5.2)
     rack-protection (1.5.2)
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
-    rake (10.3.2)
     shotgun (0.9)
       rack (>= 1.0)
-    sinatra (1.4.5)
+    sinatra (1.4.4)
       rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
-    sinatra-contrib (1.4.2)
-      backports (>= 2.0)
-      multi_json
-      rack-protection
-      rack-test
-      sinatra (~> 1.4.0)
-      tilt (~> 1.3)
     stringex (1.5.1)
     thread_safe (0.2.0)
       atomic (>= 1.1.7, < 2)
@@ -142,8 +120,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (1.2.2)
-      thread_safe (~> 0.1)
+    tzinfo (0.3.38)
     uuidtools (2.1.4)
 
 PLATFORMS
@@ -152,18 +129,13 @@ PLATFORMS
 
 DEPENDENCIES
   actionmailer
-  activerecord (~> 4.1)
-  activesupport (~> 4.1)
-  arrow_payments (= 0.1.3)
+  arrow_payments
   data_mapper
   dm-postgres-adapter
   dm-sqlite-adapter
   dotenv
-  faraday (= 0.8.9)
-  hashie (= 2.0.5)
+  faraday
+  hashie
   json
-  pg
-  rake
   shotgun
   sinatra
-  sinatra-contrib
