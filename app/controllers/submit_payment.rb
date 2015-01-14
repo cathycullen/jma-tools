@@ -17,8 +17,6 @@ PaymentDetails.auto_upgrade!
 
 configure do
   puts "configure called"
-  Sinatra::Application.routes["GET"].each do |route|
-  puts route[0]
 end
 
 end
