@@ -6,13 +6,18 @@ class Payment < ActiveRecord::Base
   validates_presence_of :amount
   validates_presence_of :category
   validates_presence_of :coach
+  validates_presence_of :transaction_type
+
+
+  belongs_to :coach
+  belongs_to :category
 
   def populate(name, amount, coach, category)
     self.name = name
     self.payment_date = Date.today
     self.amount = amount
     if !coach.nil?
-      self.coach = coach.id
+      self.coach = coach
     end
     if !category.nil?
       self.category = category

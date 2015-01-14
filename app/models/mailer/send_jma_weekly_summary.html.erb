@@ -46,8 +46,8 @@
 							<td><%= i %></td>
 							<td><%= entry[:name] %></td>
 							<td>$<%= entry[:amount] %></td>
-              <td>$<%= Coach.find_by_id(entry[:coach]).name %></td>
-              <td>$<%= entry[:category] %></td>
+              <td><%= Coach.find_by_id(entry[:coach]).name %></td>
+              <td><%= entry[:category] %></td>
 						</tr>
 					<% i = i + 1 %>			
 				<% end %>	

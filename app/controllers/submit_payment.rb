@@ -17,6 +17,9 @@ PaymentDetails.auto_upgrade!
 
 configure do
   puts "configure called"
+  Sinatra::Application.routes["GET"].each do |route|
+  puts route[0]
+end
 
 end
 
@@ -80,7 +83,7 @@ post '/send_payment_email' do
   end
 
   if params[:category].size > 0
-    @payment_details.category=params[:category]
+    @payment_details.category=Category.find_by_name(params[:category])
   end
   if params[:coach_name].size > 0
     @payment_details.coach = Coach.find_by_name(params[:coach_name])
@@ -139,11 +142,11 @@ post '/send_welcome_email' do
   @payment_details.email=params[:email]
   if params[:amount].size > 0
     @payment_details.amount=params[:amount]
-    if params[:category].size > 0
-      @payment_details.category=params[:category]
-    end
   else 
     @payment_details.amount = 0
+  end
+  if params[:category].size > 0
+    @payment_details.category=Category.find_by_name(params[:category])
   end
   if params[:coach_name].size > 0
     @payment_details.coach = Coach.find_by_name(params[:coach_name])
@@ -181,11 +184,11 @@ post '/send_interview_email' do
   @payment_details.email=params[:email]
   if params[:amount].size > 0
     @payment_details.amount=params[:amount]
-    if params[:category].size > 0
-      @payment_details.category=params[:category]
-    end
   else 
     @payment_details.amount = 0
+  end
+  if !params[:category_name].nil?
+    @payment_details.category=Category.find_by_name(params[:category_name])
   end
   
   @appt_date = params[:appt_date]
@@ -193,10 +196,10 @@ post '/send_interview_email' do
   @appt_start = params[:appt_start][0..-4]
   @appt_end = params[:appt_end]
   @location = params[:location]
-  puts "coach name #{coach_name} start time #{@appt_start} end time #{@appt_end}"
   @location = params[:location]
   
-  @payment_details.coach = Coach.find_by_name(params[:coach])
+  @payment_details.coach = Coach.find_by_name(params[:coach_name])
+  puts "coach name #{@payment_details.coach.name} start time #{@appt_start} end time #{@appt_end}"
     
   email = Mailer.send_interview_email(
   @payment_details.name,
@@ -226,9 +229,10 @@ get '/jma_payment_form' do
   else @payment_details.amount = 0
   end
 
-  puts "coach #{params[:coach_id]} "
-  if  params[:category] != nil
-    @payment_details.category = params[:category] 
+  puts "coach: #{params[:coach_id]}  category: #{params[:category_id]}  "
+  if  params[:category_id] != nil
+    @payment_details.category = Category.find_by_id(params[:category_id] )
+    puts "category: #{@payment_details.category}"
   end
   puts "coach #{params[:coach_id]} "
   puts "@payment_details.category.nil? #{@payment_details.category.nil?}"
@@ -255,19 +259,26 @@ post '/jma_submit_payment' do
   @payment_details.city=params[:city].strip()
   @payment_details.state= params[:state].strip()
   @payment_details.zip=params[:zip].strip()
+
   if params[:amount] != nil 
     @payment_details.amount=params[:amount]
-    if params[:category].size > 0
-      @payment_details.category=params[:category]
-    end
   else 
     @payment_details.amount=0
   end
+
+  if params[:category_id] != nil
+    @payment_details.category=Category.find_by_id(params[:category_id])
+  else
+    if params[:category_name] != nil
+      @payment_details.category=Category.find_by_name(params[:category_name])
+    end
+  end
   if !params[:coach_id].nil?
     @payment_details.coach=Coach.find_by_id(params[:coach_id])
-  end
-  if !params[:coach_name].nil?
-    @payment_details.coach=Coach.find_by_name(params[:coach_name])
+  else
+    if !params[:coach_name].nil?
+      @payment_details.coach=Coach.find_by_name(params[:coach_name])
+    end
   end
 
    if !@payment_details.valid?
@@ -308,6 +319,23 @@ post '/jma_submit_payment' do
       @payment_details.created_at = Time.now
       @payment_details.save!
       
+       #create client
+      client = Client.find_by_name(@payment_details.name)
+      if client.nil?
+        puts "Client #{@payment_details.name} not found.  Create new client"
+        client = Client.new
+        client.name = @payment_details.name
+        client.coach = @payment_details.coach
+        client.category = @payment_details.category
+        client.email = @payment_details.email
+        client.address = @payment_details.address
+        client.city = @payment_details.city
+        client.state = @payment_details.state
+        client.zip = @payment_details.zip
+        client.phone = @payment_details.phone
+        puts "Client created #{client.coach}, #{client.category}"
+        client.save
+      end
       
        # send email to jma staff      print "$ " + @payment_details.amount.to_s
       

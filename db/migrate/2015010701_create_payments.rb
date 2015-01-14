@@ -3,12 +3,12 @@ class CreatePayments < ActiveRecord::Migration
     create_table :payments do |t|
       t.datetime :payment_date
       t.string :name
-      t.integer :coach
+      t.references :coach
       t.float :amount
       t.string :status
       t.string :msg
-      t.string :session_id
-      t.string :category
+      t.string :transaction_type
+      t.references :category
     end
   end
 end

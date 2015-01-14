@@ -115,25 +115,10 @@
             <label class="control-label" style="width:35%; text-align:left">Amount</label>
             <input type="text" class="span3" name="amount"  value="<%= @payment_details.amount %>" style="width: 25%!important;" required value="250">
           </div>
-          <div  style="position:relative;">
-            <label class="control-label" style="width:35%; text-align:left">Category</label>
-            <% if !@payment_details.category.nil?  %>
-              <select class="span2" name="category" value="<%= @payment_details.category  %>">
-            <% else %>
-              <select class="span2" name="category" %>">
-            <% end %>
-            <% categories.each do |category|%>
-              <% if !@payment_details.category.nil? && category == @payment_details.category %>
-                <option value="<%= category.name %>" selected ><%= category.name %></option>
-              <% else %>
-                <option value="<%= category.name %>"><%= category.name %></option>
-              <% end %>
-            <% end %>
-            </select>
-          </div> 
+        </div>
+       <% end %>
 
-
-
+          <div style="position:relative;">
           <% if @payment_details.coach.nil? %>
             <label class="control-label" for="textarea" style="width:35%; text-align:left">Coach</label>  
             <select name="coach_name" >
@@ -147,7 +132,23 @@
             </div>
           <% end %>
         </div>
-       <% end %>
+
+
+          <div>
+          <% if @payment_details.category.nil? %>
+            <label class="control-label" for="textarea" style="width:35%; text-align:left">Category</label>  
+            <select name="category_name" >
+              <% categories.each do |category|%>         
+                <option value="<%= category.name %>"><%= category.name %></option>
+              <% end %>
+            </select>
+          <% else %>
+            <div  style="position:relative;">
+              <input type="hidden" class="span3" name="category_id"  value="<%= @payment_details.category.id%>" style="width: 25%">
+            </div>
+          <% end %>
+        </div>
+
       <div class="control-group">
         <div >
           <button class="btn btn-success" style="margin-top: 15px;">Submit</button>

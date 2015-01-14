@@ -31,7 +31,7 @@
           <br>
           <p  style="color: #656769;">Dear <%=@name%>,</p>
           <% if @amount > 0 %>
-            <p  style="color: #656769;">Thank you for choosing Jody Michael  Associates.   Please follow this link to our <a href="https://jma-tools.herokuapp.com/jma_payment_form?amount=<%= @amount %>&category=<%= @category %>&coach_id=<%= @coach.id%>" style="color: #8bc129;">Secure Payment Page</a> where you can enter your credit card information.<p>
+            <p  style="color: #656769;">Thank you for choosing Jody Michael  Associates.   Please follow this link to our <a href="https://jma-tools.herokuapp.com/jma_payment_form?amount=<%= @amount %>&category_id=<%= @category.id %>&coach_id=<%= @coach.id%>" style="color: #8bc129;">Secure Payment Page</a> where you can enter your credit card information.<p>
           <% else %>
             <p  style="color: #656769;">Thank you for choosing Jody Michael  Associates.   Please follow this link to our <a href="https://jma-tools.herokuapp.com/jma_payment_form" style="color: #8bc129;">Secure Payment Page</a> where you can enter your credit card information.<p>
           <% end %>

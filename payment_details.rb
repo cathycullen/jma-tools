@@ -24,7 +24,7 @@ class PaymentDetails
   property :state, String
   property :zip, String
   property :amount, Float
-  property :category, String
+  property :category, Integer
   property :coach, Integer
   property :created_at, DateTime
 
