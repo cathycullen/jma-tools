@@ -19,8 +19,6 @@ configure do
   puts "configure called"
 end
 
-end
-
 helpers do
   puts "helpers called"
   def categories
