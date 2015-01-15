@@ -274,6 +274,7 @@ post '/submit_arrow_payment' do
       erb :arrow_payment_form
     end
   end
+  erb :arrow_payment_completed
 end
                                      
 get '/jma_payment_form' do
