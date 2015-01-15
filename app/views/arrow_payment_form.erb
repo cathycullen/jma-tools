@@ -1,0 +1,42 @@
+
+        
+<section id="forms" style="margin-left: 30%;">
+  <!-- <div class="row">  -->
+    <div class="col-md-5">
+      <!-- <a href="http://www.jodymichael.com"><img src="http://www.jodymichael.com/filebin/images/logo.png" alt="<= @reference %>" style=" margin-bottom: 30px;"></a>
+      -->
+      <br>
+
+      <form class="form-horizontal well" action="/submit_arrow_payment" method="post"  style="margin-top:20%;">
+        <fieldset>
+          <legend>Arrow Quick Pay</legend>
+          <div class="control-group" >
+            <div class="col-md-10">
+              <label class="control-label" for="textarea">Name</label> 
+              <input type="text" class="form-control" name="name" title="Enter Recipients Name" placeholder="Name" required >
+              <label class="control-label" for="textarea">Payment Amount</label>
+              <input type="text" class="form-control" name="amount"  title="Enter Payment Amount" placeholder="Optional Amount" >
+
+              <label class="control-label" for="textarea">Category</label>  
+                <select name="category_name" style="width:100%; ">
+                  <% categories.each do |category|%>         
+                    <option value="<%= category.name %>"><%= category.name %></option>
+                  <% end %>
+                </select>
+                <label class="control-label" for="textarea">Coach</label>  
+                <select name="coach_name" style="width:100%; ">
+                  <% coaches.each do |coach|%>         
+                    <option value="<%= coach.name %>"><%= coach.name %></option>
+                  <% end %>
+                </select>
+              <hr>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-success" title="Select to Send Payment Link to Client">Submit</button>
+                <button type="reset" class="btn">Cancel</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  <!-- </div> -->
+</section>

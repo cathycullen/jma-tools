@@ -53,6 +53,30 @@ class PaymentDetails
     p
   end
 
+ def valid_for_quick_pay?
+    @errors = []
+
+    # check each field for errors
+    if @name.split(/\W+/).size < 2 then
+      @errors << "Please Enter a Valid Name"
+    end
+
+    if @amount <= 0 
+      @errors << "Please Enter a Valid Amount"
+    end
+
+     if @coach.nil? 
+      @errors << "Please Enter a Valid Coach"
+    end
+    
+     if @category.nil? 
+      @errors << "Please Enter a Valid Category"
+    end
+    
+    @errors.empty?
+  end
+  
+
   def valid?
     @errors = []
 

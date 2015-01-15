@@ -213,6 +213,68 @@ post '/send_interview_email' do
   #redirect to some thank you page
   erb :welcome_email_sent
 end
+
+get '/arrow_payment_form' do
+  puts "hello /arrow_payment_form"
+  erb :arrow_payment_form, :layout => :jma_layout
+end
+
+post '/submit_arrow_payment' do
+
+  puts "/submit_arrow_payment "
+  @payment_details = PaymentDetails.new
+  @payment_details.name=params[:name].strip()
+
+  if params[:amount] != nil 
+    @payment_details.amount=params[:amount]
+  else 
+    @payment_details.amount=0
+  end
+  if params[:category_name] != nil
+    @payment_details.category=Category.find_by_name(params[:category_name])
+  end
+  if !params[:coach_name].nil?
+    @payment_details.coach=Coach.find_by_name(params[:coach_name])
+  end
+
+   if !@payment_details.valid_for_quick_pay?
+    @submit_callback = '/submit_arrow_payment'
+    erb :payment_form, :layout => :jma_layout
+  else
+    arrow_payment = ArrowPayment.new()
+    description = @payment_details.name + "-" + @payment_details.category.name+"-"+@payment_details.amount.to_s
+
+    payment_error = arrow_payment.submit_recurring_payment(
+      @payment_details.name,
+      @payment_details.amount,
+      description
+    )
+    if payment_error.nil?
+      puts "Payment info submitted successfully for #{@payment_details.name} amount: #{@payment_details.amount} "
+
+       client = Client.find_by_name(@payment_details.name)
+      if client.nil?
+        client = Client.new
+        client.name = @payment_details.name
+        client.coach = @payment_details.coach
+        client.category = @payment_details.category
+        client.save
+      end
+      payment = Payment.new
+      payment.populate(@payment_details.name,
+      @payment_details.amount,
+      @payment_details.coach,
+      @payment_details.category)
+      payment.transaction_type = CREDIT_CARD
+      payment[:status] = PAID
+      payment.save
+    else
+      @payment_details.errors = [payment_error]
+      puts "Error Encountered #{payment_error}"
+      erb :arrow_payment_form
+    end
+  end
+end
                                      
 get '/jma_payment_form' do
   puts "hello /jma_payment_form"

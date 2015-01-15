@@ -5,11 +5,9 @@ class ArrowPayment
 
   def initialize()
     begin
-      puts "initialize called"
       @arrow = app_config()
       @error_message = nil
       @payment_method = nil
-      puts "initialize done"
     rescue Exception => e
       puts "ArrowPayment:  rescue caught in initialize #{e.message}"
       puts e.backtrace 
