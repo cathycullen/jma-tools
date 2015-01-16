@@ -8,7 +8,6 @@ class Payment < ActiveRecord::Base
   validates_presence_of :coach
   validates_presence_of :transaction_type
 
-
   belongs_to :coach
   belongs_to :category
 
@@ -34,8 +33,11 @@ class Payment < ActiveRecord::Base
   def self.paid_entries
     Payment.where(:payment_date => Date.today, :status => PAID)
   end
-  def self.total_payments
+  def self.total_payments_today
     Payment.where(:payment_date => Date.today, :status => PAID).sum(:amount)
+  end
+  def self.total_payments
+    Payment.where(:status => PAID).sum(:amount)
   end
   def self.delete_invalid_entries
     Payment.where(:status => ERROR).delete_all
@@ -46,4 +48,22 @@ class Payment < ActiveRecord::Base
   def self.delete_pending_entries
     Payment.where(:status => PENDING).delete_all
   end
+
+
+  def self.all_paid_entries
+    Payment.where(:status => PAID)
+  end
+
+  def self.this_week_payments
+
+  end
+
+  def self.this_month_payments
+
+  end
+
+  def self.this_year_payments
+
+  end
+  
 end

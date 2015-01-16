@@ -1,6 +1,7 @@
 
 class CoachHelper
   def initialize
+    puts "initialize CoachHelper"
     @coaches = coaches
   end
 

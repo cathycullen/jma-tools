@@ -1,4 +1,15 @@
 
+get '/payments' do
+  erb :payments
+end
+
+post '/filter_payments' do
+
+  puts "/ilter_payments params:  #{params}"
+  coach_filter = params[:coach]
+  puts "coach filter: #{coach_filter}"
+  end
+
   get '/prompt_import_file' do
     erb :import_transactions
   end

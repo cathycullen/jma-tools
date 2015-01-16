@@ -1,0 +1,44 @@
+<div class="wrapper">
+  <div >
+<h3>JMA Clients</h3>
+  <table class="table table-condensed table-bordered table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Zip</th>
+        <th>Coach</th>
+        <th>Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if Client.all != nil && Client.all.size > 0 %>
+        <% Client.all.each do |entry| %>
+          <tr>
+            <td><%= entry[:name] %></td>
+            <td><%= entry[:email] %></td>
+            <td><%= entry[:phone] %></td>
+            <td><%= entry[:address] %></td>
+            <td><%= entry[:city] %></td>
+            <td><%= entry[:state] %></td>
+            <td><%= entry[:zip] %></td>
+            <td><%= Coach.find_by_id(entry[:coach_id]).name %></td>
+            <td><%= Category.find_by_id(entry[:category_id]).name %></td>
+            
+          </tr>
+      <% end %>	
+      <% end %>	
+    </tbody>
+  </table>	
+	<br>
+
+  <form action="/done_weekly_payments" method="post">
+    <input type="submit" value="Done" name="done" class="btn btn-success"  >
+  </form>
+  <br> 
+</div>
+</div>

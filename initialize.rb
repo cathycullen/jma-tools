@@ -9,7 +9,6 @@ Dotenv.load
 
 configure do
   set :environment =>  ENV['RACK_ENV']
-  puts " :environment #{:environment}  #{ ENV['RACK_ENV']}"
 end
 
 set :protection, :except => [:http_origin]

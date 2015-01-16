@@ -6,7 +6,7 @@ require 'data_mapper'
 require 'yaml'
 require './credit_card'
 require './cc_date_helper'
-require './initialize'
+#require './initialize'
 include CCDateHelper
 require './payment_details'
 require './coach_old'
@@ -214,9 +214,49 @@ post '/send_interview_email' do
   erb :welcome_email_sent
 end
 
+get '/deposit_check_form' do
+  erb :deposit_check_form
+end
+
+post '/submit_deposit_check' do
+  puts "/submit_deposit_check"
+  @payment_details = PaymentDetails.new
+  @payment_details.name=params[:name].strip()
+
+  if params[:amount] != nil 
+    @payment_details.amount=params[:amount]
+  else 
+    @payment_details.amount=0
+  end
+  if params[:category_name] != nil
+    @payment_details.category=Category.find_by_name(params[:category_name])
+  end
+  if !params[:coach_name].nil?
+    @payment_details.coach=Coach.find_by_name(params[:coach_name])
+  end
+   client = Client.find_by_name(@payment_details.name)
+  if client.nil?
+    client = Client.new
+    client.name = @payment_details.name
+    client.coach = @payment_details.coach
+    client.category = @payment_details.category
+    client.save
+  end
+  payment = Payment.new
+  payment.populate(@payment_details.name,
+  @payment_details.amount,
+  @payment_details.coach,
+  @payment_details.category)
+  payment.transaction_type = CREDIT_CARD
+  payment[:status] = PAID
+  payment.save
+    
+  erb :deposit_check_completed
+end
+
+
 get '/arrow_payment_form' do
-  puts "hello /arrow_payment_form"
-  erb :arrow_payment_form, :layout => :jma_layout
+  erb :arrow_payment_form
 end
 
 post '/submit_arrow_payment' do
@@ -300,7 +340,7 @@ get '/jma_payment_form' do
     @payment_details.coach = Coach.find_by_id(params[:coach_id])
     puts "@payment_details.coach #{@payment_details.coach}"
   end
-  erb :payment_form, :layout => :jma_layout
+  erb :payment_form
 end
 
 post '/jma_submit_payment' do

@@ -1,7 +1,9 @@
 
-<div class="payment-border">
+
+
+<div class="payment-border" style="margin-left: 30%;">
   <ul class="list-group">
-    <form action="<%= @submit_callback %>" method="post">
+    <form action="<%= @submit_callback %>" method="post" >
     <!-- <form action="/submit_payment" method="post"> -->
 
     <% if !@payment_details.errors.empty? %>

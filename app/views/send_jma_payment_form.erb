@@ -1,13 +1,9 @@
 
         
 <section id="forms" style="margin-left: 30%;">
-  <!-- <div class="row">  -->
     <div class="col-md-5">
-      <!-- <a href="http://www.jodymichael.com"><img src="http://www.jodymichael.com/filebin/images/logo.png" alt="<= @reference %>" style=" margin-bottom: 30px;"></a>
-      -->
       <br>
-
-      <form class="form-horizontal well" action="/send_payment_email" method="post"  style="margin-top:20%;">
+      <form class="form-horizontal well" action="/send_payment_email" method="post" >
         <fieldset>
           <legend>Generate Client Credit Card Email</legend>
           <div class="control-group" >
@@ -31,14 +27,6 @@
                     <option value="<%= coach.name %>"><%= coach.name %></option>
                   <% end %>
                 </select>
-
-              
-              <!--
-              <label class="control-label" for="textarea">Textarea</label>
-              <textarea class="form-control input-xlarge" id="textarea" rows="5"  placeholder="Body"></textarea>
-              <label class="control-label" for="textarea">Formatted Results</label>
-              <textarea class="form-control input-xlarge" id="textarea" rows="8"  placeholder="Can We Show Formatted Results Here?"></textarea>
-              -->
               <hr>
               <div class="form-actions">
                 <button type="submit" class="btn btn-success" title="Select to Send Payment Link to Client">Send Email</button>
@@ -48,19 +36,4 @@
         </fieldset>
       </form>
     </div>
-  <!-- </div> -->
 </section>
-<!--
-  <script type='text/javascript' src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script type='text/javascript' src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-
-  <script type='text/javascript'>
-  $(document).ready(function() {
-  
-  });
-  </script>
-        
-    </body>
-</html>
-
--->

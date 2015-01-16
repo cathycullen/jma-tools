@@ -1,6 +1,7 @@
 
 class CategoryHelper
   def initialize
+    puts "initialize CategoryHelper"
     @categories = categories
   end
 
