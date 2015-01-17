@@ -31,7 +31,7 @@ class Payment < ActiveRecord::Base
     Payment.where(:payment_date => Date.today, :status => ERROR)
   end
   def self.paid_entries
-    Payment.where(:payment_date => Date.today, :status => PAID)
+    Payment.where(:status => PAID).order(:payment_date)
   end
   def self.total_payments_today
     Payment.where(:payment_date => Date.today, :status => PAID).sum(:amount)
@@ -51,7 +51,7 @@ class Payment < ActiveRecord::Base
 
 
   def self.all_paid_entries
-    Payment.where(:status => PAID)
+    Payment.where(:status => PAID).order(:payment_date)
   end
 
   def self.this_week_payments
