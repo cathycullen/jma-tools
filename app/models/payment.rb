@@ -11,6 +11,9 @@ class Payment < ActiveRecord::Base
   belongs_to :coach
   belongs_to :category
 
+  scope :by_year, lambda { |year| where('extract(year from payment_date) = ?', year) }
+  scope :by_month, lambda { |month| where('extract(month from payment_date) = ?', month) }
+
   def populate(name, amount, coach, category)
     self.name = name
     self.payment_date = Date.today
@@ -48,21 +51,24 @@ class Payment < ActiveRecord::Base
   def self.delete_pending_entries
     Payment.where(:status => PENDING).delete_all
   end
-
+  def self.filter_entries(coach, category, transaction_type)
+    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type)
+  end
 
   def self.all_paid_entries
     Payment.where(:status => PAID).order(:payment_date)
   end
 
-  def self.this_week_payments
-
+  def self.sum_this_week(coach, category, transaction_type)
+    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, payment_date: Date.today.monday..Date.today).sum('amount')
   end
 
-  def self.this_month_payments
+  def self.sum_this_month(coach, category, transaction_type)
+    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type).by_month(Date.today.month).sum('amount')
 
   end
-
-  def self.this_year_payments
+  def self.sum_this_year(coach, category, transaction_type)
+    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type).by_year(Date.today.year).sum('amount')
 
   end
   

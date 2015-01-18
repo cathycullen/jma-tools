@@ -1,13 +1,47 @@
 
 get '/payments' do
+  @payments = Payment.all_paid_entries
   erb :payments
 end
 
 post '/filter_payments' do
 
-  puts "/ilter_payments params:  #{params}"
-  coach_filter = params[:coach]
-  puts "coach filter: #{coach_filter}"
+  puts "/filter_payments params:  #{params}  coach #{params[:coach]} first #{params[:coach].first}"
+
+  if params[:coach].first == "All"
+    coach_hash = Coach.all.map { |coach| coach } 
+    @coach_filter = coach_hash
+  else
+    @coach_filter = params[:coach]
+  end
+
+  if params[:category].first == "All"
+    category_hash = Category.all.map { |category| category } 
+    @category_filter = category_hash
+  else
+    @category_filter = params[:category]
+  end
+
+  if params[:transaction].first == "All"
+    transaction_hash = [CREDIT_CARD, CHECK]
+    @transaction_filter = transaction_hash
+  else
+    @transaction_filter = params[:transaction]
+  end
+
+
+
+  puts "coach filter: #{@coach_filter}"
+  #@category_filter = params[:category]
+  puts "category filter: #{@category_filter}"
+  #@transaction_filter = params[:transaction]
+  puts "transaction filter: #{@transaction_filter}"
+  @payments = Payment.filter_entries(@coach_filter, @category_filter, @transaction_filter)
+  @payment_sum = @payments.sum('amount')
+  @sum_this_week = Payment.sum_this_week(@coach_filter, @category_filter, @transaction_filter)
+  @sum_this_month = Payment.sum_this_month(@coach_filter, @category_filter, @transaction_filter)
+  @sum_this_year = Payment.sum_this_year(@coach_filter, @category_filter, @transaction_filter)
+  erb :payments
   end
 
   get '/prompt_import_file' do

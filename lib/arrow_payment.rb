@@ -208,6 +208,7 @@ def submit_new_client_payment(payment, description)
     first = name_arr.first.downcase
     last = name_arr.last.downcase
 
+    
     # recurring payments assume that customer and payment methods exist
     client = get_client_by_name(first, last)
 
