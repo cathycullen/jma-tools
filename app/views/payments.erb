@@ -1,77 +1,107 @@
-<div class="wrapper">
-  <div >
-<form class="form-inline  well" action="/filter_payments" method="post">
-<fieldset>
-
-<!-- Form Name -->
-<legend>Filters</legend> 
-  <label class="control-label" for="textarea">Category</label>  
-  <select name="category[]"  >
-    <option value="All">All</option>"
-    <% categories.each do |category|%>         
-      <option value="<%= category.id %>"><%= category.name %></option>
-    <% end %>
-  </select>
-
-  <label class="control-label" for="textarea">Coach</label>  
-  <select name="coach[]" >
-    <option value="All">All</option>"
-    <% coaches.each do |coach|%>         
-      <option value="<%= coach.id %>"><%= coach.name %></option>
-    <% end %>
-  </select>
-  <label class="control-label" for="textarea">Transaction Type</label>  
-  <select name="transaction[]" > 
-    <option value="All">All</option>" 
-    <option value="Credit Card">Credit Card</option>
-    <option value="Check">Check</option>
-  </select>
-  <input type="submit" value="Submit" name="submit" class="btn btn-success"  >
-<br>
-</fieldset>
-</form>
-
-  <h3>Payment Summary</h3>
-    <table class="table table-condensed table-bordered table-striped table-hover">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Payment Date</th>
-          <th>Name</th>
-          <th>Amount</th>
-          <th>Coach</th>
-          <th>Category</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% if @payments != nil && @payments.size > 0 %>
-          <% total_amount=0 %>
-          <% @payments.each do |entry| %>
-            <tr>
-              <td><%= entry[:id]%></td>
-              <td><%= entry[:payment_date].strftime("%m/%d/%Y") %></td>
-              <td><%= entry[:name] %></td>
-              <td>$<%= entry[:amount] %></td>
-              <td><%= Coach.find_by_id(entry[:coach_id]).name %></td>
-            <td><%= Category.find_by_id(entry[:category_id]).name %></td>
-            </tr>	
-        <% end %>	
-        <tr>
-          <td>Total Amount:</td>
-          <td></td>
-          <td>$<%= @payment_sum  %></td>
-          <td>$<%= @sum_this_year  %></td>
-          <td>$<%= @sum_this_month  %></td>
-          <td>$<%= @sum_this_week  %></td>
-        </tr>	
-        <% end %>	
-      </tbody>
-    </table>	
-  	<br>
-
-    <form action="/done_weekly_payments" method="post">
-      <input type="submit" value="Done" name="done" class="btn btn-success"  >
-    </form>
-    <br> 
+<div class="container" style="width:100%; margin-left:4%">
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-2">
+      <h4>This Year: $<%= @sum_this_year  %></h4>
+    </div>
+    <div class="col-md-2">
+      <h4>This Month: $<%= @sum_this_month  %></h4>
+    </div>
+    <div class="col-md-2">
+      <h4>This Week:$<%= @sum_this_week  %></h4>
+    </div>
+    <div class="col-md-2">
+      <h4>Today:</h4>
+    </div>
   </div>
+  <div class="row">
+    <div class="col-md-3" id="leftCol">
+      <h3>Filters</h3>
+    </div>
+    <div class="col-md-9">
+      <h3>Payment Summary</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3" id="leftCol">
+      <form class="form-inline  well" action="/filter_payments" method="post">
+      <fieldset>
+        <!-- Form Name -->
+        <div class="control-group" style="display:block; line-height:2">
+          <div  style="position:relative;">
+            <label class="control-label" for="textarea">Category</label>  
+            <select name="category[]"  >
+             <option value="All">All</option>"
+              <% categories.each do |category|%>         
+               <option value="<%= category.id %>"><%= category.name %></option>
+              <% end %>
+            </select>
+            <br>
+            <label class="control-label" for="textarea">Coach</label>  
+            <select name="coach[]" >
+              <option value="All">All</option>"
+              <% coaches.each do |coach|%>         
+                <option value="<%= coach.id %>"><%= coach.name %></option>
+              <% end %>
+            </select>
+            <br>
+            <label class="control-label" for="textarea">Transaction</label>  
+            <select name="transaction[]" > 
+              <option value="All">All</option>" 
+              <option value="Credit Card">Credit Card</option>
+              <option value="Check">Check</option>
+            </select>
+            <br>
+            <input type="submit" value="Submit" name="submit" class="btn btn-success"  >
+            <br>
+          </div>
+        </div>
+      </fieldset>
+      </form>
+    </div>
+    <div class="col-md-9">
+        <table class="table table-condensed table-bordered table-striped table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Payment Date</th>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>Coach</th>
+              <th>Category</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @payments != nil && @payments.size > 0 %>
+              <% total_amount=0 %>
+              <% @payments.each do |entry| %>
+                <tr>
+                  <td><%= entry[:id]%></td>
+                  <td><%= entry[:payment_date].strftime("%m/%d/%Y") %></td>
+                  <td><%= entry[:name] %></td>
+                  <td>$<%= entry[:amount] %></td>
+                  <td><%= Coach.find_by_id(entry[:coach_id]).name %></td>
+                <td><%= Category.find_by_id(entry[:category_id]).name %></td>
+                </tr>	
+            <% end %>	
+            <tr>
+              <td>Total Amount:</td>
+              <td></td>
+              <td>$<%= @payment_sum  %></td>
+              <td>$<%= @sum_this_year  %></td>
+              <td>$<%= @sum_this_month  %></td>
+              <td>$<%= @sum_this_week  %></td>
+            </tr>	
+            <% end %>	
+          </tbody>
+        </table>	
+      	<br>
+
+        <form action="/done_weekly_payments" method="post">
+          <input type="submit" value="Done" name="done" class="btn btn-success"  >
+        </form>
+        <br> 
+      </div>
+    </div>
 </div>

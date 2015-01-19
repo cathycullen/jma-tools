@@ -27,6 +27,11 @@ class Payment < ActiveRecord::Base
     self.status = PENDING
   end
 
+  def self.format_money(number, delimiter = ',')
+    number.to_s.reverse.gsub(%r{([0-9]{3}(?=([0-9])))}, "\\1#{delimiter}").reverse
+  end
+
+
   def self.valid_entries
     Payment.where(:payment_date => Date.today, :status => VALID)
   end
@@ -60,16 +65,17 @@ class Payment < ActiveRecord::Base
   end
 
   def self.sum_this_week(coach, category, transaction_type)
-    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, payment_date: Date.today.monday..Date.today).sum('amount')
+    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, payment_date: Date.today.monday..Date.today).sum('amount').to_i
   end
 
   def self.sum_this_month(coach, category, transaction_type)
-    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type).by_month(Date.today.month).sum('amount')
+    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type).by_month(Date.today.month).sum('amount').to_i
 
   end
+  
   def self.sum_this_year(coach, category, transaction_type)
-    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type).by_year(Date.today.year).sum('amount')
-
+    x = Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type).by_year(Date.today.year).sum('amount').to_i
+    x.to_s.reverse.gsub(%r{([0-9]{3}(?=([0-9])))}, "\\1,").reverse
   end
   
 end

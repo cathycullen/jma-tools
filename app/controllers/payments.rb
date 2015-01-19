@@ -1,6 +1,7 @@
 
 get '/payments' do
   @payments = Payment.all_paid_entries
+  @category_selected = 
   erb :payments
 end
 
@@ -38,9 +39,9 @@ post '/filter_payments' do
   puts "transaction filter: #{@transaction_filter}"
   @payments = Payment.filter_entries(@coach_filter, @category_filter, @transaction_filter)
   @payment_sum = @payments.sum('amount')
-  @sum_this_week = Payment.sum_this_week(@coach_filter, @category_filter, @transaction_filter)
-  @sum_this_month = Payment.sum_this_month(@coach_filter, @category_filter, @transaction_filter)
-  @sum_this_year = Payment.sum_this_year(@coach_filter, @category_filter, @transaction_filter)
+  @sum_this_week = Payment.format_money(Payment.sum_this_week(@coach_filter, @category_filter, @transaction_filter))
+  @sum_this_month = Payment.format_money(Payment.sum_this_month(@coach_filter, @category_filter, @transaction_filter))
+  @sum_this_year = Payment.format_money(Payment.sum_this_year(@coach_filter, @category_filter, @transaction_filter))
   erb :payments
   end
 

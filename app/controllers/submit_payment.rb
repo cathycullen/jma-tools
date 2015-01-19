@@ -31,11 +31,11 @@ helpers do
   end
 
   def url_root
-  if ENV['RACK_ENV'] == 'development' then
-    @url_root = "localhost:9393"
-  else
-    @url_root = "https://"+APP_NAME+".herokuapp.com"
-  end
+    if ENV['RACK_ENV'] == 'development' then
+      @url_root = "localhost:9393"
+    else
+      @url_root = "https://"+APP_NAME+".herokuapp.com"
+    end
   end
 end
 
