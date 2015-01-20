@@ -38,24 +38,28 @@
 				</tr>
 			</thead>
 			<tbody>
-				<% if Payment.paid_entries != nil && Payment.paid_entries.size > 0 %>
-					<% i = 1 %>
-					<% total_amount=0 %>
-					<% Payment.paid_entries.each do |entry| %>
-						<tr>
-							<td><%= i %></td>
-							<td><%= entry[:name] %></td>
-							<td>$<%= entry[:amount] %></td>
-              <td><%= Coach.find_by_id(entry[:coach]).name %></td>
-              <td><%= entry[:category] %></td>
-						</tr>
-					<% i = i + 1 %>			
-				<% end %>	
-				<tr>
-					<td>Total Amount:</td>
-					<td></td>
-					<td>$<%= Payment.total_payments_today %></td>
-				</tr>	
+				 <% if Payment.paid_entries_today != nil && Payment.paid_entries_today.size > 0 %>
+        <% i = 1 %>
+        <% total_amount=0 %>
+        <% Payment.paid_entries_today.each do |entry| %>
+          <tr>
+            <td><%= i %></td>
+            <td><%= entry[:name] %></td>
+            <td>$<%= entry[:amount] %></td>
+            <td><%= Coach.find_by_id(entry[:coach_id]).name %></td>
+            <td><%= Category.find_by_id(entry[:category_id]).name %></td>
+            <td><%= entry[:status] %></td>
+          </tr>
+        <% i = i + 1 %>     
+      <% end %> 
+      <tr>
+        <td>Total Amount:</td>
+        <td></td>
+        <td>$<%= Payment.total_payments_today %></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr> 
 			<% end %>	
 		</tbody>
 	</table>	
