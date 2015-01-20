@@ -4,6 +4,7 @@
     </div>
     <div class="col-md-2">
       <h4>This Year: $<%= @sum_this_year  %></h4>
+      <h4>$<%= @sum_this_year%></h4>
     </div>
     <div class="col-md-2">
       <h4>This Month: $<%= @sum_this_month  %></h4>
@@ -12,7 +13,7 @@
       <h4>This Week:$<%= @sum_this_week  %></h4>
     </div>
     <div class="col-md-2">
-      <h4>Today:</h4>
+      <h4>Today:$<%= @sum_today  %></h4>
     </div>
   </div>
   <div class="row">
@@ -32,25 +33,57 @@
           <div  style="position:relative;">
             <label class="control-label" for="textarea">Category</label>  
             <select name="category[]"  >
-             <option value="All">All</option>"
+             <% if @category_selected == "All" %>
+                <option value="All" selected>All</option>"
+              <%else%>
+                <option value="All">All</option>"
+              <% end %>
               <% categories.each do |category|%>         
-               <option value="<%= category.id %>"><%= category.name %></option>
+               <% if @category_selected == category.id.to_s %>
+                  <option value="<%= category.id %>" selected><%= category.name %></option>
+                <%else%>
+                  <option value="<%= category.id %>"><%= category.name %></option>
+                <% end %>
               <% end %>
             </select>
             <br>
             <label class="control-label" for="textarea">Coach</label>  
             <select name="coach[]" >
-              <option value="All">All</option>"
+
+
+
+              <% if @coach_selected == "All" %>
+                <option value="All" selected>All</option>"
+              <%else%>
+                <option value="All">All</option>"
+              <% end %>
               <% coaches.each do |coach|%>         
-                <option value="<%= coach.id %>"><%= coach.name %></option>
+               <% if @coach_selected == coach.id.to_s %>
+                  <option value="<%= coach.id %>" selected><%= coach.name %></option>
+                <%else%>
+                  <option value="<%= coach.id %>"><%= coach.name %></option>
+                <% end %>
               <% end %>
             </select>
+
             <br>
             <label class="control-label" for="textarea">Transaction</label>  
             <select name="transaction[]" > 
-              <option value="All">All</option>" 
-              <option value="Credit Card">Credit Card</option>
-              <option value="Check">Check</option>
+              <% if @transaction_selected == "All" %>
+                <option value="All" selected>All</option>">
+              <% else %>
+                <option value="All">All</option>">
+              <%end %> 
+              <% if @transaction_selected == "Credit Card" %>
+                <option value="Credit Card" selected>Credit Card</option>">
+              <% else %>
+                <option value="Credit Card">Credit Card</option>">
+              <%end %>
+              <% if @transaction_selected == "Check" %>
+                <option value="Check" selected>Check</option>">
+              <% else %>
+                <option value="Check">Check</option>">
+              <%end %>
             </select>
             <br>
             <input type="submit" value="Submit" name="submit" class="btn btn-success"  >
@@ -89,9 +122,9 @@
               <td>Total Amount:</td>
               <td></td>
               <td>$<%= @payment_sum  %></td>
-              <td>$<%= @sum_this_year  %></td>
-              <td>$<%= @sum_this_month  %></td>
-              <td>$<%= @sum_this_week  %></td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>	
             <% end %>	
           </tbody>

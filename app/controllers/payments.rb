@@ -1,36 +1,5 @@
 
-get '/payments' do
-  @payments = Payment.all_paid_entries
-  @category_selected = 
-  erb :payments
-end
-
-post '/filter_payments' do
-
-  puts "/filter_payments params:  #{params}  coach #{params[:coach]} first #{params[:coach].first}"
-
-  if params[:coach].first == "All"
-    coach_hash = Coach.all.map { |coach| coach } 
-    @coach_filter = coach_hash
-  else
-    @coach_filter = params[:coach]
-  end
-
-  if params[:category].first == "All"
-    category_hash = Category.all.map { |category| category } 
-    @category_filter = category_hash
-  else
-    @category_filter = params[:category]
-  end
-
-  if params[:transaction].first == "All"
-    transaction_hash = [CREDIT_CARD, CHECK]
-    @transaction_filter = transaction_hash
-  else
-    @transaction_filter = params[:transaction]
-  end
-
-
+def payment_totals 
 
   puts "coach filter: #{@coach_filter}"
   #@category_filter = params[:category]
@@ -42,6 +11,65 @@ post '/filter_payments' do
   @sum_this_week = Payment.format_money(Payment.sum_this_week(@coach_filter, @category_filter, @transaction_filter))
   @sum_this_month = Payment.format_money(Payment.sum_this_month(@coach_filter, @category_filter, @transaction_filter))
   @sum_this_year = Payment.format_money(Payment.sum_this_year(@coach_filter, @category_filter, @transaction_filter))
+  @sum_today = Payment.format_money(Payment.sum_today(@coach_filter, @category_filter, @transaction_filter))
+end
+
+get '/payments' do
+  @payments = Payment.all_paid_entries
+
+  @coach_filter= map_all(Coach)
+  @category_filter = map_all(Category)
+  @transaction_filter = [CREDIT_CARD, CHECK]
+
+  @coach_selected = 'All'
+  @category_selected = 'All'
+  @transaction_selected = 'All'
+
+  @save_params = {"category"=>["All"], "coach"=>["All"], "transaction"=>["All"]} 
+  @category_selected = @save_params["category"]
+  @coach_selected = @save_params["coach"]
+  @transaction_selected = @save_params["transaction"]
+  payment_totals
+    
+  erb :payments
+end
+
+
+def map_all(obj)
+  obj.all.map { |c| c } 
+end
+
+post '/filter_payments' do
+
+  puts "/filter_payments params:  #{params}  coach #{params[:coach]} first #{params[:coach].first} "
+  @save_params = params
+  @category_selected = @save_params["category"].first
+  @coach_selected = @save_params["coach"].first
+  @transaction_selected = @save_params["transaction"].first
+  puts "trans selected #{@transaction_selected}  == #{@transaction_selected == "All"} "
+  puts "class: #{@category_selected.class} selected #{@category_selected}  #{@coach_selected}  #{@transaction_selected} "
+
+  if params[:coach].first == "All"
+    @coach_filter= map_all(Coach)
+    puts "@coach_filter: #{@coach_filter}"
+  else
+    @coach_filter = params[:coach]
+  end
+
+  if params[:category].first == "All"
+    @category_filter = map_all(Category)
+  else
+    @category_filter = params[:category]
+  end
+
+  if params[:transaction].first == "All"
+    @transaction_filter = [CREDIT_CARD, CHECK]
+  else
+    @transaction_filter = params[:transaction]
+  end
+
+  payment_totals
+
   erb :payments
   end
 

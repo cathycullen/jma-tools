@@ -201,11 +201,7 @@ def submit_new_client_payment(payment, description)
     end
   end
 
-def submit_recurring_payment(name, amount, description)
-    @error_message = nil
-end
-  
-  def submit_recurring_payment_prod(name, amount, description)
+  def submit_recurring_payment(name, amount, description)
 
     @error_message = nil
     name_arr = name.split(/\W+/)

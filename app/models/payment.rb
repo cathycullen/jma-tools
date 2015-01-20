@@ -77,8 +77,12 @@ class Payment < ActiveRecord::Base
   end
   
   def self.sum_this_year(coach, category, transaction_type)
-    x = Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type).by_year(Date.today.year).sum('amount').to_i
-    x.to_s.reverse.gsub(%r{([0-9]{3}(?=([0-9])))}, "\\1,").reverse
+    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type).by_year(Date.today.year).sum('amount').to_i
   end
+
+  def self.sum_today(coach, category, transaction_type)
+    Payment.where(:payment_date => Date.today,coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).sum(:amount).to_i
+  end
+
   
 end

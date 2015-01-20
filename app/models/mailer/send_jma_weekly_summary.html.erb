@@ -35,10 +35,11 @@
 					<th>Amount</th>
           <th>Coach Name</th>
           <th>Category</th>
+          <th>Status</th>
 				</tr>
 			</thead>
 			<tbody>
-				 <% if Payment.paid_entries_today != nil && Payment.paid_entries_today.size > 0 %>
+				<% if Payment.paid_entries_today != nil && Payment.paid_entries_today.size > 0 %>
         <% i = 1 %>
         <% total_amount=0 %>
         <% Payment.paid_entries_today.each do |entry| %>

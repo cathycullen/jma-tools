@@ -7,4 +7,5 @@ class Category < ActiveRecord::Base
   def self.all_entries
     Category.all
   end
+
 end
