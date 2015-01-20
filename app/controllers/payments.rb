@@ -163,22 +163,25 @@ post '/weekly_payment_entries' do
         amount = row[AMOUNT].gsub(/['$]/, "").gsub(/"/, '')
       end
       if row[NAME] then 
-        name = (row[NAME].gsub /"/, '').split(' ')
-        fullname = name[0] + ' ' + name[1]
+        name = (row[NAME].downcase.gsub /"/, '').split.each{|i| i.capitalize!}.join(' ').split(' ')
+        puts "name #{name}  class: #{name.class}"
+        fullname = name[0] + ' '+ name[1]
+        puts "fullname: #{fullname} "
       end
       if row[COACH]
-        coach_name = row[COACH].gsub /"/, ''
+        coach_name = (row[COACH].downcase.gsub /"/, '').split.each{|i| i.capitalize!}.join(' ')
         coach = Coach.find_by_name(coach_name)
       end
       if row[CATEGORY]
         category_name = (row[CATEGORY].gsub /"/, '')
-        category = Category.find_by_name(category)
+        category = Category.find_by_name(category_name)
       end
 
-      puts "name: #{fullname} amount: #{amount} coach #{coach_name} category #{category}"
+      puts "name: #{fullname} amount: #{amount} coach #{coach.name} category #{category.name}"
       @payment = Payment.new
       @payment.populate(fullname, amount, coach, category)
       @payment.name = fullname
+      @payment.transaction_type = CREDIT_CARD
       @payment.save
       puts "payment status #{@payment.status} count: #{Payment.count}"
     end

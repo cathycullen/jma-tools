@@ -23,8 +23,8 @@
           <td><%= entry[:name] %></td>
           <td>$<%= entry[:amount] %></td>
           <% total_amount=total_amount + entry[:amount].to_f %>
-          <td><%= Coach.find_by_id(entry[:coach]).name %></td>
-          <td><%= entry[:category] %></td>
+          <td><%= Coach.find_by_id(entry[:coach_id]).name %></td>
+          <td><%= Category.find_by_id(entry[:category_id]).name %></td>
         </tr>
         <% i = i + 1 %>			
         <% end %>	

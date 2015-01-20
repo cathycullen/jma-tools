@@ -41,6 +41,9 @@ class Payment < ActiveRecord::Base
   def self.paid_entries
     Payment.where(:status => PAID).order(:payment_date)
   end
+  def self.paid_entries_today
+    Payment.where(:payment_date => Date.today, :status => PAID).order(:payment_date)
+  end
   def self.total_payments_today
     Payment.where(:payment_date => Date.today, :status => PAID).sum(:amount)
   end
