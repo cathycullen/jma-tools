@@ -9,7 +9,7 @@ class Payment < ActiveRecord::Base
   validates_presence_of :transaction_type
 
   belongs_to :coach
-  has_and_belongs_to_many :categories
+  belongs_to :category
 
   scope :by_year, lambda { |year| where('extract(year from payment_date) = ?', year) }
   scope :by_month, lambda { |month| where('extract(month from payment_date) = ?', month) }
@@ -97,8 +97,6 @@ class Payment < ActiveRecord::Base
     categories.each do |entry|
       category_names.store Category.find_by_id(entry[0]).name, entry[1]
     end
-    category_names.sort_by(&:last).reverseend
-
-
-  
+    category_names.sort_by(&:last).reverse
+  end
 end
