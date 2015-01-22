@@ -1,18 +1,17 @@
 
+require 'chartkick'
+
 def payment_totals 
 
-  puts "coach filter: #{@coach_filter}"
-  #@category_filter = params[:category]
-  puts "category filter: #{@category_filter}"
-  #@transaction_filter = params[:transaction]
-  puts "transaction filter: #{@transaction_filter}"
   @payments = Payment.filter_entries(@coach_filter, @category_filter, @transaction_filter)
   @payment_sum = @payments.sum('amount')
   @sum_this_week = Payment.format_money(Payment.sum_this_week(@coach_filter, @category_filter, @transaction_filter))
   @sum_this_month = Payment.format_money(Payment.sum_this_month(@coach_filter, @category_filter, @transaction_filter))
   @sum_this_year = Payment.format_money(Payment.sum_this_year(@coach_filter, @category_filter, @transaction_filter))
   @sum_today = Payment.format_money(Payment.sum_today(@coach_filter, @category_filter, @transaction_filter))
+  @category_chart = Payment.category_group_names(@coach_filter, @category_filter, @transaction_filter)
 end
+
 
 get '/payments' do
   @payments = Payment.all_paid_entries
@@ -29,6 +28,7 @@ get '/payments' do
   @category_selected = @save_params["category"]
   @coach_selected = @save_params["coach"]
   @transaction_selected = @save_params["transaction"]
+
   payment_totals
     
   erb :payments
@@ -41,17 +41,13 @@ end
 
 post '/filter_payments' do
 
-  puts "/filter_payments params:  #{params}  coach #{params[:coach]} first #{params[:coach].first} "
   @save_params = params
   @category_selected = @save_params["category"].first
   @coach_selected = @save_params["coach"].first
   @transaction_selected = @save_params["transaction"].first
-  puts "trans selected #{@transaction_selected}  == #{@transaction_selected == "All"} "
-  puts "class: #{@category_selected.class} selected #{@category_selected}  #{@coach_selected}  #{@transaction_selected} "
 
   if params[:coach].first == "All"
     @coach_filter= map_all(Coach)
-    puts "@coach_filter: #{@coach_filter}"
   else
     @coach_filter = params[:coach]
   end

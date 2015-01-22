@@ -9,7 +9,7 @@ class Payment < ActiveRecord::Base
   validates_presence_of :transaction_type
 
   belongs_to :coach
-  belongs_to :category
+  has_and_belongs_to_many :categories
 
   scope :by_year, lambda { |year| where('extract(year from payment_date) = ?', year) }
   scope :by_month, lambda { |month| where('extract(month from payment_date) = ?', month) }
@@ -83,6 +83,22 @@ class Payment < ActiveRecord::Base
   def self.sum_today(coach, category, transaction_type)
     Payment.where(:payment_date => Date.today,coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).sum(:amount).to_i
   end
+  def self.cagetory_groups(coach, category, transaction_type)
+    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).group(:category_id).sum('amount')
+    #@category_chart {"Career Strategy"=>2900.0, "Life Coaching">=>10125.0, "Psychotherapy">=>1490.0,  "Trader Coaching">=>1350.0, "Career Coaching">=>38770.0, "Executive Coaching">=>1100.0, "Executive Coaching Individual">=>12025.0,  "Interview Coaching">=>1050.0, "ELI">=>9100.0}
+    Category.joins(:payments).group("categories.name").sum('amount')
+    #x = {"1" => 1000, "2" =>2000}
+
+  end
+
+  def self.category_group_names(coach, category, transaction_type)
+    categories = Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).group(:category_id).sum('amount')
+    category_names = Hash.new
+    categories.each do |entry|
+      category_names.store Category.find_by_id(entry[0]).name, entry[1]
+    end
+    category_names.sort_by(&:last).reverseend
+
 
   
 end

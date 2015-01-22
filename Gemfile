@@ -14,7 +14,7 @@ gem 'hashie', "2.0.5"
 gem 'json'
 # PostgreSQL driver
 gem 'pg'
-
+gem 'chartkick'
 gem 'actionmailer'
 
 gem 'activesupport', '~>4.1'

@@ -5,6 +5,7 @@ class Coach < ActiveRecord::Base
   validates_presence_of :email
   validates_presence_of :phone
   has_many :clients
+  has_many :payments
 end
 
 def find_by_name(name)

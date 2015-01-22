@@ -129,7 +129,11 @@
             <% end %>	
           </tbody>
         </table>	
-      	<br>
+      	 <br>
+    <h3>Income By Category</h3>
+    <%= pie_chart @category_chart %>
+  <br> 
+
 
         <form action="/done_weekly_payments" method="post">
           <input type="submit" value="Done" name="done" class="btn btn-success"  >
