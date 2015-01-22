@@ -247,7 +247,7 @@ post '/submit_deposit_check' do
   @payment_details.amount,
   @payment_details.coach,
   @payment_details.category)
-  payment.transaction_type = CREDIT_CARD
+  payment.transaction_type = CHECK
   payment[:status] = PAID
   payment.save
     
