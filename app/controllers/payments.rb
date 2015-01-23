@@ -66,12 +66,13 @@ post '/filter_payments' do
     @transaction_filter = params[:transaction]
   end
 
-  if !params[:start_date].nil?
+  if !params[:start_date].nil? && params[:start_date].length > 0
+    puts "start date #{params[:start_date]} nil? #{params[:start_date]}  length: #{params[:start_date].length}}"
     @start_date =  Date.strptime(params[:start_date], "%m/%d/%Y")
     @start_date_selected = params[:start_date]
   @end_date_selected = "End Date"
   end
-  if !params[:end_date].nil?
+  if !params[:end_date].nil? && params[:start_date].length > 0
     @end_date =  Date.strptime(params[:end_date], "%m/%d/%Y")
     @end_date_selected = params[:end_date]
   end
