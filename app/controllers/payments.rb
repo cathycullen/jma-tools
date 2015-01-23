@@ -3,7 +3,7 @@ require 'chartkick'
 
 def payment_totals 
 
-  @payments = Payment.filter_entries(@coach_filter, @category_filter, @transaction_filter)
+  @payments = Payment.filter_entries(@coach_filter, @category_filter, @transaction_filter, @start_date, @end_date)
   @payment_sum = @payments.sum('amount')
   @sum_this_week = Payment.format_money(Payment.sum_this_week(@coach_filter, @category_filter, @transaction_filter))
   @sum_this_month = Payment.format_money(Payment.sum_this_month(@coach_filter, @category_filter, @transaction_filter))
@@ -22,12 +22,13 @@ get '/payments' do
   @coach_selected = 'All'
   @category_selected = 'All'
   @transaction_selected = 'All'
+  @start_date_selected = ""
+  @end_date_selected = ""
 
   @save_params = {"category"=>["All"], "coach"=>["All"], "transaction"=>["All"]} 
   @category_selected = @save_params["category"]
   @coach_selected = @save_params["coach"]
   @transaction_selected = @save_params["transaction"]
-
   payment_totals
     
   erb :payments
@@ -44,6 +45,7 @@ post '/filter_payments' do
   @category_selected = @save_params["category"].first
   @coach_selected = @save_params["coach"].first
   @transaction_selected = @save_params["transaction"].first
+
 
   if params[:coach].first == "All"
     @coach_filter= map_all(Coach)
@@ -62,6 +64,19 @@ post '/filter_payments' do
   else
     @transaction_filter = params[:transaction]
   end
+
+  if !params[:start_date].nil?
+    @start_date =  Date.strptime(params[:start_date], "%m/%d/%Y")
+    @start_date_selected = params[:start_date]
+  @end_date_selected = "End Date"
+  end
+  if !params[:end_date].nil?
+    @end_date =  Date.strptime(params[:end_date], "%m/%d/%Y")
+    @end_date_selected = params[:end_date]
+  end
+  puts "****************** start_date #{@start_date}   end_date #{@end_date}"
+
+
 
   payment_totals
 

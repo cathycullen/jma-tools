@@ -25,7 +25,7 @@
   </div>
   <div class="row">
     <div class="col-md-3" id="leftCol">
-      <form class="form-inline  well" action="/filter_payments" method="post">
+      <form class="form-horizontal well" action="/filter_payments" method="post">
       <fieldset>
         <!-- Form Name -->
         <div class="control-group" style="display:block; line-height:2">
@@ -84,6 +84,11 @@
                 <option value="Check">Check</option>">
               <%end %>
             </select>
+            <br>
+            <label class="control-label" for="textarea">Start Date</label>
+            <input type="text" class="form-control" name="start_date"  title="Enter Appt Date" value="<%=@start_date_selected%>" placeholder="Start Date" id="dp1" > 
+            <label class="control-label" for="textarea">End Date</label>
+            <input type="text" class="form-control" name="end_date"  title="Enter Payment Due Date" value="<%=@end_date_selected%>" placeholder="End Date" id="dp2" > 
             <br>
             <input type="submit" value="Submit" name="submit" class="btn btn-success"  >
             <br>

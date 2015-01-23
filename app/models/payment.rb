@@ -59,8 +59,19 @@ class Payment < ActiveRecord::Base
   def self.delete_pending_entries
     Payment.where(:status => PENDING).delete_all
   end
-  def self.filter_entries(coach, category, transaction_type)
-    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type).order('payment_date desc')
+   def self.filter_entries(coach, category, transaction_type, start_date, end_date)
+    if start_date.nil?
+      Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type).order('payment_date desc')
+    else
+      self.filter_entries_by_date(coach, category, transaction_type, start_date, end_date)
+    end
+  end
+
+  def self.filter_entries_by_date(coach, category, transaction_type, start_date, end_date)
+    if end_date.nil?
+      end_date = Date.today
+    end
+    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, payment_date: start_date..end_date).order('payment_date desc')
   end
 
   def self.all_paid_entries
