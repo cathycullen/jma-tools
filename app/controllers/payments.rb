@@ -14,8 +14,7 @@ end
 
 
 get '/payments' do
-  @payments = Payment.all_paid_entries
-
+  #@payments = Payment.all_paid_entries
   @coach_filter= map_all(Coach)
   @category_filter = map_all(Category)
   @transaction_filter = [CREDIT_CARD, CHECK]
@@ -67,6 +66,10 @@ post '/filter_payments' do
   payment_totals
 
   erb :payments
+  end
+
+  get '/payments2' do
+    erb :payments2
   end
 
   get '/prompt_import_file' do

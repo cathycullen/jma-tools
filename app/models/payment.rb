@@ -39,7 +39,7 @@ class Payment < ActiveRecord::Base
     Payment.where(:payment_date => Date.today, :status => ERROR)
   end
   def self.paid_entries
-    Payment.where(:status => PAID).order(:payment_date)
+    Payment.where(:status => PAID).order('payment_date desc')
   end
   def self.paid_entries_today
     Payment.where(:payment_date => Date.today, :status => PAID).order(:payment_date)
@@ -60,11 +60,11 @@ class Payment < ActiveRecord::Base
     Payment.where(:status => PENDING).delete_all
   end
   def self.filter_entries(coach, category, transaction_type)
-    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type)
+    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type).order('payment_date desc')
   end
 
   def self.all_paid_entries
-    Payment.where(:status => PAID).order(:payment_date)
+    Payment.where(:status => PAID).order('payment_date desc')
   end
 
   def self.sum_this_week(coach, category, transaction_type)
