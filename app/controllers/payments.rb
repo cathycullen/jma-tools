@@ -4,6 +4,7 @@ require 'chartkick'
 def payment_totals 
 
   @payments = Payment.filter_entries(@coach_filter, @category_filter, @transaction_filter, @start_date, @end_date)
+  @client_groups = Payment.group_by_clients
   @payment_sum = @payments.sum('amount')
   @sum_this_week = Payment.format_money(Payment.sum_this_week(@coach_filter, @category_filter, @transaction_filter))
   @sum_this_month = Payment.format_money(Payment.sum_this_month(@coach_filter, @category_filter, @transaction_filter))

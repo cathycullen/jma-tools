@@ -110,4 +110,9 @@ class Payment < ActiveRecord::Base
     end
     category_names.sort_by(&:last).reverse
   end
+
+  def self.group_by_clients
+    clients = Payment.where(:status => PAID).group(:name).sum('amount')
+    clients.sort_by(&:last).reverse
+  end
 end

@@ -15,6 +15,10 @@
       <h4>Today:$<%= @sum_today  %></h4>
     </div>
   </div>
+ 
+ 
+
+
   <div class="row">
     <div class="col-md-3" id="leftCol">
       <h3>Filters</h3>
@@ -98,51 +102,93 @@
       </form>
     </div>
     <div class="col-md-9">
-        <table class="table table-condensed table-bordered table-striped table-hover table-responsive" style="display:block; height:500px;">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Payment Date</th>
-              <th>Name</th>
-              <th>Amount</th>
-              <th>Coach</th>
-              <th>Category</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% if @payments != nil && @payments.size > 0 %>
-              <% total_amount=0 %>
-              <% @payments.each do |entry| %>
-                <tr>
-                  <td><%= entry[:id]%></td>
-                  <td><%= entry[:payment_date].strftime("%m/%d/%Y") %></td>
-                  <td><%= entry[:name] %></td>
-                  <td>$<%= entry[:amount] %></td>
-                  <td><%= Coach.find_by_id(entry[:coach_id]).name %></td>
-                <td><%= Category.find_by_id(entry[:category_id]).name %></td>
-                </tr>	
-            <% end %>	
-            <tr>
-              <td>Total Amount:</td>
-              <td></td>
-              <td>$<%= @payment_sum  %></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>	
-            <% end %>	
-          </tbody>
-        </table>	
+      <table class="table table-condensed table-bordered table-striped table-hover table-responsive" style="display:block; height:500px;">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Payment Date</th>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Coach</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @payments != nil && @payments.size > 0 %>
+            <% total_amount=0 %>
+            <% @payments.each do |entry| %>
+              <tr>
+                <td><%= entry[:id]%></td>
+                <td><%= entry[:payment_date].strftime("%m/%d/%Y") %></td>
+                <td><%= entry[:name] %></td>
+                <td>$<%= entry[:amount] %></td>
+                <td><%= Coach.find_by_id(entry[:coach_id]).name %></td>
+              <td><%= Category.find_by_id(entry[:category_id]).name %></td>
+              </tr>	
+          <% end %>	
+          <tr>
+            <td>Total Amount:</td>
+            <td></td>
+            <td></td>
+            <td>$<%= @payment_sum  %></td>
+            <td></td>
+            <td></td>
+          </tr>	
+          <% end %>	
+        </tbody>
+      </table>	
       	 <br>
-    <h3>Income By Category</h3>
-    <%= pie_chart @category_chart %>
-  <br> 
-
-
+      </div>
+    </div>
+  <hr>
+    <div class="row">
+      <div class="col-md-3" id="leftCol">
+        <h3>Client Summary</h3>
+      </div>
+      <div class="col-md-9">
+        <h3>Income By Category</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+      <table class="table table-condensed table-bordered table-striped table-hover table-responsive" style="display:block; height:300px;">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @client_groups != nil && @client_groups.size > 0 %>
+            <% total_amount=0 %>
+            <% @client_groups.each do |entry| %>
+              <tr>
+                <td><%= entry[0] %></td>
+                <td>$<%= entry[1] %></td>
+              </tr> 
+          <% end %> 
+          <tr>
+            <td></td>
+            <td></td>
+          </tr> 
+          <% end %> 
+        </tbody>
+      </table>  
+    </div>
+      <div class="col-md-9">
+        <%= pie_chart @category_chart %>
+      </div>
+    </div>
+    </div>
+    <br> 
         <form action="/done_weekly_payments" method="post">
           <input type="submit" value="Done" name="done" class="btn btn-success"  >
         </form>
         <br> 
       </div>
     </div>
+    <br>
+
+
+
 </div>
