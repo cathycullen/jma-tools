@@ -1,5 +1,17 @@
 <div class="wrapper">
   <div >
+
+
+    <% if !@payment_errors.empty? %>
+      <legend style="color: red;  font-weight: bold; font-size: 14px;"
+        <p>The Following Errors Were Encountered: </p>
+        <% @payment_errors.each do |e| %>
+          <p><%=e%></p>
+        <% end %>
+      </legend>
+    <% end %>
+
+
   <h2>The Following Payments Will be Made:</h2>
   <h2><%= @date %></h2>
   <form action="/process_weekly_payments" method="post">

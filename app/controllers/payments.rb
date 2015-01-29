@@ -180,11 +180,12 @@ post '/filter_payments' do
 post '/weekly_payment_entries' do
   NAME ||= 2
   AMOUNT ||= 1
-  COACH ||=5
+  COACH ||=4
   CATEGORY ||=3
 
   @pending_entries = []
   @invalid_entries = []
+  @payment_errors = []
   puts "/weekly_payment_entries was called"
 
   #cleanup any previous payment attempts
@@ -199,7 +200,7 @@ post '/weekly_payment_entries' do
 
   csv_text = params['myfile'][:tempfile].read
   csv = CSV.parse(csv_text, :headers=>true)
-  
+   
   begin
     csv.each  do |row|
       amount = 0
@@ -215,19 +216,28 @@ post '/weekly_payment_entries' do
       if row[COACH]
         coach_name = (row[COACH].downcase.gsub /"/, '').split.each{|i| i.capitalize!}.join(' ')
         coach = Coach.find_by_name(coach_name)
+        if coach.nil?
+          puts "Please Enter a Valid Coach for #{fullname}"
+          @payment_errors << "Please Enter a Valid Coach for #{fullname}"
+        end
       end
       if row[CATEGORY]
         category_name = (row[CATEGORY].gsub /"/, '')
         category = Category.find_by_name(category_name)
+        if category.nil?
+          puts "Please Enter a Valid Coach for #{fullname}"
+          @payment_errors << "Please Enter a Valid category for #{fullname}"
+        end
       end
-
-      puts "name: #{fullname} amount: #{amount} coach #{coach.name} category #{category.name}"
-      @payment = Payment.new
-      @payment.populate(fullname, amount, coach, category)
-      @payment.name = fullname
-      @payment.transaction_type = CREDIT_CARD
-      @payment.save
-      puts "payment status #{@payment.status} count: #{Payment.count}"
+      if (!coach.nil? && !category.nil?)
+        puts "name: #{fullname} amount: #{amount} coach #{coach.name} category #{category.name}"
+        @payment = Payment.new
+        @payment.populate(fullname, amount, coach, category)
+        @payment.name = fullname
+        @payment.transaction_type = CREDIT_CARD
+        @payment.save
+        puts "payment status #{@payment.status} count: #{Payment.count}"
+      end
     end
 
     puts "Done collecting payment entries. #{Payment.pending_entries.count}"

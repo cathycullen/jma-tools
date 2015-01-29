@@ -79,16 +79,16 @@ class Payment < ActiveRecord::Base
   end
 
   def self.sum_this_week(coach, category, transaction_type)
-    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, payment_date: Date.today.monday..Date.today).sum('amount').to_i
+    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, payment_date: Date.today.monday..Date.today, :status => PAID).sum('amount').to_i
   end
 
   def self.sum_this_month(coach, category, transaction_type)
-    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type).by_month(Date.today.month).sum('amount').to_i
+    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).by_month(Date.today.month).sum('amount').to_i
 
   end
   
   def self.sum_this_year(coach, category, transaction_type)
-    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type).by_year(Date.today.year).sum('amount').to_i
+    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).by_year(Date.today.year).sum('amount').to_i
   end
 
   def self.sum_today(coach, category, transaction_type)
