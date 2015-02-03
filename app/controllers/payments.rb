@@ -108,6 +108,7 @@ post '/filter_payments' do
   
   begin
     csv.each  do |row|
+
       if row[DATE]
         excel_date = (row[DATE].gsub /"/, '')
         transaction_date = Date.strptime(excel_date, "%m/%d/%y %H:%M")
@@ -204,7 +205,10 @@ post '/weekly_payment_entries' do
   begin
     csv.each  do |row|
       amount = 0
-      if row[AMOUNT] != nil then
+ puts "********   amount:  #{row[AMOUNT]}"
+ puts "********   coach:  #{row[COACH]},"
+ puts "********   Category:  #{row[CATEGORY]}"
+           if row[AMOUNT] != nil then
         amount = row[AMOUNT].gsub(/['$]/, "").gsub(/"/, '')
       end
       if row[NAME] then 

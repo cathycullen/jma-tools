@@ -16,6 +16,7 @@ gem 'json'
 gem 'pg'
 gem 'chartkick'
 gem 'actionmailer'
+gem 'groupdate'
 
 gem 'activesupport', '~>4.1'
 gem 'activerecord', '~>4.1'

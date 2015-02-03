@@ -84,7 +84,6 @@ class Payment < ActiveRecord::Base
 
   def self.sum_this_month(coach, category, transaction_type)
     Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).by_month(Date.today.month).sum('amount').to_i
-
   end
   
   def self.sum_this_year(coach, category, transaction_type)
@@ -96,10 +95,7 @@ class Payment < ActiveRecord::Base
   end
   def self.cagetory_groups(coach, category, transaction_type)
     Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).group(:category_id).sum('amount')
-    #@category_chart {"Career Strategy"=>2900.0, "Life Coaching">=>10125.0, "Psychotherapy">=>1490.0,  "Trader Coaching">=>1350.0, "Career Coaching">=>38770.0, "Executive Coaching">=>1100.0, "Executive Coaching Individual">=>12025.0,  "Interview Coaching">=>1050.0, "ELI">=>9100.0}
     Category.joins(:payments).group("categories.name").sum('amount')
-    #x = {"1" => 1000, "2" =>2000}
-
   end
 
   def self.category_group_names(coach, category, transaction_type)
@@ -115,4 +111,16 @@ class Payment < ActiveRecord::Base
     clients = Payment.where(:status => PAID).group(:name).sum('amount')
     clients.sort_by(&:last).reverse
   end
+
+  def self.group_by_months
+    months = Payment.where(:status => PAID).group(:name).sum('amount')
+    clients.sort_by(&:last).reverse
+  end
+
+  def self.last_12_months
+    range = (Time.now.beginning_of_month - 11.months)..Time.now.end_of_month
+    group_by_month(:payment_date, Time.zone, range).sum(:payment_amount)  
+  end
+
+  
 end

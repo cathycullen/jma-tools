@@ -340,7 +340,7 @@ get '/jma_payment_form' do
     @payment_details.coach = Coach.find_by_id(params[:coach_id])
     puts "@payment_details.coach #{@payment_details.coach}"
   end
-  erb :payment_form
+  erb :payment_form, :layout => :min_layout
 end
 
 post '/jma_submit_payment' do
