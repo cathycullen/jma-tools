@@ -53,8 +53,53 @@ get '/' do
 end
 
 
-get '/send_client_welcome_email' do
-    erb :send_client_welcome_email
+get '/client_welcome_email_template' do
+    erb :client_welcome_email_template
+end
+
+post '/preview_welcome_email' do
+  # moved from send_welcome_email  try to not repeat.
+  puts "/preview_welcome_email'******** params #{params} "
+  @name =params[:name]
+  @email=params[:email]
+  if params[:amount].size > 0
+    @amount=params[:amount].to_f
+  else 
+    @amount = 0
+  end
+  if params[:category].size > 0
+    @category=Category.find_by_name(params[:category])
+    if !@category.nil?
+      @category_name = @category.name
+    end
+  end
+  if params[:coach_name].size > 0
+    @coach = Coach.find_by_name(params[:coach_name])
+    if !@coach.nil?
+      @coach_name = @coach.name
+      @coach_email = @coach.email
+      @coach_phone = @coach.phone
+    end
+  end
+  
+  #@appt_date = params[:appt_date]
+  #@payment_date = params[:payment_date]
+
+  @appt_start = params[:appt_start][0..-4]
+  @appt_end = params[:appt_end]
+  @location = params[:location]
+
+  @appt_date = ''
+  @payment_date = ''
+
+  if params[:appt_date].size
+    @appt_date = params[:appt_date]
+  end
+  if params[:payment_date].size
+    @payment_date = params[:payment_date]
+  end
+
+  erb :preview_welcome_email
 end
 
 get '/send_interview_email' do
@@ -84,8 +129,6 @@ post '/send_payment_email' do
   if params[:coach_name].size > 0
     @payment_details.coach = Coach.find_by_name(params[:coach_name])
     end
-  
-
   
   email = Mailer.send_jma_email_payment_link(
   @payment_details.name,
@@ -126,11 +169,11 @@ post '/show_send_welcome_email_format' do
   @payment_details_date = params[:payment_date]
   @payment_details_date_s = format_date(@payment_details_date)
   
-  puts "call test_send_welcome_email @amount #{@amount}"
   erb :test_send_welcome_email
 end
 
 post '/send_welcome_email' do
+
   # send payment form.   read parameters, generate html, and send email.
   puts "post /send_welcome_email params #{params}"
   @payment_details = PaymentDetails.new
@@ -141,11 +184,11 @@ post '/send_welcome_email' do
   else 
     @payment_details.amount = 0
   end
-  if params[:category].size > 0
-    @payment_details.category=Category.find_by_name(params[:category])
+  if params[:category_id].size > 0
+    @payment_details.category=Category.find(params[:category_id])
   end
-  if params[:coach_name].size > 0
-    @payment_details.coach = Coach.find_by_name(params[:coach_name])
+  if params[:coach_id].size > 0
+    @payment_details.coach = Coach.find(params[:coach_id])
     end
   
   @appt_date = params[:appt_date]
@@ -154,7 +197,7 @@ post '/send_welcome_email' do
   @appt_start = params[:appt_start][0..-4]
   @appt_end = params[:appt_end]
   @location = params[:location]
-    
+  
   email = Mailer.send_welcome_email(
   @payment_details.name,
   @payment_details.email,

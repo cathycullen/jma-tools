@@ -68,7 +68,7 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
       
     def format_date(a_date)
     @end_str = {'1' => 'st', '2' => 'nd', '3' => 'rd', '4' =>'th', '5' =>'th', '6' => "th", '7' => "th", '8' => "th", '9' => "th", '0' => "th" }
-    puts "datepicker #{a_date}"
+    
       retval = ""
       if(a_date != nil)
         #date_arr = a_date.split(/\\|-/)
@@ -119,7 +119,7 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
           :password       => ENV['JMA_PASS'],
           :enable_starttls_auto => true,
         }
-        puts "send_welcome_email coach #{coach_name} amount #{amount} date #{@appt_date} payment date #{@payment_date} start #{@appt_start} end #{@appt_end}"
+        puts "send_welcome_email email #{@email} coach #{coach_name} amount #{amount} date #{@appt_date_s} payment date #{@payment_date_s} start #{@appt_start} end #{@appt_end}"
         mail( 
           :to      =>  @email,
           :from    => ENV['JMA_FROM_ADDRESS'],

@@ -76,9 +76,7 @@ post '/filter_payments' do
     @end_date =  Date.strptime(params[:end_date], "%m/%d/%Y")
     @end_date_selected = params[:end_date]
   end
-  puts "****************** start_date #{@start_date}   end_date #{@end_date}"
-
-
+  
 
   payment_totals
 

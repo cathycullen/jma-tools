@@ -51,7 +51,7 @@
             <div class="col-lg-10">
               <div class="well">
                  <% if @appt_date_s.size > 0 %>
-                  <p><b>Date/Time:</b> <%= @appt_date_s %>, at <%= @appt_start %> - <%= @appt_end %> CST</p>
+                  <p><b>Date/Time:</b> <%= @appt_date_s %> at <%= @appt_start %> - <%= @appt_end %> CST</p>
                 <% end %>
                 <p><b>Location: </b><%= @location %> office (See more details below)</p>
                 <p><b>Coach: </b><%= @coach_name%>; (p) <%= @coach_phone%>, (e) <a href="mailto:<%= @coach_email%>" style="color: #8bc129;"><%= @coach_email%></a></p>

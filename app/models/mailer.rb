@@ -77,7 +77,8 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
         if date_arr[0] != nil && date_arr[1] != nil && date_arr[2] != nil then
           rev_date = Date.parse("#{date_arr[1]}/#{date_arr[0]}/#{date_arr[2]}")
            puts "in formate_date  a_date #{a_date} rev_date #{rev_date}"
-          retval = rev_date.strftime('%A, %B') + " " +rev_date.strftime('%d').to_i.to_s+ @end_str[rev_date.strftime('%d').to_i.to_s[-1,1]]
+          #retval = rev_date.strftime('%A, %B') + " " +rev_date.strftime('%d').to_i.to_s+ @end_str[rev_date.strftime('%d').to_i.to_s[-1,1]]
+          retval = rev_date.strftime('%A, %B') + " " +rev_date.strftime('%d').to_i.to_s
         else
           puts "invalid date #{a_date}  date_arr #{date_arr}"
         end
@@ -97,13 +98,15 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
       @location = location
       @appt_date_s = ''
       @payment_date_s = ''
-      
+
       begin
         if appt_date != nil 
-          @appt_date_s = format_date(appt_date)
+          #@appt_date_s = format_date(appt_date)
+          @appt_date_s = appt_date
         end
         if payment_date != nil
-          @payment_date_s = format_date(payment_date)
+          #@payment_date_s = format_date(payment_date)
+          @payment_date_s = payment_date
         end
         @appt_start = appt_start
         @appt_end = appt_end
@@ -111,8 +114,6 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
         @date = Time.local(time.year, time.month, time.day) 
         @date = Time.now.strftime("%b %d, %Y")
         
-        puts "start time #{@appt_start} end time #{@appt_end}"
-      
         ActionMailer::Base.smtp_settings = {
           :address   => ENV['JMA_ADDRESS'],
           :port      => ENV['JMA_PORT'],
