@@ -139,6 +139,61 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
       end
     end
     
+    def send_email(name, email, amount, category, appt_date, payment_date, appt_start, appt_end, coach, location,
+      text1, text2, text3, text4, text5, interview_text1, interview_text2, interview_text3, template)
+      @name = name
+      @email = email
+      @amount = amount
+      @category = category
+      @coach = coach
+      @coach_name = coach.name
+      @coach_email = coach.email
+      @coach_phone = coach.phone
+      @location = location
+      @appt_date = appt_date
+      @payment_date = payment_date
+      @appt_start = appt_start
+      @appt_end = appt_end
+      @text1 = text1
+      @text2 = text2
+      @text3 = text3
+      @text4 = text4
+      @text5 = text5
+      @interview_text1 = interview_text1
+      @interview_text2 = interview_text2
+      @interview_text3 = interview_text3
+      @template = template
+
+      begin
+        time = Time.new
+        @date = Time.local(time.year, time.month, time.day) 
+        @date = Time.now.strftime("%b %d, %Y")
+        
+        ActionMailer::Base.smtp_settings = {
+          :address   => ENV['JMA_ADDRESS'],
+          :port      => ENV['JMA_PORT'],
+          :domain    => ENV['JMA_DOMAIN'],
+          :authentication => :"login",
+          :user_name      => ENV['JMA_USER'],
+          :password       => ENV['JMA_PASS'],
+          :enable_starttls_auto => true,
+        }
+        puts "send_welcome_email coach #{coach.name} amount #{amount} date #{@appt_date} payment date #{@payment_date} start #{@appt_start} end #{@appt_end}"
+        mail( 
+          :to      =>  @email,
+          :from    => ENV['JMA_FROM_ADDRESS'],
+          :subject => "Welcome To Jody Michael Associates",
+        ) do |format|
+          format.html
+          format.text
+        end
+      rescue Exception => e
+        puts "rescue caught in send_welcome_email #{e.message}"
+        @error_message = e.message
+        puts e.backtrace 
+      end
+    end
+
     def send_interview_email(name, email, amount, appt_date, payment_date, appt_start, appt_end, coach, category, location)
       @name = name
       @email = email
