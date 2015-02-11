@@ -3,7 +3,7 @@
       <br>
       <form class="form-horizontal well" action="<%= @preview_callback_method %>" method="post" >
         <fieldset>
-          <legend>Client Email Template</legend>
+          <legend><%= @template.humanize.titleize%> Template</legend>
           <div class="control-group" >
             <div class="col-md-12">
 
@@ -148,6 +148,7 @@
                   <input type="hidden" name="interview_text3" value="<%= @interview_text3 %>">
                 <% end %>
                 <input type="hidden" name="template" value="<%= @template %>">
+                <input type="hidden" name="payment_text" value="<%= @payment_text %>">
               <hr>
 
               <input type="hidden" name="send_callback_method" value="<%= @send_callback_method%>">

@@ -7,6 +7,7 @@ require 'yaml'
 require './cc_date_helper'
 #require './initialize'
 include CCDateHelper
+require 'chronic'
 
 configure do
 end
@@ -30,6 +31,11 @@ helpers do
   end
 end
 
+def new_format_date(a_date)
+  rev_date = Chronic.parse(a_date)
+  retval = rev_date.strftime('%A, %B') + " " +rev_date.strftime('%d').to_i.to_s
+end
+
 def get_params(params)
   puts "get_params params:  #{params}, how many  #{params.count}"
 
@@ -42,7 +48,9 @@ def get_params(params)
   @name = params[:name]
   @email = params[:email]
   @appt_date = params[:appt_date]
+  @appt_date_formatted = new_format_date(@appt_date)
   @payment_date = params[:payment_date]
+  @payment_date_formatted = new_format_date(@appt_date)
   @appt_start = params[:appt_start]
   @appt_end = params[:appt_end]
   @category_name = params[:category]
@@ -55,7 +63,9 @@ def get_params(params)
   @interview_text2 = params[:interview_text2]
   @interview_text3 = params[:interview_text3]
   @template = params[:template]
-  puts "@template #{@template}"
+  @payment_text = params[:payment_text]
+  puts "@payment_date_formatted:  #{@payment_date_formatted}"
+  puts "@payment_date:  #{@payment_date}"
 
   if params[:amount].size > 0
     @amount=params[:amount].to_f
@@ -90,7 +100,9 @@ def show_param_results
   puts "#{@name}"
   puts "#{@email}"
   puts "#{@appt_date}"
+  puts "#{@appt_date_formatted}"
   puts "#{@payment_date}"
+  puts "#{@payment_date_formatted}"
   puts "#{@amount}"
   puts "#{@appt_start}"
   puts "#{@appt_end}"
@@ -121,6 +133,7 @@ This is also the location of JMA's career exploration center. You will receive m
 
 Free street parking is available most times. If you need a temporary permit, please let us know when you arrive."
   @closing_text = "We look forward to working with you."
+  @payment_text = " enter your credit card information "
 end
 
 def populate_interview_template
@@ -132,9 +145,6 @@ We can't guarantee that the questions you will be asked in your mock interview w
   @interview_text3 = "Your coach will not break character as interviewer, nor should you as interview candidate until the interview portion of the session is complete. Treat this like the real thing!
 
 Feedback from your coach will be constructive, but direct in nature. If you feel you are thin-skinned or sensitive to negative feedback you should:"
-end
-
-def populate_welcome_template
 end
 
 
@@ -149,6 +159,7 @@ get '/fixed_fee_email_template' do
   #populate default text for email template and show template
   populate_template
   @template = "fixed_fee"
+  @payment_text = " submit your payment "
   erb :email_template
 end
 
@@ -162,7 +173,7 @@ get '/interview_email_template' do
 end
 
 post '/preview' do
-  puts "@template:  #{@template}"
+  puts "@payment_date_formatted:  #{@payment_date_formatted}"
   # read user parameters, display preview of email
  
   @errors = []
@@ -180,8 +191,8 @@ post '/send' do
     @email,
     @amount,
     @category,
-    @appt_date,
-    @payment_date,
+    @appt_date_formatted,
+    @payment_date_formatted,
     @appt_start,
     @appt_end,
     @coach,
@@ -194,7 +205,8 @@ post '/send' do
     @interview_text1,
     @interview_text2,
     @interview_text3,
-    @template
+    @template,
+    @payment_text
   )
   email.deliver
   #redirect to some thank you page

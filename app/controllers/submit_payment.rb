@@ -9,7 +9,7 @@ require './cc_date_helper'
 #require './initialize'
 include CCDateHelper
 require './payment_details'
-require './coach_old'
+#require './coach_old'
 
   
 # automatically create the payment table
@@ -52,60 +52,6 @@ get '/' do
     end
 end
 
-
-get '/client_welcome_email_template' do
-    erb :client_welcome_email_template
-end
-
-post '/preview_welcome_email' do
-  # moved from send_welcome_email  try to not repeat.
-  puts "/preview_welcome_email'******** params #{params} "
-  @name =params[:name]
-  @email=params[:email]
-  if params[:amount].size > 0
-    @amount=params[:amount].to_f
-  else 
-    @amount = 0
-  end
-  if params[:category].size > 0
-    @category=Category.find_by_name(params[:category])
-    if !@category.nil?
-      @category_name = @category.name
-    end
-  end
-  if params[:coach_name].size > 0
-    @coach = Coach.find_by_name(params[:coach_name])
-    if !@coach.nil?
-      @coach_name = @coach.name
-      @coach_email = @coach.email
-      @coach_phone = @coach.phone
-    end
-  end
-  
-  #@appt_date = params[:appt_date]
-  #@payment_date = params[:payment_date]
-
-  @appt_start = params[:appt_start][0..-4]
-  @appt_end = params[:appt_end]
-  @location = params[:location]
-
-  @appt_date = ''
-  @payment_date = ''
-
-  if params[:appt_date].size
-    @appt_date = params[:appt_date]
-  end
-  if params[:payment_date].size
-    @payment_date = params[:payment_date]
-  end
-
-  erb :preview_welcome_email
-end
-
-get '/send_interview_email' do
-    erb :send_interview_email
-end
-
 get '/send_payment_email' do
     erb :send_jma_payment_form
 end
@@ -142,120 +88,17 @@ post '/send_payment_email' do
   erb :payment_email_sent
 end
 
- def format_date(a_date)
+  def format_date(a_date)
     @end_str = {'1' => 'st', '2' => 'nd', '3' => 'rd', '4' =>'th', '5' =>'th', '6' => "th", '7' => "th", '8' => "th", '9' => "th", '0' => "th" }
-  
-      retval = ""
-      if(a_date != nil)
-        date_arr = a_date.split(/\\|-/)
-        rev_date = Date.parse("#{date_arr[1]}/#{date_arr[0]}/#{date_arr[2]}")
-        retval = rev_date.strftime('%A, %B') + " " +rev_date.strftime('%d').to_i.to_s+ @end_str[rev_date.strftime('%d').to_i.to_s]
-      end
-      retval
+
+    retval = ""
+    if(a_date != nil)
+      date_arr = a_date.split(/\\|-/)
+      rev_date = Date.parse("#{date_arr[1]}/#{date_arr[0]}/#{date_arr[2]}")
+      retval = rev_date.strftime('%A, %B') + " " +rev_date.strftime('%d').to_i.to_s+ @end_str[rev_date.strftime('%d').to_i.to_s]
     end
-    
-post '/show_send_welcome_email_format' do
- # send payment form.   read parameters, generate html, and send email.
-  puts "post /test_format params #{params}"
-  @name=params[:name]
-  @email=params[:email]
-  if params[:amount].size > 0
-    @amount=params[:amount].to_f
-  else 
-    @amount = 0
+    retval
   end
-  @appt_date = params[:appt_date]
-  @appt_date_s = format_date(@appt_date)
-  @payment_details_date = params[:payment_date]
-  @payment_details_date_s = format_date(@payment_details_date)
-  
-  erb :test_send_welcome_email
-end
-
-post '/send_welcome_email' do
-
-  # send payment form.   read parameters, generate html, and send email.
-  puts "post /send_welcome_email params #{params}"
-  @payment_details = PaymentDetails.new
-  @payment_details.name=params[:name]
-  @payment_details.email=params[:email]
-  if params[:amount].size > 0
-    @payment_details.amount=params[:amount]
-  else 
-    @payment_details.amount = 0
-  end
-  if params[:category_id].size > 0
-    @payment_details.category=Category.find(params[:category_id])
-  end
-  if params[:coach_id].size > 0
-    @payment_details.coach = Coach.find(params[:coach_id])
-    end
-  
-  @appt_date = params[:appt_date]
-  @payment_details_date = params[:payment_date]
-
-  @appt_start = params[:appt_start][0..-4]
-  @appt_end = params[:appt_end]
-  @location = params[:location]
-  
-  email = Mailer.send_welcome_email(
-  @payment_details.name,
-  @payment_details.email,
-  @payment_details.amount,
-  @payment_details.category,
-  @appt_date,
-  @payment_details_date,
-  @appt_start,
-  @appt_end,
-  @payment_details.coach,
-  @location
-  )
-  email.deliver
-  #redirect to some thank you page
-  erb :welcome_email_sent
-end
-
-post '/send_interview_email' do
-  # send payment form.   read parameters, generate html, and send email.
-  puts "post /send_interview_email params #{params}"
-  @payment_details = PaymentDetails.new
-  @payment_details.name=params[:name]
-  @payment_details.email=params[:email]
-  if params[:amount].size > 0
-    @payment_details.amount=params[:amount]
-  else 
-    @payment_details.amount = 0
-  end
-  if !params[:category_name].nil?
-    @payment_details.category=Category.find_by_name(params[:category_name])
-  end
-  
-  @appt_date = params[:appt_date]
-  @payment_details_date = params[:payment_date]
-  @appt_start = params[:appt_start][0..-4]
-  @appt_end = params[:appt_end]
-  @location = params[:location]
-  @location = params[:location]
-  
-  @payment_details.coach = Coach.find_by_name(params[:coach_name])
-  puts "coach name #{@payment_details.coach.name} start time #{@appt_start} end time #{@appt_end}"
-    
-  email = Mailer.send_interview_email(
-  @payment_details.name,
-  @payment_details.email,
-  @payment_details.amount,
-  @appt_date,
-  @payment_details_date,
-  @appt_start,
-  @appt_end,
-  @payment_details.coach,
-  @payment_details.category,
-  @location
-  )
-  email.deliver
-  #redirect to some thank you page
-  erb :welcome_email_sent
-end
 
 get '/deposit_check_form' do
   erb :deposit_check_form
@@ -296,7 +139,6 @@ post '/submit_deposit_check' do
     
   erb :deposit_check_completed
 end
-
 
 get '/arrow_payment_form' do
   erb :arrow_payment_form

@@ -1,11 +1,12 @@
 # A sample Gemfile
 source "https://rubygems.org"
-ruby "2.1.2"
+ruby "2.1.1"
 
 
 # Sinatra driver
 gem 'sinatra'
 gem 'sinatra-contrib'
+gem 'chronic'
 
 gem "dotenv"
 gem 'faraday', "0.8.9"

@@ -36,21 +36,21 @@
       <p>Dear <%=@name%>,</p>
       <p><%= @text1%></p>
      <% if @amount > 0 %>
-        <% if @payment_date.size > 0 %>
-          <p><b>To hold your appointment* </b>please enter your credit card information on our <a href="https://jma-tools.herokuapp.com/jma_payment_form?amount=<%= @amount %>&category_id=<%= @category.id %>&coach_id=<%= @coach.id%>" style="color: #8bc129;">Secure Payment Page</a>&nbsp<b>within 24 hours of receipt of this email.&nbsp</b>
+        <% if @payment_date_formatted.size > 0 %>
+          <p><b>To hold your appointment* </b>please<%= @payment_text %>on our <a href="https://jma-tools.herokuapp.com/jma_payment_form?amount=<%= @amount %>&category_id=<%= @category.id %>&coach_id=<%= @coach.id%>" style="color: #8bc129;">Secure Payment Page</a>&nbsp<b>within 24 hours of receipt of this email.&nbsp</b>
             <% if @template == "interview" or @template == "pay_per_session"%>  
             Please note we will keep this card on file and payments for your session(s) will be processed on Mondays for the sessions you have scheduled for that week.
             <% end %>
           </p>
         <% else %>
-          <p><b>To hold your appointment* </b>please enter your credit card information on our <a href="https://jma-tools.herokuapp.com/jma_payment_form?amount=<%= @amount %>&category_id=<%= @category.id %>&coach_id=<%= @coach.id %>" style="color: #8bc129;">Secure Payment Page</a>&nbsp<b>within 24 hours of receipt of this email.&nbsp</b>
+          <p><b>To hold your appointment* </b>please<%= @payment_text %>on our <a href="https://jma-tools.herokuapp.com/jma_payment_form?amount=<%= @amount %>&category_id=<%= @category.id %>&coach_id=<%= @coach.id %>" style="color: #8bc129;">Secure Payment Page</a>&nbsp<b>within 24 hours of receipt of this email.&nbsp</b>
           <% if @template == "interview" or @template == "pay_per_session"%>  
             Please note we will keep this card on file and payments for your session(s) will be processed on Mondays for the sessions you have scheduled for that week.
             <% end %>
           </p>
         <% end %>
       <% else %>
-        <p><b>To hold your appointment* </b>please enter your credit card information on our <a href=" https://jma-tools.herokuapp.com/jma_payment_form" style="color: #8bc129;">Secure Payment Page</a>&nbsp<b>within 24 hours of receipt of this email.&nbsp</b>
+        <p><b>To hold your appointment* </b>please<%= @payment_text %>on our <a href=" https://jma-tools.herokuapp.com/jma_payment_form" style="color: #8bc129;">Secure Payment Page</a>&nbsp<b>within 24 hours of receipt of this email.&nbsp</b>
         <% if @template == "interview" or @template == "pay_per_session"%>   
             Please note we will keep this card on file and payments for your session(s) will be processed on Mondays for the sessions you have scheduled for that week.
             <% end %>
@@ -61,8 +61,8 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="well">
-             <% if @appt_date.size > 0 %>
-              <p><b>Date/Time:</b> <%= @appt_date %>, at <%= @appt_start %> - <%= @appt_end %> CST</p>
+             <% if @appt_date_formatted.size > 0 %>
+              <p><b>Date/Time:</b> <%= @appt_date_formatted %>, at <%= @appt_start %> - <%= @appt_end %> CST</p>
             <% end %>
             <p><b>Location: </b><%= @location %> office (See more details below)</p>
             <p><b>Coach: </b><%= @coach.name%>; (p) <%= @coach.phone%>, (e) <a href="mailto:<%= @coach_email%>" style="color: #8bc129;"><%= @coach.email%></a></p>
