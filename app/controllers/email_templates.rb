@@ -32,25 +32,38 @@ helpers do
 end
 
 def new_format_date(a_date)
-  rev_date = Chronic.parse(a_date)
-  retval = rev_date.strftime('%A, %B') + " " +rev_date.strftime('%d').to_i.to_s
+  unless  a_date.size == 0 
+    rev_date = Chronic.parse(a_date)
+    puts "new_format_date a_date #{a_date}  rev_date #{rev_date}"
+    rev_date.strftime('%A, %B') + " " +rev_date.strftime('%d').to_i.to_s
+  else
+    ''
+  end
 end
 
 def get_params(params)
   puts "get_params params:  #{params}, how many  #{params.count}"
 
+  @errors = []
   @text1 = params[:text1]
   @text2 = params[:text2]
   @text3 = params[:text3]
   @text4 = params[:text4]
   @text5 = params[:text5]
+  @greeting = params[:greeting]
+  @greeting1 = params[:greeting1]
+  @greeting2 = params[:greeting2]
   @closing_text = params[:closing_text]
   @name = params[:name]
   @email = params[:email]
   @appt_date = params[:appt_date]
-  @appt_date_formatted = new_format_date(@appt_date)
+  if params[:appt_date]
+    @appt_date_formatted = new_format_date(@appt_date)
+  end
   @payment_date = params[:payment_date]
-  @payment_date_formatted = new_format_date(@appt_date)
+  if params[:payment_date]
+    @payment_date_formatted = new_format_date(@payment_date)
+  end
   @appt_start = params[:appt_start]
   @appt_end = params[:appt_end]
   @category_name = params[:category]
@@ -64,10 +77,8 @@ def get_params(params)
   @interview_text3 = params[:interview_text3]
   @template = params[:template]
   @payment_text = params[:payment_text]
-  puts "@payment_date_formatted:  #{@payment_date_formatted}"
-  puts "@payment_date:  #{@payment_date}"
 
-  if params[:amount].size > 0
+  if params[:amount] && params[:amount].size > 0
     @amount=params[:amount].to_f
   else 
     @amount = 0
@@ -106,12 +117,17 @@ def show_param_results
   puts "#{@amount}"
   puts "#{@appt_start}"
   puts "#{@appt_end}"
-  puts "#{@coach.name}"
-  puts "#{@category.name}"
+  if @coach
+    puts "#{@coach.name}"
+  end
+  if @category
+    puts "#{@category.name}"
+  end
   puts "#{@location}"
   puts "#{@text1}"
   puts "interview_text1: #{@interview_text1}"
   puts "#{@template}"
+  puts "#{@greeting}"
 end
 
 def populate_template
@@ -137,6 +153,7 @@ Free street parking is available most times. If you need a temporary permit, ple
 end
 
 def populate_interview_template
+  @errors = []
   @interview_text1 = "Please send me a copy of your résumé along with the job title(s) and a brief description of the job you are targeting (optional)"
   @interview_text2 = "This session will include a mock interview, as well as time for feedback and coaching around your performance. This will mock an initial, general interview which will include questions it is highly probable you will be asked on a first interview.
 
@@ -146,7 +163,29 @@ We can't guarantee that the questions you will be asked in your mock interview w
 
 Feedback from your coach will be constructive, but direct in nature. If you feel you are thin-skinned or sensitive to negative feedback you should:"
 end
+def populate_pre_workshop_email
+  @errors = []
+  @preview_callback_method = "/preview_pre_workshop_email"
+  @send_callback_method = "/send_pre_workshop_email"
+  @greeting = "We are delighted that you will be joining us for the | Accountability Mirror workshop.  The purpose of this email is to orient you to the workshop and to provide you with your pre-work that you should complete and bring with you.
+"
+  @text1 = "4860 N. Paulina
 
+Chicago, IL 60640
+Please let yourself in the middle door.  Street parking is available."
+  @text2 = "Please be on time. 
+
+The workshop will end at or before 5:00 p.m."
+  @text3 = "There will be Starbucks coffee and snacks available during workshop breaks, and lunch will be provided. It is advisable to eat a full breakfast before you arrive."
+  @text4 = "I’d like to give you an idea of what to expect when you arrive.  We will begin by doing a quick group icebreaker exercise so that we can all get to know each other a little and become comfortable with one another right away. I believe this will make the rest of the day more enjoyable for everyone.
+ 
+I know, I know … everyone hates these (despite their effectiveness). Therefore, I have decided to let you know ahead of time how I open the workshop so that, if you choose, you can ponder and prepare beforehand and not feel rushed or put on the spot."
+  @text5 = "You will be asked to share something about yourself that meets one of the following criteria: (1) something most people don't know about you when they first meet you, (2) an interesting story about yourself, (3) a passionate interest or hobby of yours or (4) an experience that would help people quickly get to know a bit about who you are."
+  @closing_text = "Finally - please complete and bring the attached pre-work with you on the day of the workshop!
+ 
+We are looking forward to seeing you!"
+
+end
 
 get '/pay_per_session_email_template' do
   #populate default text for email template and show template
@@ -176,7 +215,6 @@ post '/preview' do
   puts "@payment_date_formatted:  #{@payment_date_formatted}"
   # read user parameters, display preview of email
  
-  @errors = []
   get_params(params)
   erb :preview
 end
@@ -212,5 +250,63 @@ post '/send' do
   #redirect to some thank you page
   erb :welcome_email_sent
 end
+
+get '/accountability_mirror_pre_workshop' do
+
+  @template = "accountability_mirror_pre_workshop"
+  populate_pre_workshop_email
+  erb :pre_workshop_template
+end
+
+post '/preview_pre_workshop_email' do
+
+  puts "/preview_pre_workshop_email #{@params}"
+  # read user parameters, display preview of email
+ 
+  get_params(params)
+  temp_greeting = @greeting.split("|")
+  if temp_greeting.size == 2 
+    @greeting1 = temp_greeting[0]
+    @greeting2 = temp_greeting[1]
+  end
+
+  erb :preview_pre_workshop_email
+
+end
+
+post '/send_pre_workshop_email'  do
+  get_params(params)
+  show_param_results
+
+  email = Mailer.send_pre_workshop_email(
+    @name,
+    @email,
+    @amount,
+    @appt_date_formatted,
+    @payment_date_formatted,
+    @appt_start,
+    @appt_end,
+    @location,
+    @text1,
+    @text2,
+    @text3,
+    @text4,
+    @text5,
+    @interview_text1,
+    @interview_text2,
+    @interview_text3,
+    @template,
+    @payment_text,
+    @greeting1,
+    @greeting2,
+    @closing_text
+  )
+  email.deliver
+  #redirect to some thank you page
+  erb :welcome_email_sent
+
+  end
+
+
 
 

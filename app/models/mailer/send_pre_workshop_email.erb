@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Jma Welcome Email</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Responsive stuff -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	
+  <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+  <link href="css/jma.css" rel="stylesheet">
+  <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> 
+  <script src="js/jquery.progressTimer.js"></script>
+
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+  <style>
+  h1, h2, h3, h4, h5, legend, p {
+  color: #5e605d;
+}
+  </style>
+</head>
+<body>  
+    <div class="thumbnail" style="width: 600px; margin-left: 10%; margin-top: 2%;">
+       <a href="http://www.jodymichael.com"><img src="http://www.jodymichael.com/filebin/images/logo.png" alt="<= @reference %>"  style="display: block; margin-left: auto;margin-right: auto;"></a>
+        <br>
+          <img src="http://www.jodymichael.com/filebin/images/dotted-border-img.png" style="margin-top: 10px; margin-bottom: 20px;">
+          <br>
+      <p>Hi <%=@name%>,</p>
+      <p><%= @greeting1%> <b><%= @appt_date_formatted %></b>,&nbsp<%= @greeting2%> </p>
+      <div class="row">
+        <div class="col-lg-12">
+          <p><b><u>Location</u></b></p>
+          <p><%= @text1%></p>
+       </div>
+     </div>
+      <br>
+      <div class="row">
+        <div class="col-lg-12">
+           <% if @appt_date_formatted  %>
+              <p><b><u>Date andTime:</u></b></p>
+              <p>We will begin on <b><%= @appt_date_formatted %>, at <%= @appt_start %> Sharp!</b></p>
+            <% end %>
+            <p><%= @text2 %></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+              <p><b><u>Food</u></b></p>
+            <p><%= @text3 %></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+              <p><b><u>Heads-up</u></b></p>
+            <p><%= @text4 %></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+              <p><b><u>The Icebreaker</u></b></p>
+            <p><%= @text5 %></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+              <p><b><u>Pre-work</u></b></p>
+            <p><%= @closing_text %></p> 
+            <p>Best regards,</p>
+            <p>Kelly</p>
+          </div>
+        </div>
+    
+     </div>
+    <br>
+</div>
+
+</body>
+</html>
