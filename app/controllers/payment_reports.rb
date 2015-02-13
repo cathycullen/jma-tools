@@ -11,6 +11,20 @@ def payment_totals
   @category_chart = Payment.category_group_names(@coach_filter, @category_filter, @transaction_filter)
 end
 
+get '/password' do
+  @errors = []
+  @callback_method = "/password"
+  erb :password
+end
+
+post '/password' do
+  if params[:password] == 'Makena'
+    redirect to('/payments')
+  else
+    redirect to('/password')
+  end
+end
+
 
 get '/payments' do
   #@payments = Payment.all_paid_entries

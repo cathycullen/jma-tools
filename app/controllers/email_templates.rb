@@ -244,7 +244,9 @@ post '/send' do
     @interview_text2,
     @interview_text3,
     @template,
-    @payment_text
+    @payment_text,
+    @greeting,
+    @closing_text
   )
   email.deliver
   #redirect to some thank you page
