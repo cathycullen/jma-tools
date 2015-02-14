@@ -127,7 +127,7 @@ def show_param_results
   puts "#{@text1}"
   puts "interview_text1: #{@interview_text1}"
   puts "#{@template}"
-  puts "#{@greeting}"
+  puts "greeting:  #{@greeting}"
 end
 
 def populate_template
@@ -172,10 +172,8 @@ def populate_pre_workshop_email
   @text1 = "4860 N. Paulina
 
 Chicago, IL 60640
-Please let yourself in the middle door.  Street parking is available."
-  @text2 = "Please be on time. 
-
-The workshop will end at or before 5:00 p.m."
+Please let yourself in the middle door at the top of the stairs.  Street parking is available."
+  @text2 = "To prepare for the training, we will need you to complete an online assessment in advance.   Here are the directions:"
   @text3 = "There will be Starbucks coffee and snacks available during workshop breaks, and lunch will be provided. It is advisable to eat a full breakfast before you arrive."
   @text4 = "I’d like to give you an idea of what to expect when you arrive.  We will begin by doing a quick group icebreaker exercise so that we can all get to know each other a little and become comfortable with one another right away. I believe this will make the rest of the day more enjoyable for everyone.
  
@@ -184,6 +182,24 @@ I know, I know … everyone hates these (despite their effectiveness). Therefore
   @closing_text = "Finally - please complete and bring the attached pre-work with you on the day of the workshop!
  
 We are looking forward to seeing you!"
+end
+
+def populate_perceptual_lens_email
+  @errors = []
+  @preview_callback_method = "/preview_perceptual_lens_email"
+  @send_callback_method = "/send_perceptual_lens_email"
+  @greeting = "We are delighted to have the opportunity to work with you at the upcoming Perceptual Lens Training on "
+  @text1 = "4860 N. Paulina
+
+Chicago, IL 60640
+Please let yourself in the middle door at the top of the stairs.  Street parking is available."
+  @text2 = "To prepare for the training, we will need you to complete an online assessment in advance.  Here are the directions:"
+  @text3 = "1. Please check your inbox and/or spam filter for an email from “noreply@ipeccoaching.com,” with the subject line “Request to Complete an On-Line Assessment” 
+  
+*If you do not receive this email by the end of the day today, please let me know."
+  @text4 = "2. Please open this attachment and read before you begin to take the assessment to ensure accurate results. "
+  @text5 = "3. Please complete the assessment on or before this Thursday, February 16th, if possible."
+  @closing_text = "Any questions, please let us know."
 
 end
 
@@ -306,8 +322,57 @@ post '/send_pre_workshop_email'  do
   email.deliver
   #redirect to some thank you page
   erb :welcome_email_sent
+  end
+
+get '/perceptual_lens_email_template' do
+
+  @template = "perceptual_lens_email_template"
+  populate_perceptual_lens_email
+  erb :perceptual_lens_template
+end
+
+post '/preview_perceptual_lens_email' do
+
+  puts "/preview_perceptual_lens_email #{@params}"
+  # read user parameters, display preview of email
+  get_params(params)
+  erb :preview_perceptual_lens_email
+end
+
+
+post '/send_perceptual_lens_email'  do
+  get_params(params)
+  puts "/send_perceptual_lens_email"
+  show_param_results
+
+  email = Mailer.send_perpetual_lens_email(
+    @name,
+    @email,
+    @amount,
+    @appt_date_formatted,
+    @payment_date_formatted,
+    @appt_start,
+    @appt_end,
+    @location,
+    @text1,
+    @text2,
+    @text3,
+    @text4,
+    @text5,
+    @interview_text1,
+    @interview_text2,
+    @interview_text3,
+    @template,
+    @payment_text,
+    @greeting, 
+    @closing_text
+  )
+  email.deliver
+  #redirect to some thank you page
+  erb :welcome_email_sent
 
   end
+
 
 
 

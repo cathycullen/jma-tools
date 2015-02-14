@@ -1,0 +1,77 @@
+  <body> 
+    <div class="thumbnail" style="width: 600px; margin-left: 10%; margin-top: 2%;">
+       <a href="http://www.jodymichael.com"><img src="http://www.jodymichael.com/filebin/images/logo.png" alt="<= @reference %>"  style="display: block; margin-left: auto;margin-right: auto;"></a>
+        <br>
+          <img src="http://www.jodymichael.com/filebin/images/dotted-border-img.png" style="margin-top: 10px; margin-bottom: 20px;">
+          <br>
+      <p>Hello <%=@name%>,</p>
+      <p><%= @greeting%> <b><%= @appt_date_formatted %></b></p>
+      <div class="row">
+        <div class="col-lg-12">
+          <p><b><u>Location</u></b></p>
+          <p><%= @text1%></p>
+       </div>
+     </div>
+      <br>
+      <div class="row">
+        <div class="col-lg-12">
+           <% if @appt_date_formatted  %>
+              <p><b><u>Date andTime:</u></b></p>
+              <p>The workshop will begin on &nbsp<b><%= @appt_date_formatted %>, at <%= @appt_start %> Sharp!</b></p>
+            <% end %>
+            <p><%= @text2 %></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <p><%= @text3 %></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <p><b><%= @text4 %></b></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <p><%= @text5 %></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <p><%= @closing_text %></p> 
+            <p>Thank you,</p>
+            <p>Kelly</p>
+          </div>
+        </div>
+    
+   <form action="<%=@send_callback_method%>" method="post" >
+    <div >
+      <input type="hidden" name="name" value="<%= @name%>">
+      <input type="hidden" name="email" value="<%= @email%>">
+      <input type="hidden" name="amount" value="<%= @amount%>">
+      <input type="hidden" name="location" value="<%= @location%>">
+      <input type="hidden" name="appt_date" value="<%= @appt_date%>">
+      <input type="hidden" name="appt_start" value="<%= @appt_start%>">
+      <input type="hidden" name="appt_end" value="<%= @appt_end%>">
+      <input type="hidden" name="payment_date" value="<%= @payment_date%>">
+      <input type="hidden" name="text1" value="<%= @text1%>">
+      <input type="hidden" name="text2" value="<%= @text2%>">
+      <input type="hidden" name="text3" value="<%= @text3%>">
+      <input type="hidden" name="text4" value="<%= @text4%>">
+      <input type="hidden" name="text5" value="<%= @text5%>">
+      <input type="hidden" name="template" value="<%= @template%>">
+      <input type="hidden" name="payment_text" value="<%= @payment_text%>">
+      <input type="hidden" name="closing_text" value="<%= @closing_text%>">
+      <input type="hidden" name="greeting" value="<%= @greeting%>">
+      <input type="hidden" name="greeting" value="<%= @greeting%>">
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-success" title="Select to Email to Client">Send</button>
+      <button type="reset" class="btn" onclick="history.go(-1);" >Cancel</button>
+    </div>
+  </form>
+     </div>
+    <br>
+</div>
+</body>

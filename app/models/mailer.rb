@@ -176,6 +176,64 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
       end
     end
     
+
+
+
+    def send_perpetual_lens_email(name, email, amount, appt_date, payment_date, appt_start, appt_end, location,
+      text1, text2, text3, text4, text5, interview_text1, interview_text2, interview_text3, template, payment_text, greeting,
+      closing_text)
+      @name = name
+      @email = email
+      @amount = amount
+      @location = location
+      @appt_date_formatted = appt_date
+      @payment_date_formatted = payment_date
+      @appt_start = appt_start
+      @appt_end = appt_end
+      @text1 = text1
+      @text2 = text2
+      @text3 = text3
+      @text4 = text4
+      @text5 = text5
+      @interview_text1 = interview_text1
+      @interview_text2 = interview_text2
+      @interview_text3 = interview_text3
+      @template = template
+      @payment_text = payment_text
+      @greeting = greeting
+      @closing_text = closing_text
+
+      begin
+        
+        ActionMailer::Base.smtp_settings = {
+          :address   => ENV['JMA_ADDRESS'],
+          :port      => ENV['JMA_PORT'],
+          :domain    => ENV['JMA_DOMAIN'],
+          :authentication => :"login",
+          :user_name      => ENV['JMA_USER'],
+          :password       => ENV['JMA_PASS'],
+          :enable_starttls_auto => true,
+        }
+        #need a list of recipient emails here
+        attachments['Perceptual Lens Assessment Instructions.pdf'] = File.read('public/images/Perceptual Lens Assessment Instructions.pdf')
+        puts "sending perpetual lense email to #{@email}"
+        mail( 
+          :to      =>  @email,
+          :from    => ENV['JMA_FROM_ADDRESS'],
+          :subject => "Welcome To Jody Michael Associates",
+        ) do |format|
+          format.html
+          format.text
+        end
+      rescue Exception => e
+        puts "rescue caught in send_welcome_email #{e.message}"
+        @error_message = e.message
+        puts e.backtrace 
+      end
+    end
+   
+
+
     def credit_card_charged_email_to_jma_support(name, amount)
       @name = name
       @amount = amount
