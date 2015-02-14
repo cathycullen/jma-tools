@@ -269,8 +269,6 @@ post '/jma_submit_payment' do
     @submit_callback = '/jma_submit_payment'
     erb :payment_form, :layout => :jma_layout
   else
-   
-
     description='Jody Michael Associates'
     puts "call ArrowPayment.new"
     arrow_payment = ArrowPayment.new()
@@ -282,7 +280,7 @@ post '/jma_submit_payment' do
     )
 
     if payment_error.nil?
-      puts "Payment info submitted successfully for #{@payment_details.name} amount: #{@payment_details.amount} "
+      puts "Payment info submitted successfully for #{@payment_details.name} amount: #{@payment_details.amount}  coach: #{@payment_details.coach} category: #{@payment_details.category}"
       # send confirmation email
       email = Mailer.send_jma_email_confirm(
       @payment_details.name,
@@ -292,13 +290,15 @@ post '/jma_submit_payment' do
       email.deliver
       if @payment_details.amount > 0
         payment = Payment.new
+        payment.transaction_type = CREDIT_CARD
         payment.populate(@payment_details.name,
           @payment_details.amount,
           @payment_details.coach,
           @payment_details.category)
-        payment[:status] = PAID
+        payment[:status] = PAID        
+        puts "Attempt to add to Payment  #{payment}"
         payment.save
-      puts "call submit_online_payment payment: #{payment.name}, #{payment.amount}"
+        puts "call submit_online_payment payment: #{payment.name}, #{payment.amount} #{payment.transaction_type}"
       end
       @payment_details.created_at = Time.now
       @payment_details.save!
