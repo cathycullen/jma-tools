@@ -198,7 +198,7 @@ Please let yourself in the middle door at the top of the stairs.  Street parking
   
 *If you do not receive this email by the end of the day today, please let me know."
   @text4 = "2. Please open this attachment and read before you begin to take the assessment to ensure accurate results. "
-  @text5 = "3. Please complete the assessment on or before this Thursday, February 16th, if possible."
+  @text5 = "3. Please complete the assessment on or before this Monday, February 16th, if possible."
   @closing_text = "Any questions, please let us know."
 
 end
