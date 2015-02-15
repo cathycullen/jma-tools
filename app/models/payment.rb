@@ -59,9 +59,13 @@ class Payment < ActiveRecord::Base
   def self.delete_pending_entries
     Payment.where(:status => PENDING).delete_all
   end
-   def self.filter_entries(coach, category, transaction_type, start_date, end_date)
+  def self.filter_entries(name, coach, category, transaction_type, start_date, end_date)
     if start_date.nil?
+    if !name.nil?
+      self.search(name)
+    else
       Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type).order('payment_date desc')
+    end
     else
       self.filter_entries_by_date(coach, category, transaction_type, start_date, end_date)
     end
@@ -78,20 +82,36 @@ class Payment < ActiveRecord::Base
     Payment.where(:status => PAID).order('payment_date desc')
   end
 
-  def self.sum_this_week(coach, category, transaction_type)
-    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, payment_date: Date.today.monday..Date.today, :status => PAID).sum('amount').to_i
+  def self.sum_this_week(name, coach, category, transaction_type)
+    if !name.nil?
+      Payment.where(name: name, coach_id: coach, category_id: category, transaction_type: transaction_type, payment_date: Date.today.monday..Date.today, :status => PAID).sum('amount').to_i
+    else
+      Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, payment_date: Date.today.monday..Date.today, :status => PAID).sum('amount').to_i
+    end
   end
 
-  def self.sum_this_month(coach, category, transaction_type)
-    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).by_month(Date.today.month).sum('amount').to_i
-  end
+  def self.sum_this_month(name, coach, category, transaction_type)
+    if !name.nil?
+      Payment.where(name: name, coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).by_month(Date.today.month).sum('amount').to_i
+    else
+      Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).by_month(Date.today.month).sum('amount').to_i
+   end
+ end
   
-  def self.sum_this_year(coach, category, transaction_type)
-    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).by_year(Date.today.year).sum('amount').to_i
+  def self.sum_this_year(name, coach, category, transaction_type)
+    if !name.nil?
+     Payment.where(name: name, coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).by_year(Date.today.year).sum('amount').to_i
+   else
+     Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).by_year(Date.today.year).sum('amount').to_i
+    end
   end
 
-  def self.sum_today(coach, category, transaction_type)
-    Payment.where(:payment_date => Date.today,coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).sum(:amount).to_i
+  def self.sum_today(name, coach, category, transaction_type)
+    if !name.nil?
+     Payment.where(name: name, :payment_date => Date.today,coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).sum(:amount).to_i
+   else
+     Payment.where(:payment_date => Date.today, coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).sum(:amount).to_i
+    end
   end
   def self.cagetory_groups(coach, category, transaction_type)
     Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).group(:category_id).sum('amount')
@@ -122,5 +142,8 @@ class Payment < ActiveRecord::Base
     group_by_month(:payment_date, Time.zone, range).sum(:payment_amount)  
   end
 
+  def self.search(name)
+     Payment.where("name like '%#{name}%'")
+  end
   
 end
