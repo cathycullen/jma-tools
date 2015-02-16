@@ -5,6 +5,7 @@ class CreateAttendees < ActiveRecord::Migration
       t.string :email, :null => false, :unique => true
       t.integer :amount
       t.boolean :paid, :default => false
+      t.references :workshop
     end
   end
 end

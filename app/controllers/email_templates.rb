@@ -42,7 +42,7 @@ def new_format_date(a_date)
 end
 
 def get_params(params)
-  puts "get_params params:  #{params}, how many  #{params.count}"
+  #puts "get_params params:  #{params}, how many  #{params.count}"
 
   @errors = []
   @text1 = params[:text1]
@@ -152,6 +152,18 @@ Free street parking is available most times. If you need a temporary permit, ple
   @payment_text = " enter your credit card information "
 end
 
+def populate_initial_contact_template
+  @errors = []
+  @preview_callback_method = "/preview_initial_contact_email"
+  @send_callback_method = "/send_initial_contact_email_with_pricing"
+  @text1 = "Thank you for reaching out to Jody Michael Associates."
+  @text2 = "I received your message about our services and wanted to touch base.  If you’d like to look over our offerings, I’ve attached a PDF about our career discovery process, which includes pricing."
+  @text3 = "Once you’ve looked over the attachment, if you would like to hear more about our services and if they are right for you, please let me know some upcoming windows of time including today, that you are available.  I can then setup a time for you to speak to Jody."
+  @text4 = "We look forward to hearing from you!"
+  @text5 = ""
+  @closing_text = "Kind Regards,"
+end
+
 def populate_interview_template
   @errors = []
   @interview_text1 = "Please send me a copy of your résumé along with the job title(s) and a brief description of the job you are targeting (optional)"
@@ -227,6 +239,15 @@ get '/interview_email_template' do
   erb :email_template
 end
 
+get '/initial_contact_with_pricing_email_template'  do
+  populate_template
+  populate_initial_contact_template
+  @template = "initial_contact"
+  puts "@template:  #{@template}"
+  erb :initial_contact_template
+
+  end
+
 post '/preview' do
   puts "@payment_date_formatted:  #{@payment_date_formatted}"
   # read user parameters, display preview of email
@@ -234,6 +255,15 @@ post '/preview' do
   get_params(params)
   erb :preview
 end
+
+post '/preview_initial_contact_email' do
+  # read user parameters, display preview of email
+ 
+  get_params(params)
+  puts "/preview_initial_contact_email text3:  #{@text3}"
+  erb :preview_initial_contact_email
+end
+
 
 post '/send' do
   #read user parameters and send formatted email
@@ -266,7 +296,29 @@ post '/send' do
   )
   email.deliver
   #redirect to some thank you page
-  erb :welcome_email_sent
+  @on_complete_msg = "Welcome Email Sent."
+  @on_complete_redirect=  "/done"
+  erb :done
+end
+
+post '/send_initial_contact_email_with_pricing' do
+  #read user parameters and send formatted email
+  get_params(params)
+
+  email = Mailer.send_initial_contact_email_with_pricing(
+    @name,
+    @email,
+    @text1,
+    @text2,
+    @text3,
+    @text4,
+    @closing_text
+  )
+  email.deliver
+  #redirect to some thank you page
+  @on_complete_msg = "Initial Contact With Pricing Email Sent."
+  @on_complete_redirect=  "/done"
+  erb :done
 end
 
 get '/accountability_mirror_pre_workshop' do
@@ -321,7 +373,9 @@ post '/send_pre_workshop_email'  do
   )
   email.deliver
   #redirect to some thank you page
-  erb :welcome_email_sent
+  @on_complete_msg = "Pre Workshop Email Sent."
+  @on_complete_redirect=  "/done"
+  erb :done
   end
 
 get '/perceptual_lens_email_template' do
@@ -369,7 +423,9 @@ post '/send_perceptual_lens_email'  do
   )
   email.deliver
   #redirect to some thank you page
-  erb :welcome_email_sent
+  @on_complete_msg = "Perceptual Lense Email Sent."
+  @on_complete_redirect=  "/done"
+  erb :done
 
   end
 

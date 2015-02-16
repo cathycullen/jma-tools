@@ -139,7 +139,9 @@ post '/filter_payments' do
     end
 
     puts "params #{params[:payment_id]}, #{params[:name]}"
-    erb :payment_info_saved
+    @on_complete_msg = "Payment Information Saaved."
+    @on_complete_redirect=  "/payments"
+    erb :done
   end
 
 

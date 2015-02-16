@@ -122,6 +122,45 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
         puts e.backtrace 
       end
     end
+
+    def send_initial_contact_email_with_pricing(name, email, text1, text2, text3, text4, closing_text)
+      @name = name
+      @email = email
+      @text1 = text1
+      @text2 = text2
+      @text3 = text3
+      @text4 = text4
+      @closing_text = closing_text
+
+      begin
+        
+        ActionMailer::Base.smtp_settings = {
+          :address   => ENV['JMA_ADDRESS'],
+          :port      => ENV['JMA_PORT'],
+          :domain    => ENV['JMA_DOMAIN'],
+          :authentication => :"login",
+          :user_name      => ENV['KELLY_USER'],
+          :password       => ENV['JMA_PASS'],
+          :enable_starttls_auto => true,
+        }
+        puts "send_initial_contact_email_with_pricing #{@name}, #{@email}"
+        attachments['2015 JMA Career Discovery Package.pdf'] = File.read('public/images/2015 JMA Career Discovery Package.pdf')
+                mail( 
+          :to      =>  @email,
+          :from    => ENV['KELLY_USER'],
+          :subject => "Jody Michael Associates Inquiry",
+        ) do |format|
+          format.html
+          format.text
+        end
+      rescue Exception => e
+        puts "rescue caught in send_welcome_email #{e.message}"
+        @error_message = e.message
+        puts e.backtrace 
+      end
+    end
+
+
     def send_pre_workshop_email(name, email, amount, appt_date, payment_date, appt_start, appt_end, location,
       text1, text2, text3, text4, text5, interview_text1, interview_text2, interview_text3, template, payment_text, greeting1, greeting2,
       closing_text)

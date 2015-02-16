@@ -2,7 +2,7 @@ coach = Coach.create(name: "Jody Michael", email: "jody@jodymichael.com", phone:
 coach = Coach.create(name: "Maura Koutoujian", email: "maura@jodymichael.com", phone: "312-218-0016")
 
 
-#payment = Payment.create(name: "John Doe", amount: 300, coach: 1, payment_date: Date.today, status: "paid", category: "Career Coaching")
+#payment = Payment.create(name: "John Doe", amount: 300, coach_id: 1, payment_date: Date.today, status: "paid", category_id: 1)
 
 category = Category.create(name: "Career Coaching")
 category = Category.create(name: "Executive Coaching")

@@ -82,7 +82,9 @@ post '/send_payment_email' do
   )
   email.deliver
   #redirect to some thank you page
-  erb :payment_email_sent
+  @on_complete_msg = "Payment Email Sent."
+  @on_complete_redirect=  "/done"
+  erb :done
 end
 
  def format_date(a_date)

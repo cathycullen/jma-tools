@@ -1,0 +1,30 @@
+  <body> 
+    <div class="thumbnail" style="width: 600px; margin-left: 10%; margin-top: 2%;">
+       <a href="http://www.jodymichael.com"><img src="http://www.jodymichael.com/filebin/images/logo.png" alt="<= @reference %>"  style="display: block; margin-left: auto;margin-right: auto;"></a>
+        <br>
+          <img src="http://www.jodymichael.com/filebin/images/dotted-border-img.png" style="margin-top: 10px; margin-bottom: 20px;">
+          <br>
+        <p>Dear <%=@name%>,</p>
+        <p><%= @text1%></p>
+        <p><%= @text2%></p>
+        <p><%=@text3%></p>
+        <p><%=@text4%></p>
+        <p><%=@closing_text%></p>
+        <p>Kelly</p>
+   <form action="<%=@send_callback_method%>" method="post" >
+    <div >
+      <input type="hidden" name="name" value="<%= @name%>">
+      <input type="hidden" name="email" value="<%= @email%>">
+      <input type="hidden" name="text1" value="<%= @text1%>">
+      <input type="hidden" name="text2" value="<%= @text2%>">
+      <input type="hidden" name="text3" value="<%= @text3%>">
+      <input type="hidden" name="text4" value="<%= @text4%>">
+      <input type="hidden" name="template" value="<%= @template%>">
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-success" title="Select to Email to Client">Send</button>
+      <button type="reset" class="btn" onclick="history.go(-1);" >Cancel</button>
+    </div>
+  </form>
+</div>
+</body>
