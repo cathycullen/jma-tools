@@ -87,6 +87,7 @@ post '/send_payment_email' do
   #redirect to some thank you page
   @on_complete_msg = "Payment Email Sent."
   @on_complete_redirect=  "/done"
+  @on_complete_method=  "post"
   erb :done
 end
 

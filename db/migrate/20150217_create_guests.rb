@@ -1,6 +1,6 @@
-class CreateAttendees < ActiveRecord::Migration
+class CreateGuests < ActiveRecord::Migration
   def change
-    create_table :attendees do |t|
+    create_table :guests do |t|
       t.string :name, :null => false, :unique => true
       t.string :email, :null => false, :unique => true
       t.integer :amount

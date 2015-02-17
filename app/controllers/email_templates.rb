@@ -210,7 +210,7 @@ Please let yourself in the middle door at the top of the stairs.  Street parking
   
 *If you do not receive this email by the end of the day today, please let me know."
   @text4 = "2. Please open this attachment and read before you begin to take the assessment to ensure accurate results. "
-  @text5 = "3. Please complete the assessment on or before this Monday, February 16th, if possible."
+  @text5 = "3. Please complete the assessment on or before tomorrow, if possible."
   @closing_text = "Any questions, please let us know."
 
 end
@@ -298,6 +298,7 @@ post '/send' do
   #redirect to some thank you page
   @on_complete_msg = "Welcome Email Sent."
   @on_complete_redirect=  "/done"
+  @on_complete_method=  "post"
   erb :done
 end
 
@@ -318,6 +319,7 @@ post '/send_initial_contact_email_with_pricing' do
   #redirect to some thank you page
   @on_complete_msg = "Initial Contact With Pricing Email Sent."
   @on_complete_redirect=  "/done"
+  @on_complete_method=  "post"
   erb :done
 end
 
@@ -375,6 +377,7 @@ post '/send_pre_workshop_email'  do
   #redirect to some thank you page
   @on_complete_msg = "Pre Workshop Email Sent."
   @on_complete_redirect=  "/done"
+  @on_complete_method=  "post"
   erb :done
   end
 
@@ -425,6 +428,7 @@ post '/send_perceptual_lens_email'  do
   #redirect to some thank you page
   @on_complete_msg = "Perceptual Lense Email Sent."
   @on_complete_redirect=  "/done"
+  @on_complete_method=  "post"
   erb :done
 
   end

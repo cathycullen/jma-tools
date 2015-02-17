@@ -4,5 +4,5 @@ class Workshop < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :date
 
-  has_many :attendees
+  has_many :guests
 end

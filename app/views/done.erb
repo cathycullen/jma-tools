@@ -1,7 +1,7 @@
 <div style="margin-left:5%;">
 <p><%= @on_complete_msg %></p>
 
-  <form action="<%= @on_complete_redirect %>" method="post">
+  <form action="<%= @on_complete_redirect %>" method="<%= @on_complete_method %>"">
     <input type="submit" value="Continue" name="done" class="btn btn-success"  >
   </form>
   <br> 

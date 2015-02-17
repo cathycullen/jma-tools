@@ -18,14 +18,15 @@
                 </div>            
               </div>
 
-              <div clsss="row">
-                <div class="col-md-5">
-                  <label class="control-label" for="textarea">Workshop Date</label>
-                  <input type="text" class="form-control" name="appt_date"  title="Enter Workshop Date" placeholder="Workshop Date" id="dp1" > 
-                </div>
-                <div class="col-md-5">
-                 <label class="control-label" >Time</label>
-                    <select class="form-control" name="appt_start">
+            <div clsss="row">
+              <div class="col-md-5">
+                <label class="control-label" for="textarea">Workshop Date</label>
+                <input type="text" class="form-control" name="appt_date"  title="Enter Workshop Date"  placeholder="Workshop Date" id="dp1" > 
+              </div>
+
+              <div class="col-md-5">
+               <label class="control-label" >Time</label>
+                  <select class="form-control" name="appt_start">
                     <option value="7:00 am">7:00 am</option>
                     <option value="7:30 am">7:30 am</option>
                     <option value="8:00 am" selected >8:00 am</option>
@@ -36,18 +37,24 @@
                     <option value="10:30 am">10:30 am</option>
                     <option value="11:00 am">11:00 am</option>
                     <option value="11:30 am" selected >11:30 am</option>
-                    </select>     
+                  </select>     
                 </div>      
-              </div>
+              </div> 
               <div clsss="row">
                 <div class="col-md-5">
-                <label class="control-label" for="textarea">Location</label>
-                <textarea class="form-control" name="text1" rows="3"><%=@text1 %>
-                </textarea>
-                </div>
+                  <label class="control-label" for="textarea">Assessment Due Date</label>
+                  <input type="text" class="form-control" name="payment_date"  title="Enter Assessment Due Date" placeholder="Assessment Due Date" id="dp2" > 
+                </div>   
                 <div class="col-md-5">
+                  <label class="control-label" for="textarea">Location</label>
+                  <textarea class="form-control" name="text1" rows="5"><%=@text1 %>
+                  </textarea>
+                </div>  
+              </div> 
+              <div clsss="row">
+                <div class="col-md-12">
                 <label class="control-label" for="textarea">Preparation</label>
-                <textarea class="form-control" name="text2" rows="3"><%=@text2 %>
+                <textarea class="form-control" name="text2" rows="2"><%=@text2 %>
                 </textarea>
                 </div>
               </div>
@@ -61,7 +68,7 @@
               <div clsss="row">
                 <div class="col-md-12">
                 <label class="control-label" for="textarea">Section 2</label>
-                <textarea class="form-control" name="text4" rows="3"><%=@text4 %>
+                <textarea class="form-control" name="text4" rows="2"><%=@text4 %>
                 </textarea>
                 </div>
               </div>
@@ -75,7 +82,7 @@
               <div clsss="row">
                 <div class="col-md-12">
                 <label class="control-label" for="textarea">Closing</label>
-                <textarea class="form-control" name="closing_text" rows="4"><%=@closing_text %>
+                <textarea class="form-control" name="closing_text" rows="2"><%=@closing_text %>
                 </textarea>
                 </div>
               </div>

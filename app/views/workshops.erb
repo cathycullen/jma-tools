@@ -3,17 +3,43 @@
     <!-- sidebar -->
     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
       <ul class="nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Link 1</a></li>
-        <li><a href="#">Link 2</a></li>             
+        <li class="active"><a href="/new_workshop">New Workshop</a></li>
       </ul>
     </div>
     <!-- main area -->
-    <div class="col-xs-12 col-sm-9">
-      <h1>Shrink Width to Collapse Sidebar</h1>
-      <p>Aliquam a lacinia orci, iaculis porttitor neque. Nullam cursus dolor tempus mauris posuere, eu 
-        scelerisque sem tincidunt. Praesent blandit sapien at sem pulvinar, vel egestas orci varius. 
-        Praesent </p>
-    </div><!-- /.col-xs-12 main -->
+    
+    <div class="col-md-6">
+      <table class="table table-condensed table-bordered table-striped table-hover table-responsive" style="display:block; height:300px;">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @workshops != nil && @workshops.size > 0 %>
+            <% total_amount=0 %>
+            <% @workshops.each do |entry| %>
+              <tr>
+                <td><%= entry[:id]%></td>
+                <td><%= entry[:date].strftime("%m/%d/%Y") %></td>
+                <td><%= entry[:name] %></td>
+                <td>
+                <a href="/edit_workshop?id=<%= entry[:id]%>" class="btn btn-primary btn-xs">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a></td>
+                <td>
+                <a href="/delete_workshop?id=<%= entry[:id]%>" class="btn btn-danger btn-xs">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </a>
+                </td>
+              </tr> 
+          <% end %> 
+          <% end %> 
+        </tbody>
+      </table>  
+         <br>
+      </div> <!--/.col-md-9 -->
   </div><!--/.row-->
   </div><!--/.container-->
