@@ -233,7 +233,7 @@ def submit_new_client_payment(payment, description)
       rescue Exception => e
         puts "rescue caught in submit_recurring_payment #{e.message}"
         @error_message = e.message
-       puts e.backtrace 
+        #puts e.backtrace 
       else
         puts "Transaction successful #{transaction}"
       end

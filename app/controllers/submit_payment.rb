@@ -144,11 +144,13 @@ post '/submit_deposit_check' do
 end
 
 get '/arrow_payment_form' do
+  @errors = []
   erb :arrow_payment_form
 end
 
 post '/submit_arrow_payment' do
 
+  @errors = []
   puts "/submit_arrow_payment "
   @payment_details = PaymentDetails.new
   @payment_details.name=params[:name].strip()
@@ -197,12 +199,16 @@ post '/submit_arrow_payment' do
       payment[:status] = PAID
       payment.save
     else
-      @payment_details.errors = [payment_error]
-      puts "Error Encountered #{payment_error}"
-      erb :arrow_payment_form
+      @errors = [payment_error]
+      puts "Error Encountered #{payment_error}  error_count:  #{@errors.count}"
     end
   end
-  erb :arrow_payment_completed
+  if @errors
+    puts "calling arrow_payment_form"
+      erb :arrow_payment_form
+  else
+    erb :arrow_payment_completed
+  end
 end
                                      
 get '/jma_payment_form' do

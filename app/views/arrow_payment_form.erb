@@ -5,31 +5,39 @@
     <br>
       <form class="form-horizontal well" action="/submit_arrow_payment" method="post" > 
         <fieldset>
-          <legend>Arrow Quick Pay</legend>
+          <legend>Arrow Quick Pay</legend><br>
+          <% if !@errors.empty? %>
+             <legend style="color: red;  font-weight: bold; font-size: 14px;"
+              <p>The Following Errors Were Encountered: </p>
+              <% @errors.each do |e| %>
+                <p><%=e%></p>
+              <% end %>
+            </legend>
+          <% end %>
           <br>
           <div class="control-group" >
-              <label class="control-label" for="textarea">Name</label> 
-              <input type="text" class="form-control" name="name" title="Enter Recipients Name" placeholder="Name" required >
-              <label class="control-label" for="textarea">Payment Amount</label>
-              <input type="text" class="form-control" name="amount"  title="Enter Payment Amount" placeholder="Amount" >
+            <label class="control-label" for="textarea">Name</label> 
+            <input type="text" class="form-control" name="name" title="Enter Recipients Name" placeholder="Name" required >
+            <label class="control-label" for="textarea">Payment Amount</label>
+            <input type="text" class="form-control" name="amount"  title="Enter Payment Amount" placeholder="Amount" >
 
-              <label class="control-label" for="textarea">Category</label>  
-              <select name="category_name" style="width:100%; ">
-                <% categories.each do |category|%>         
-                <option value="<%= category.name %>"><%= category.name %></option>
-                <% end %>
-              </select>
-              <label class="control-label" for="textarea">Coach</label>  
-              <select name="coach_name" style="width:100%; ">
-                <% coaches.each do |coach|%>         
-                  <option value="<%= coach.name %>"><%= coach.name %></option>
-                <% end %>
-              </select>
-              <hr>
-              <div class="form-actions">
-                <button type="submit" class="btn btn-success" title="Select to Send Payment Link to Client">Submit</button>
-                <button type="reset" class="btn">Cancel</button>
-              </div>
+            <label class="control-label" for="textarea">Category</label>  
+            <select name="category_name" style="width:100%; ">
+              <% categories.each do |category|%>         
+              <option value="<%= category.name %>"><%= category.name %></option>
+              <% end %>
+            </select>
+            <label class="control-label" for="textarea">Coach</label>  
+            <select name="coach_name" style="width:100%; ">
+              <% coaches.each do |coach|%>         
+                <option value="<%= coach.name %>"><%= coach.name %></option>
+              <% end %>
+            </select>
+            <hr>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-success" title="Select to Send Payment Link to Client">Submit</button>
+              <button type="reset" class="btn">Cancel</button>
+            </div>
         </fieldset>
       </form>
     </div>
