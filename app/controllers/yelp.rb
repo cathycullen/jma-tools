@@ -1,6 +1,6 @@
 
   get '/yelp_request' do
-    @template = "yelp_request_template"
+    @template = "yelp_request"
     @preview_callback_method = "/yelp_request_preview"
     @send_callback_method = "/yelp_request_send"
     @callback_method = '/yelp_request_preview'

@@ -1,5 +1,5 @@
 <section id="forms"  style="margin-left: 15%;">
-    <div class="col-md-7">
+    <div class="col-md-9">
     <br>
       <form class="form-horizontal well" action="<%=@callback_method%>?id=<%= @workshop.id %>" method="post" >   
         <fieldset>
@@ -14,7 +14,7 @@
             </legend>
           <% end %>
           <div class = "row">
-            <div class = "col-md-3">
+            <div class = "col-md-6">
               <div class="control-group" >
                 <label class="control-label" for="textarea">Name</label> 
                 <input type="text" class="form-control" name="name" value="<%=@workshop.name%>" required >
@@ -24,7 +24,7 @@
               <label class="control-label" for="textarea">Workshop Date</label>
               <input type="text" class="form-control" name="date"  title="Enter Workshop Date" value="<%=@workshop.date%>" placeholder="Workshop Date" id="dp1" >
             </div>  
-            <div class = "col-md-3">
+            <div class = "col-md-2">
               <label class="control-label" for="textarea">Add Attendee</label>
               <td><a href="/new_guest?workshop_id=<%=@workshop.id%>" class="btn btn-primary btn-xs">
               <span class="glyphicon glyphicon-plus"></span></a>
@@ -33,7 +33,7 @@
           </div>
           <hr>
           <div class = "row">
-              <div class="well col-md-10" style="background-color:white;">
+              <div class="well col-md-8" style="background-color:white;">
               <table class="col-md-9 table table-condensed table-bordered table-striped table-hover table-responsive" style="display:block; height:300px;">
                 <thead>
                   <tr>
@@ -67,7 +67,7 @@
         <hr>
         <div class="form-actions">
           <button type="submit" class="btn btn-success" title="Select to Save Payment Information">Save</button>
-          <button type="reset" class="btn">Cancel</button>
+          <button type="reset" class="btn" onclick="history.go(-1);">Cancel</button>
         </div>
         <input type="hidden" name="id" value="<%= @workshop.id%>">
       </fieldset>

@@ -10,22 +10,19 @@ get '/new_workshop' do
 end
 
 
-post '/save_new_workshop' do
-  @errors = []
+  post '/save_new_workshop' do
+    @errors = []
 
-  #read params
-  #create new worksho
-  if params[:name]
-    @name = params[:name]
-  else
-    @errors << "Please enter workshop name."
-  end
-  if params[:date]
-    @date = params[:date]
-  else
-    @errors << "Please enter workshop date."
-  end
-  
+    if params[:name]
+      @name = params[:name]
+    else
+      @errors << "Please enter workshop name."
+    end
+    if params[:date]
+      @date = params[:date]
+    else
+      @errors << "Please enter workshop date."
+    end
    if !@errors.empty?
       erb :new_workshop 
     else
@@ -37,18 +34,6 @@ post '/save_new_workshop' do
       @workshop.save
     end
 end
-
-  get '/edit_workshop' do
-    @errors = []
-    @callback_method = '/save_workshop'
-    if !params[:id].nil?
-      @workshop = Workshop.find(params[:id])
-      @attendees = Guest.where(:workshop_id => @workshop.id)
-      if @workshop
-        erb :edit_workshop
-      end
-    end
-  end
 
   post '/save_workshop' do
     @errors = []
@@ -74,6 +59,18 @@ end
     end
   end
 
+
+  get '/edit_workshop' do
+    @errors = []
+    @callback_method = '/save_workshop'
+    if !params[:id].nil?
+      @workshop = Workshop.find(params[:id])
+      @attendees = Guest.where(:workshop_id => @workshop.id)
+      if @workshop
+        erb :edit_workshop
+      end
+    end
+  end
 
 get '/new_guest' do
   puts "/new_guest called #{params}"

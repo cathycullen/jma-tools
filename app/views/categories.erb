@@ -3,34 +3,32 @@
     <!-- sidebar -->
     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
       <ul class="nav">
-        <li class="active"><a href="/new_workshop">New Workshop</a></li>
+        <li class="active"><a href="/new_category">New Category</a></li>
       </ul>
     </div>
     <!-- main area -->
     
-    <div class="col-md-9">
+    <div class="col-md-6">
       <table class="table table-condensed table-bordered table-striped table-hover table-responsive" style="display:block; height:300px;">
         <thead>
           <tr>
             <th>#</th>
-            <th style="width: 300px;">Workshop Date</th>
-            <th style="width: 300px;">Workshop Name</th>
+            <th>Category Name</th>
           </tr>
         </thead>
         <tbody>
-          <% if @workshops != nil && @workshops.size > 0 %>
+          <% if @categories != nil && @categories.size > 0 %>
             <% total_amount=0 %>
-            <% @workshops.each do |entry| %>
+            <% @categories.each do |entry| %>
               <tr>
                 <td><%= entry[:id]%></td>
-                <td><%= entry[:date].strftime("%m/%d/%Y") %></td>
                 <td><%= entry[:name] %></td>
                 <td>
-                <a href="/edit_workshop?id=<%= entry[:id]%>" class="btn btn-primary btn-xs">
+                <a href="/edit_category?id=<%= entry[:id]%>" class="btn btn-primary btn-xs">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a></td>
                 <td>
-                <a href="/delete_workshop?id=<%= entry[:id]%>" class="btn btn-danger btn-xs">
+                <a href="/delete_category?id=<%= entry[:id]%>" class="btn btn-danger btn-xs">
                     <span class="glyphicon glyphicon-trash"></span>
                 </a>
                 </td>

@@ -1,5 +1,4 @@
 
-
 get '/prompt_weekly_payment' do
   erb :prompt_weekly_payment
 end
