@@ -11,7 +11,7 @@ get '/new_category' do
   erb :add_category
 end
 
-post '/save__new_category' do
+post '/save_new_category' do
   if params[:commit] == 'Submit'
     @category_name = params[:name]
     @category = Category.find_by_name(@category_name)
