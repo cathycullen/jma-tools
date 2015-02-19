@@ -353,9 +353,7 @@ end
 
   post '/done' do
   puts "/done called done:  #{params[:done]}   params: #{params}"
-    if params[:done] == 'Continue'
-      erb :send_jma_payment_form
-    end
+  erb :send_jma_payment_form
   end
   
 

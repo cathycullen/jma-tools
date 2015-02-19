@@ -3,7 +3,7 @@ class CreateGuests < ActiveRecord::Migration
     create_table :guests do |t|
       t.string :name, :null => false, :unique => true
       t.string :email, :null => false, :unique => true
-      t.integer :amount
+      t.float :amount
       t.boolean :paid, :default => false
       t.references :workshop
     end

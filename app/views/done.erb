@@ -2,7 +2,10 @@
 <p><%= @on_complete_msg %></p>
 
   <form action="<%= @on_complete_redirect %>" method="<%= @on_complete_method %>"">
-    <input type="submit" value="Continue" name="done" class="btn btn-success"  >
+    <% if !@param_name.nil? %>
+      <input type="hidden" name="<%= @param_name %>" value="<%= @param_value %>">
+    <% end %>
+    <input type="submit" value="Done" class="btn btn-success"  >
   </form>
   <br> 
 </div>

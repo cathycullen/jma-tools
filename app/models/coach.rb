@@ -15,3 +15,7 @@ end
 def find_by_id(id)
   Coach.find(id)
 end
+
+def try_this(id)
+  Coach.find(id)
+end

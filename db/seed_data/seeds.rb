@@ -21,4 +21,4 @@ category = Category.create(name: "Personal Branding")
 
 workshop = Workshop.create(name: "Jan 2015 Workshop", date: Date.today)
 
-guest = Guest.create(name: "Makena Michael", email: "cathy@softwareoptions.com", amount: 995, paid: true, workshop_id: 1)
+guest = Guest.create(name: "Makena Michael", email: "cathy@softwareoptions.com", amount: 995.0, paid: true, workshop_id: 1)
