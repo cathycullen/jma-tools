@@ -25,7 +25,7 @@
       <h3>Payment Summary</h3>
     </div>
     <div class="col-md-3">
-      <form class="navbar-form" role="search">
+      <form class="navbar-form" role="search" action="/payments" method="get">
         <div class="input-group add-on">
           <input type="text" class="form-control" placeholder="Search" name="search" id="search" value="<%=@name_search%>">
         <div class="input-group-btn">
@@ -120,6 +120,8 @@
             <th>Amount</th>
             <th>Coach</th>
             <th>Category</th>
+            <th>Status</th>
+            <th>Msg</th>
           </tr>
         </thead>
         <tbody>
@@ -133,6 +135,12 @@
                 <td>$<%= entry[:amount] %></td>
                 <td><%= Coach.find_by_id(entry[:coach_id]).name %></td>
                 <td><%= Category.find_by_id(entry[:category_id]).name %></td>
+                <td><%= entry[:status] %></td>
+                <td><%= entry[:msg] %></td>
+                <% if entry[:status] == 'paid' %>
+                  <td><%= total_amount %></td>
+                  <% total_amount = total_amount + entry[:amount].to_f %>
+                <% end %>
                 <td>
                 <a href="/edit_payment?payment_id=<%= entry[:id]%>" class="btn btn-primary btn-xs">
                     <span class="glyphicon glyphicon-pencil"></span>
@@ -148,7 +156,9 @@
             <td>Total Amount:</td>
             <td></td>
             <td></td>
-            <td>$<%= @payment_sum  %></td>
+            <td>$<%= total_amount  %></td>
+            <td></td>
+            <td></td>
             <td></td>
             <td></td>
           </tr>	

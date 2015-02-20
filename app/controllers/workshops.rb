@@ -66,6 +66,7 @@ end
     if !params[:id].nil?
       @workshop = Workshop.find(params[:id])
       @attendees = Guest.where(:workshop_id => @workshop.id)
+      @workshop_expenses = WorkshopExpense.where(:workshop_id => @workshop.id)
       if @workshop
         erb :edit_workshop
       end
@@ -126,7 +127,7 @@ post '/save_new_guest' do
     @errors << "Please enter guest amount."
   end
   if params[:paid]
-    @date = params[:paid]
+    @paid = params[:paid]
   else
     @errors << "Please enter guest paid."
   end
@@ -162,5 +163,87 @@ post '/save_new_guest' do
     puts "on complete:  #{ @on_complete_redirect}"
     erb :done
 end
+
+
+get '/new_workshop_expense' do
+  puts "/new_workshop_expense called #{params}"
+  @workshop_id = params[:workshop_id]
+  @errors = []
+  @callback_method = '/save_new_workshop_expense'
+  erb :new_workshop_expense  
+end
+
+
+post '/save_workshop_expense' do
+  @errors = []
+  puts "/save_workshop_expense #{params}"
+   if !params[:id].nil?
+    @workshop_expense = WorkshopExpense.find(params[:id])
+    if @workshop_expense
+      @workshop_expense.description = params[:description]
+      @workshop_expense.amount = params[:amount]
+      @workshop_expense.save
+    else 
+      puts "workshop_expense not found id: #{params[:id]}"
+    end
+    puts "saving workshop_expense changes"
+    @on_complete_msg = "WorkshopExpense  Saved."
+    #find the right workshop and redirect there.
+    @on_complete_redirect=  "/workshops"
+    @on_complete_method=  "get"
+    erb :done
+  else
+    puts "/save_workshop_expense params :id not found "
+    @errors << "WorkshopExpense Not Found"
+    erb :edit_workshop_expense
+  end
+end
+
+
+post '/save_new_workshop_expense' do
+  @errors = []
+
+  if params[:description]
+    @description = params[:description]
+  else
+    @errors << "Please enter workshop_expense description."
+  end
+  
+  if params[:amount]
+    @amount = params[:amount]
+  else
+    @errors << "Please enter workshop_expense amount."
+  end
+  if params[:workshop_id]
+    @workshop_id = params[:workshop_id]
+  else
+    @errors << "Please enter workshop id."
+  end
+  
+  
+  puts "/save_new_workshop_expense errors:  @errors.count"
+   if !@errors.empty?
+      erb :new_workshop_expense 
+    else
+      @workshop_expense = WorkshopExpense.new
+      puts "workshop_expense:  #{@workshop_expense}"  
+      @workshop_expense.description = params[:description]
+      @workshop_expense.amount = params[:amount] 
+      @workshop_expense.workshop_id = params[:workshop_id]  
+      puts "workshop_expense name #{@workshop_expense.description} date #{@workshop_expense.amount}"  
+      @workshop_expense.save
+    end
+
+    puts "***** /edit_workshop?id=#{@workshop_expense.workshop_id}"
+    @on_complete_msg = "New Workshop Expense Saved."
+    @on_complete_redirect=  "/edit_workshop?id=#{@workshop_expense.workshop_id}"
+    @on_complete_method=  "get"
+    @param_name = "id"
+    @param_value = @workshop_expense.workshop_id
+
+    puts "on complete:  #{ @on_complete_redirect}"
+    erb :done
+end
+
 
 

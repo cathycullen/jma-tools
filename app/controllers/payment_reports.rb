@@ -148,11 +148,35 @@ post '/filter_payments' do
 
   get '/delete_payment' do
     @errors = []
+    puts "/delete_payment get"
     if !params[:payment_id].nil?
       @payment = Payment.find(params[:payment_id])
-      
+      erb :delete_payment
+    else
+      puts "Unable to find payment id for delete #{params[:payment_id]}"
+      @on_complete_msg = "Unable to Delete Payment.  Payment not Found for id #{params[:payment_id]}"
+      @on_complete_redirect=  "/payments"
+      @on_complete_method=  "get"
+      erb :done
     end
-    erb :edit_payment
+  end
+
+  post '/delete_payment' do
+    puts "/delete_payment post called"
+    @errors = []
+    if !params[:payment_id].nil?
+      @payment = Payment.find(params[:payment_id])
+      @payment.delete
+
+      puts "Payment Was Deleted {@payment.id}"
+      @on_complete_msg = "Payment Was Deleted"
+    else
+      puts "Unable to Delete Payment.  Payment not Found for id #{params[:payment_id]}"
+      @on_complete_msg = "Unable to Delete Payment.  Payment not Found for id #{params[:payment_id]}"
+    end
+    @on_complete_redirect=  "/payments"
+    @on_complete_method=  "get"
+    erb :done
   end
 
 
