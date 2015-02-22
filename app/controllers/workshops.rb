@@ -27,51 +27,53 @@ end
 
   post '/save_new_workshop' do
     @errors = []
-
     if params[:name]
       @name = params[:name]
     else
       @errors << "Please enter workshop name."
     end
     if params[:date]
-      @date = params[:date]
+      @workshop_date = params[:date]
     else
       @errors << "Please enter workshop date."
     end
    if !@errors.empty?
       erb :new_workshop 
     else
-      @workshop = Workshop.new
-      puts "workshop:  #{@workshop}"  
-      @workshop.name = params[:name]
-      @workshop.date = params[:date]  
-      puts "Workshop name #{@workshop.name} date #{@workshop.date}"  
-      @workshop.save
+      @workshop = Workshop.new 
+      @workshop.name = @name
+      @workshop.workshop_date = Date.strptime(@workshop_date, "%m/%d/%Y") 
+      
+      if @workshop.save!
+        @on_complete_msg = "Workshop Added."
+      else
+        @on_complete_msg = "New Workshp returned and error and was not saved"
+      end
+      @on_complete_redirect=  "/workshops"
+      @on_complete_method=  "get"
+      erb :done
     end
-end
+  end
 
   post '/save_workshop' do
     @errors = []
     puts "/save_workshop #{params}"
-     if !params[:id].nil?
+    if !params[:id].nil?
       @workshop = Workshop.find(params[:id])
       if @workshop
         @workshop.name = params[:name]
-        @workshop.date = params[:date]
-        @workshop.save
+        @workshop.workshop_date = Date.strptime(params[:date], "%m/%d/%Y")
+        if @workshop.save
+          @on_complete_msg = "Workshop Added."
+        else
+          @on_complete_msg = "Save Workshp returned and error and was not saved"
+        end
       else 
-        puts "workshop not found id: #{params[:id]}"
+        @on_complete_msg = "workshop not found id: #{params[:id]}"
       end
-      puts "saving workshop changes"
-      @on_complete_msg = "Workshop Changes Saved."
       @on_complete_redirect=  "/workshops"
       @on_complete_method=  "get"
       erb :done
-    else
-      puts "/save_workshop params :id not found "
-      @errors << "Workshop Not Found"
-      @callback_method = '/save_workshop'
-      erb :edit_workshop
     end
   end
 

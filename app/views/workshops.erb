@@ -26,7 +26,7 @@
             <% @workshops.each do |entry| %>
               <tr>
                 <td><%= entry[:id]%></td>
-                <td><%= entry[:date].strftime("%m/%d/%Y") %></td>
+                <td><%= entry[:workshop_date].strftime("%m/%d/%Y") %></td>
                 <td><%= entry[:name] %></td>
                 <td>
                   <a href="/view_workshop?id=<%= entry[:id]%>" class="btn btn-success btn-sm">
