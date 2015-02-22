@@ -60,9 +60,7 @@
             </select>
             <br>
             <label class="control-label" for="textarea">Coach</label>  
-            <select name="coach[]" >
-
-
+            <select name="coach[]" class="form-control" >
 
               <% if @coach_selected == "All" %>
                 <option value="All" selected>All</option>"
@@ -80,7 +78,7 @@
 
             <br>
             <label class="control-label" for="textarea">Transaction</label>  
-            <select name="transaction[]" > 
+            <select name="transaction[]" class="form-control" > 
               <% if @transaction_selected == "All" %>
                 <option value="All" selected>All</option>">
               <% else %>

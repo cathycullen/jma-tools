@@ -31,7 +31,20 @@
             <div class="col-md-5">
               <label class="control-label" for="textarea">Paid</label>
               <input type="text" class="form-control" name="paid"  title="Paid" placeholder="Paid" required >
-              <input type="checkbox" class="checkthis" />
+            </div>            
+          </div>
+           <div clsss="row">
+            <div class="col-md-5">
+            <label class="control-label" for="textarea">Client Type</label>  
+              <select name="client_type"  class="form-control" class="form-control" style="width:100%; ">
+                <% @client_types.each do |client_type|%>         
+                  <option value="<%= client_type %>"><%= client_type %></option>
+                <% end %>
+              </select>
+            </div>
+            <div class="col-md-9">
+              <label class="control-label" for="textarea">Lunch</label>
+               <textarea class="form-control" rows="4" id="comment" name="lunch"  title="Lunch" placeholder="LunchOrder" ></textarea>
             </div>            
           </div>
          <input type="hidden" name="workshop_id" value = "<%= @workshop_id%>">

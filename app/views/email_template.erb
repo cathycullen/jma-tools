@@ -32,7 +32,7 @@
               <div clsss="row">
                 <div class="col-md-4">
                   <label class="control-label" >Start Time</label>
-                    <select class="form-control" name="appt_start">
+                    <select class="form-control" class="form-control" name="appt_start">
                     <% tp = [[5, 7, "am"], [12, 1, "pm"], [1, 10, "pm"]]  %>
                     <% i =0 %>
                     <% 3.times  do %>
@@ -54,7 +54,7 @@
                   </div>
                   <div class="col-md-4">
                     <label class="control-label" >End Time</label>
-                    <select class="form-control" name="appt_end">
+                    <select class="form-control" class="form-control" name="appt_end">
                     <% tp = [[5, 7, "am"], [12, 1, "pm"], [1, 10, "pm"]]  %>
                     <% i =0 %>
                     <% 3.times  do %>
@@ -83,7 +83,7 @@
               <div clsss="row">
                 <div class="col-md-4">
                   <label class="control-label" for="textarea">Coach</label>  
-                  <select name="coach_name" style="width:100%; ">
+                  <select name="coach_name" class="form-control" style="width:100%; ">
                     <% coaches.each do |coach|%>         
                       <option value="<%= coach.name %>"><%= coach.name %></option>
                     <% end %>
@@ -91,7 +91,7 @@
                 </div>  
                 <div class="col-md-4">
                   <label class="control-label" for="textarea">Location</label>            
-                  <select name="location" style="width:100%; ">
+                  <select name="location" class="form-control" style="width:100%; ">
                   <option value="Downtown">Downtown</option>
                   <option value="Northside">Northside</option>
                   </select>
@@ -100,7 +100,7 @@
 
                 <div class="col-md-4">
                   <label class="control-label" for="textarea">Category</label>  
-                  <select name="category" style="width:100%; ">
+                  <select name="category" class="form-control" style="width:100%; ">
                     <% categories.each do |category|%>         
                       <option value="<%= category.name %>"><%= category.name %></option>
                     <% end %>

@@ -16,13 +16,13 @@
               <input type="text" class="form-control" name="amount"  title="Enter Payment Amount" placeholder="Optional Amount" >
 
               <label class="control-label" for="textarea">Category</label>  
-                <select name="category" style="width:100%; ">
+                <select name="category" class="form-control" style="width:100%; ">
                   <% categories.each do |category|%>         
                     <option value="<%= category.name %>"><%= category.name %></option>
                   <% end %>
                 </select>
                 <label class="control-label" for="textarea">Coach</label>  
-                <select name="coach_name" style="width:100%; ">
+                <select name="coach_name" class="form-control" style="width:100%; ">
                   <% coaches.each do |coach|%>         
                     <option value="<%= coach.name %>"><%= coach.name %></option>
                   <% end %>

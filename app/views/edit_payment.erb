@@ -21,7 +21,7 @@
               <input type="text" class="form-control" name="amount" value="<%=@payment.amount%>" required >
 
               <label class="control-label" for="textarea">Category</label> 
-              <select name="category_id" style="width:100%; "> 
+              <select name="category_id" class="form-control" class="form-control" style="width:100%; "> 
               <% categories.each do |category|%>         
                 <% if @payment.category_id == category.id%>
                    <option value="<%= category.id %>" selected><%= category.name %></option>
@@ -33,7 +33,7 @@
 
               <input type="hidden" name="payment_id" value="<%= @payment_id%>">
               <label class="control-label" for="textarea">Coach</label>  
-              <select name="coach_id" style="width:100%; ">
+              <select name="coach_id" class="form-control" style="width:100%; ">
                 <% coaches.each do |coach|%>         
                   <% if @payment.coach_id == coach.id%>
                     <option value="<%= coach.id %>" selected><%= coach.name %></option>

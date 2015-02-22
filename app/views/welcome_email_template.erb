@@ -70,14 +70,14 @@
                 </select>
 
               <label class="control-label" for="textarea">Location</label>            
-              <select name="location" style="width:100%; ">
+              <select name="location" class="form-control" style="width:100%; ">
                 <option value="Downtown">Downtown</option>
                 <option value="Northside">Northside</option>
               </select>
 
 
               <label class="control-label" for="textarea">Category</label>  
-                <select name="category" style="width:100%; ">
+                <select name="category" class="form-control" style="width:100%; ">
                   <% categories.each do |category|%>         
                     <option value="<%= category.name %>"><%= category.name %></option>
                   <% end %>

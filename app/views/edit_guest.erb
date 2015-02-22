@@ -1,0 +1,70 @@
+<section id="forms"  style="margin-left: 15%;">
+    <div class="col-md-9">
+    <br>
+      <form class="form-horizontal well" action="<%=@callback_method%>?id=<%= @guest.id %>" method="post" >   
+        <fieldset>
+          <legend>Edit Workshop Attendee</legend>
+          <br>
+          <% if !@errors.empty? %>
+             <legend style="color: red;  font-weight: bold; font-size: 14px;"
+              <p>The Following Errors Were Encountered: </p>
+              <% @errors.each do |e| %>
+                <p><%=e%></p>
+              <% end %>
+            </legend>
+          <% end %>
+           <div clsss="row">
+            <div class="col-md-5">
+              <label class="control-label" for="textarea">Name</label> 
+              <input type="text" class="form-control" name="name" title="Enter Name" placeholder="Name" value="<%=@guest.name%>" required >
+            </div>
+            <div class="col-md-5">
+              <label class="control-label" for="textarea">Email</label>
+              <input type="text" class="form-control" name="email"  title="Enter Email" placeholder="Email" value="<%=@guest.email%>" required >
+            </div>            
+          </div>  
+          <div clsss="row">
+            <div class="col-md-5">
+              <label class="control-label" for="textarea">Amount</label> 
+              <input type="text" class="form-control" name="amount" title="Amount" placeholder="Amount" value="<%=@guest.amount%>" required >
+            </div>
+            <div class="col-md-5">
+            <label class="control-label" for="textarea">Paid</label>  
+              <select name="paid"  class="form-control" class="form-control" style="width:100%; ">
+                <% if @guest.paid == true %>
+                  <option value="true" selected >Yes</option>
+                  <option value="false">No</option>
+                  <% else %>
+                  <option value="true">Yes</option>
+                  <option value="false" selected>No</option>
+                  <% end %>
+              </select>
+              <label class="control-label" for="textarea">Paid</label>
+              <input type="text" class="form-control" name="paid"  title="Paid" placeholder="Paid" value="<%=@guest.paid%>" required >
+            </div>            
+          </div>
+           <div clsss="row">
+            <div class="col-md-5">
+            <label class="control-label" for="textarea">Client Type</label>  
+              <select name="client_type"  class="form-control" class="form-control" style="width:100%; ">
+                <% @client_types.each do |client_type|%>         
+                  <option value="<%= client_type %>"><%= client_type %></option>
+                <% end %>
+              </select>
+            </div>
+            <div class="col-md-9">
+              <label class="control-label" for="textarea">Lunch</label>
+              <textarea class="form-control" rows="4" id="lunch" name="lunch"  title="Lunch" placeholder="Lunch" value="<%=@guest.lunch%>" ><%=@guest.lunch%></textarea>
+            </div>            
+          </div>
+         <input type="hidden" name="workshop_id" value = "<%= @guest.workshop_id%>">
+          <hr>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-success" title="Select to Save Workshop Attendee Information">Save</button>
+            <button type="reset" class="btn" onclick="history.go(-1);">Cancel</button>
+          </div>
+          <input type="hidden" name="id" value="<%= @guest.id%>">
+        </fieldset>
+    </form>
+  </div>
+</section>

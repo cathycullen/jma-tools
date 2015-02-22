@@ -1,3 +1,18 @@
+require 'yaml'
+
+configure do
+end
+
+helpers do
+  puts "workshops helpers called"
+
+  def client_types
+    @client_types ||= YAML.load_file('client_types.yml')
+  end
+  
+end
+
+
 get '/workshops' do
   @workshops = Workshop.all
   erb :workshops  
@@ -55,6 +70,7 @@ end
     else
       puts "/save_workshop params :id not found "
       @errors << "Workshop Not Found"
+      @callback_method = '/save_workshop'
       erb :edit_workshop
     end
   end
@@ -75,12 +91,36 @@ end
 
 get '/new_guest' do
   puts "/new_guest called #{params}"
+  puts "client_types #{@client_types.inspect}"
+
   @workshop_id = params[:workshop_id]
   @errors = []
   @callback_method = '/save_new_guest'
   erb :new_guest  
 end
 
+
+get '/edit_guest' do
+  client_types
+
+  puts "/edit_guest called #{params}"
+  puts "client_types #{@client_types.inspect}" 
+  @errors = []
+  @callback_method = '/save_workshop'
+
+  if !params[:id].nil?
+    @id = params[:id]
+    @guest = Guest.find(params[:id])
+    puts "has guest paid? #{@guest.paid}?  what's for lunch #{@guest.lunch}"
+    if @guest
+      erb :edit_guest
+    end
+  end
+
+  @errors = []
+  @callback_method = '/save_guest'
+  erb :edit_guest  
+end
 
 post '/save_guest' do
   @errors = []
@@ -90,16 +130,24 @@ post '/save_guest' do
     if @guest
       @guest.name = params[:name]
       @guest.email = params[:email]
+      @guest.paid = params[:paid]
+      @guest.client_type = params[:client_type]
+      @guest.lunch = params[:lunch]
       @guest.save
     else 
       puts "guest not found id: #{params[:id]}"
     end
-    puts "saving guest changes"
-    @on_complete_msg = "Guest Changes Saved."
-    #find the right workshop and redirect there.
-    @on_complete_redirect=  "/workshops"
-    @on_complete_method=  "get"
-    erb :done
+     puts "saving guest changes"
+
+      @guest.workshop_id = params[:workshop_id]  
+      @on_complete_msg = "Workshop Attendee Changes Saved."
+      @on_complete_redirect=  "/edit_workshop?id=#{@guest.workshop_id}"
+      @on_complete_method=  "get"
+      @param_name = "id"
+      @param_value = @guest.workshop_id
+
+      puts "on complete:  #{ @on_complete_redirect}"
+      erb :done
   else
     puts "/save_guest params :id not found "
     @errors << "Guest Not Found"
@@ -234,16 +282,20 @@ post '/save_new_workshop_expense' do
       @workshop_expense.save
     end
 
-    puts "***** /edit_workshop?id=#{@workshop_expense.workshop_id}"
-    @on_complete_msg = "New Workshop Expense Saved."
-    @on_complete_redirect=  "/edit_workshop?id=#{@workshop_expense.workshop_id}"
-    @on_complete_method=  "get"
-    @param_name = "id"
-    @param_value = @workshop_expense.workshop_id
+    redirect "/edit_workshop?id=#{params[:workshop_id]}"
+  end
 
-    puts "on complete:  #{ @on_complete_redirect}"
-    erb :done
-end
+
+  get '/delete_workshop_expense' do
+    if params[:id]
+      @workshop_expense = WorkshopExpense.find(params[:id])
+      if @workshop_expense
+        workshop_id = @workshop_expense.workshop_id
+        @workshop_expense.delete
+        redirect "/edit_workshop?id=#{workshop_id}"
+      end
+    end
+  end
 
 
 

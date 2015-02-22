@@ -24,20 +24,7 @@
               <label class="control-label" for="textarea">Workshop Date</label>
               <input type="text" class="form-control" name="date"  title="Enter Workshop Date" value="<%=@workshop.date%>" placeholder="Workshop Date" id="dp1" >
             </div>  
-            <div class = "col-md-2">
-              <label class="control-label" for="textarea">Add Attendee</label>
-              <td><a href="/new_guest?workshop_id=<%=@workshop.id%>" class="btn btn-primary btn-xs">
-              <span class="glyphicon glyphicon-plus"></span></a>
-              </td>
-            </div>  
-            <div class = "col-md-2">
-              <label class="control-label" for="textarea">Add Expense</label>
-              <td><a href="/new_workshop_expense?workshop_id=<%=@workshop.id%>" class="btn btn-primary btn-xs">
-              <span class="glyphicon glyphicon-plus"></span></a>
-              </td>
-            </div>  
           </div>
-          <hr>
           <div class = "row">
             <legend> Workshop Attendees</legend>
           </div>
@@ -81,7 +68,11 @@
                 </tbody>
               </table>
             </div>  
-          </div>  
+          </div> 
+          <div class="row">
+              <a href="/new_guest?workshop_id=<%=@workshop.id%>" class="btn btn-primary btn-xs">Add Attendee
+              <span class="glyphicon glyphicon-plus"></span></a> 
+            </div>
         <hr>
 
           <div class = "row">
@@ -120,7 +111,11 @@
                 </tbody>
               </table>
             </div>  
-          </div>  
+          </div> 
+          <div class = "row">
+            <a href="/new_workshop_expense?workshop_id=<%=@workshop.id%>" class="btn btn-primary btn-xs">Add Expense
+                <span class="glyphicon glyphicon-plus"></span></a> 
+              </div>
         <hr>
 
 
