@@ -136,7 +136,7 @@
                 <td><%= entry[:status] %></td>
                 <td><%= entry[:msg] %></td>
                 <% if entry[:status] == 'paid' %>
-                  <td><%= total_amount %></td>
+                  <%= total_amount %>
                   <% total_amount = total_amount + entry[:amount].to_f %>
                 <% end %>
                 <td>
