@@ -37,8 +37,13 @@
             <div class="col-md-5">
             <label class="control-label" for="textarea">Client Type</label>  
               <select name="client_type"  class="form-control" class="form-control" style="width:100%; ">
-                <% @client_types.each do |client_type|%>         
+                <% i = 0 %>
+                <% @client_types.each do |client_type|%> 
+                <% if i == 0 %>        
+                   <option value="<%= client_type %>" selected><%= client_type %></option>
+                 <% else %>
                   <option value="<%= client_type %>"><%= client_type %></option>
+                 <% end %>
                 <% end %>
               </select>
             </div>

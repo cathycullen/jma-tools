@@ -1,130 +1,150 @@
-<section id="forms"  style="margin-left: 15%;">
-    <div class="col-md-9">
-    <br>
-      <form class="form-horizontal well" action="<%=@callback_method%>?id=<%= @workshop.id %>" method="post" >   
-        <fieldset>
-          <legend>Edit Workshop</legend>
-          <br>
-          <% if !@errors.empty? %>
-             <legend style="color: red;  font-weight: bold; font-size: 14px;"
-              <p>The Following Errors Were Encountered: </p>
-              <% @errors.each do |e| %>
-                <p><%=e%></p>
-              <% end %>
-            </legend>
-          <% end %>
-          <div class = "row">
-            <div class = "col-md-6">
-              <div class="control-group" >
-                <label class="control-label" for="textarea">Name</label> 
-                <input type="text" class="form-control" name="name" value="<%=@workshop.name%>" required >
-              </div>
+<div class="container" style= "margin-bottom: 50px;">
+  
+  <!-- upper section -->
+  <div class="row">
+    <div class="col-sm-2">
+      <!-- left -->
+      <h3><i class="glyphicon glyphicon-flash"></i> Links</h3> 
+      <hr>
+      <ul class="nav nav-stacked">
+        <li><a href="/new_workshop"><i class="glyphicon glyphicon-plus"></i> Add Workshop Attendee</a></li>
+        <li><a href="/new_workshop"><i class="glyphicon glyphicon-plus"></i> Add Expense</a></li>
+        <li><a href="/new_workshop"><i class="glyphicon glyphicon-plus"></i> Add Workshop</a></li>
+        <li><a href="/workshops"><i class="glyphicon glyphicon-briefcase"></i> Workshops</a></li>
+        <li><a href="/coaches"><i class="glyphicon glyphicon-bullhorn"></i> Coaches</a></li>
+        <li><a href="/categories"><i class="glyphicon glyphicon-align-justify"></i> Categories</a></li>
+    </div><!-- /span-2 -->
+    <div class="col-sm-10">
+      <h3><i class="glyphicon glyphicon-pencil"></i> &nbsp Workshop</h3>  
+      <hr>
+      <div class="row">
+       <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <i class="glyphicon glyphicon-wrench pull-right"></i>
+              <h4>Edit Workshop</h4>
             </div>
-            <div class = "col-md-3">
-              <label class="control-label" for="textarea">Workshop Date</label>
-              <input type="text" class="form-control" name="date"  title="Enter Workshop Date" value="<%=@workshop.workshop_date%>" placeholder="Workshop Date" id="dp1" >
-            </div>  
           </div>
-          <div class = "row">
-            <legend> Workshop Attendees</legend>
-          </div>
+          <div class="panel-body">
+            <form class="form form-vertical" action="<%=@callback_method%>?id=<%= @workshop.id %>" method="post" >  
+        <!--  <form class="form-horizontal well" action="<%=@callback_method%>?id=<%= @workshop.id %>" method="post" > -->  
+              <fieldset>
+                <br>
+                <% if !@errors.empty? %>
+                   <legend style="color: red;  font-weight: bold; font-size: 14px;"
+                    <p>The Following Errors Were Encountered: </p>
+                    <% @errors.each do |e| %>
+                      <p><%=e%></p>
+                    <% end %>
+                  </legend>
+                <% end %>
+                <div class = "row">
+                  <div class = "col-md-7">
+                    <div class="control-group" >
+                      <label class="control-label" for="textarea">Name</label> 
+                      <input type="text" class="form-control" name="name" value="<%=@workshop.name%>" required >
+                    </div>
+                  </div>
+                  <div class = "col-md-5">
+                    <label class="control-label" for="textarea">Workshop Date</label>
+                    <input type="text" class="form-control" name="date"  title="Enter Workshop Date" value="<%=@workshop.workshop_date.strftime("%x")%>" placeholder="Workshop Date" id="dp1" >
+                  </div>  
+                </div>
+              </fieldset>
+              <hr>
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-success" title="Select to Save Payment Information">Save</button>
+                  <button type="reset" class="btn" onclick="history.go(-1);">Cancel</button>
+                </div>
+                <input type="hidden" name="id" value="<%= @workshop.id%>">
+            </form>
+          </div><!-- panel body -->
+      </div><!-- panel default -->
+      <h4><i class="glyphicon glyphicon-user"></i> &nbsp Workshop Attendees</h4>  
+      <hr>
+      <table class=" table-condensed table-striped table-hover table-responsive" style="width:100%;">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Type</th>
+            <th>Paid?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @attendees != nil && @attendees.size > 0 %>
+          <% total_paid = 0 %>
+            <% @attendees.each do |entry| %>
+              <tr>
+                <td><%= entry[:id]%></td>
+                <td><%= entry[:name]%></td>
+                <td>$<%= entry[:amount] %></td>
+                <td><%= entry[:client_type] %></td>
+                <% if entry[:paid] %>
+                <td><i class="fa fa-check"></i></td>
+                <% else %>
+                <td><i class="fa fa-times"></i></td>
+                 <% end %>
+                <td>
+                <% total_paid = total_paid + entry[:amount].to_f %>
+                <td><a href="/edit_guest?id=<%= entry[:id]%>" class="btn btn-primary btn-xs">
+                    <span class="glyphicon glyphicon-pencil"></span></a>
+                </td>
+                <td><a href="/delete_guest?id=<%= entry[:id]%>" class="btn btn-danger btn-xs">
+                    <span class="glyphicon glyphicon-trash"></span></a>
+                </td>
+              </tr> 
+              <% end %> 
+              <tr>
+                <td>Total Amount:</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>$<%= total_paid  %></td>
+              </tr> 
+          <% end %> 
+        </tbody>
+      </table>
 
-          <div class = "row">
-              <div class="well col-md-10" style="background-color:white;">
-              <table class="col-md-12 table table-condensed table-bordered table-striped table-hover table-responsive" style="display:block; height:300px;">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Amount</th>
-                    <th>Paid?</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% if @attendees != nil && @attendees.size > 0 %>
-                  <% total_paid = 0 %>
-                    <% @attendees.each do |entry| %>
-                      <tr>
-                        <td><%= entry[:id]%></td>
-                        <td><%= entry[:name]%></td>
-                        <td>$<%= entry[:amount] %></td>
-                        <td><%= entry[:paid] %></td>
-                        <% total_paid = total_paid + entry[:amount].to_f %>
-                        <td><a href="/edit_guest?id=<%= entry[:id]%>" class="btn btn-primary btn-xs">
-                            <span class="glyphicon glyphicon-pencil"></span></a>
-                        </td>
-                        <td><a href="/delete_guest?id=<%= entry[:id]%>" class="btn btn-danger btn-xs">
-                            <span class="glyphicon glyphicon-trash"></span></a>
-                        </td>
-                      </tr> 
-                      <% end %> 
-                      <tr>
-                        <td>Total Amount:</td>
-                        <td></td>
-                        <td></td>
-                        <td>$<%= total_paid  %></td>
-                      </tr> 
-                  <% end %> 
-                </tbody>
-              </table>
-            </div>  
-          </div> 
-          <div class="row">
-              <a href="/new_guest?workshop_id=<%=@workshop.id%>" class="btn btn-primary btn-xs">Add Attendee
-              <span class="glyphicon glyphicon-plus"></span></a> 
-            </div>
-        <hr>
-
-          <div class = "row">
-            <legend> Workshop Expenses</legend>
-          </div>
-          <div class = "row">
-              <div class="well col-md-8" style="background-color:white;">
-              <table class="col-md-9 table table-condensed table-bordered table-striped table-hover table-responsive" style="display:block; height:200px;">
-                <thead>
-                  <tr>
-                    <th>Description</th>
-                    <th>Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% if @workshop_expenses != nil && @workshop_expenses.size > 0 %>
-                  <% total_expenses = 0 %>
-                    <% @workshop_expenses.each do |entry| %>
-                      <tr>
-                        <td><%= entry[:description]%></td>
-                        <td>$<%= entry[:amount] %></td>
-                        <% total_expenses = total_expenses + entry[:amount].to_f %>
-                        <td><a href="/edit_workshop_expense?id=<%= entry[:id]%>" class="btn btn-primary btn-xs">
-                            <span class="glyphicon glyphicon-pencil"></span></a>
-                        </td>
-                        <td><a href="/delete_workshop_expense?id=<%= entry[:id]%>" class="btn btn-danger btn-xs">
-                            <span class="glyphicon glyphicon-trash"></span></a>
-                        </td>
-                      </tr> 
-                    <% end %> 
-                    <tr>
-                      <td>Total Amount:</td>
-                      <td>$<%= total_expenses  %></td>
-                    </tr> 
-                  <% end %> 
-                </tbody>
-              </table>
-            </div>  
-          </div> 
-          <div class = "row">
-            <a href="/new_workshop_expense?workshop_id=<%=@workshop.id%>" class="btn btn-primary btn-xs">Add Expense
-                <span class="glyphicon glyphicon-plus"></span></a> 
-              </div>
-        <hr>
-
-
-        <div class="form-actions">
-          <button type="submit" class="btn btn-success" title="Select to Save Payment Information">Save</button>
-          <button type="reset" class="btn" onclick="history.go(-1);">Cancel</button>
-        </div>
-        <input type="hidden" name="id" value="<%= @workshop.id%>">
-      </fieldset>
-    </form>
-  </div>
-</section>
+      <h4><i class="glyphicon glyphicon-usd"></i> &nbsp Workshop Expenses</h4>  
+      <hr>
+      <table class="table-condensed table-striped table-hover table-responsive" style="width:100%;">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Description</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @workshop_expenses != nil && @workshop_expenses.size > 0 %>
+          <% total_expenses = 0 %>
+            <% @workshop_expenses.each do |entry| %>
+              <tr>
+                <td><%= entry[:id]%></td>
+                <td><%= entry[:description]%></td>
+                <td>$<%= entry[:amount] %></td>
+                <% total_expenses = total_expenses + entry[:amount].to_f %>
+                <td><a href="/edit_workshop_expense?id=<%= entry[:id]%>" class="btn btn-primary btn-xs">
+                    <span class="glyphicon glyphicon-pencil"></span></a>
+                </td>
+                <td><a href="/delete_workshop_expense?id=<%= entry[:id]%>" class="btn btn-danger btn-xs">
+                    <span class="glyphicon glyphicon-trash"></span></a>
+                </td>
+              </tr> 
+            <% end %> 
+            <tr>
+              <td></td>
+              <td>Total Amount:</td>
+              <td>$<%= total_expenses.round(2)  %></td>
+            </tr> 
+          <% end %> 
+        </tbody>
+      </table>
+      </div><!-- row -->
+    </div><!-- col sm 10-->
+       <hr>
+  </div><!-- row -->
+  
+</div><!--/container-->

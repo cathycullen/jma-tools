@@ -325,15 +325,26 @@ end
 
 get '/accountability_mirror_pre_workshop' do
 
-  @template = "accountability_mirror_pre_workshop"
-  populate_pre_workshop_email
-  erb :pre_workshop_template
+  # send in workshop id
+  # get workshop
+
+  get_params(params)
+  if !params[:id].nil?
+    @workshop = Workshop.find(params[:id])
+    if @workshop
+      @template = "accountability_mirror_pre_workshop"
+      populate_pre_workshop_email
+      erb :pre_workshop_template
+    end
+  end
 end
 
 post '/preview_pre_workshop_email' do
 
-  puts "/preview_pre_workshop_email #{@params}"
+  #puts "/preview_pre_workshop_email #{@params}"
+  #workshop_id is hidden
   # read user parameters, display preview of email
+  @workshop_id = params[:workshop_id]
  
   get_params(params)
   temp_greeting = @greeting.split("|")
@@ -348,32 +359,42 @@ end
 
 post '/send_pre_workshop_email'  do
   get_params(params)
-  show_param_results
+  @workshop_id = params[:workshop_id]
+  puts "*** workshop_id #{@workshop_id}"
+  #show_param_results
 
-  email = Mailer.send_pre_workshop_email(
-    @name,
-    @email,
-    @amount,
-    @appt_date_formatted,
-    @payment_date_formatted,
-    @appt_start,
-    @appt_end,
-    @location,
-    @text1,
-    @text2,
-    @text3,
-    @text4,
-    @text5,
-    @interview_text1,
-    @interview_text2,
-    @interview_text3,
-    @template,
-    @payment_text,
-    @greeting1,
-    @greeting2,
-    @closing_text
-  )
-  email.deliver
+  #send in a workshop id
+  # get all guests associated with workshop
+  #send email to each attendee
+
+  @attendees = Guest.where(:workshop_id => @workshop_id)
+  @attendees.each do | guest|
+    email = Mailer.send_pre_workshop_email(
+      guest.name,
+      guest.email,
+      guest.amount,
+      @appt_date_formatted,
+      @payment_date_formatted,
+      @appt_start,
+      @appt_end,
+      @location,
+      @text1,
+      @text2,
+      @text3,
+      @text4,
+      @text5,
+      @interview_text1,
+      @interview_text2,
+      @interview_text3,
+      @template,
+      @payment_text,
+      @greeting1,
+      @greeting2,
+      @closing_text
+    )
+    puts "sending email to #{guest.name}"
+    email.deliver
+  end
   #redirect to some thank you page
   @on_complete_msg = "Pre Workshop Email Sent."
   @on_complete_redirect=  "/done"

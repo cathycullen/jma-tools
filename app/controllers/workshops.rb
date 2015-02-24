@@ -34,6 +34,7 @@ end
     end
     if params[:date]
       @workshop_date = params[:date]
+      puts "**************** workshop date class #{@workshop_date.class}"
     else
       @errors << "Please enter workshop date."
     end
@@ -91,6 +92,63 @@ end
     end
   end
 
+  get '/delete_workshop' do
+    @errors = []
+    @callback_method = '/delete_workshop'
+    if !params[:id].nil?
+      @workshop = Workshop.find(params[:id])
+      if @workshop
+        erb :delete_workshop
+      end
+    end
+  end
+
+
+  post '/delete_workshop' do
+    puts "/delete_workshop post called"
+    @errors = []
+    if !params[:id].nil?
+      @workshop = Workshop.find(params[:id])
+      @workshop.delete
+
+      puts "Workshop Was Deleted {@workshop.id}"
+      @on_complete_msg = "Workshop Was Deleted"
+    else
+      puts "Unable to Delete Workshop.  Workshop not Found for id #{params[:id]}"
+      @on_complete_msg = "Unable to Delete Workshop.  Workshop not Found for id #{params[:id]}"
+    end
+    @on_complete_redirect=  "/workshops"
+    @on_complete_method=  "get"
+    erb :done
+  end
+
+
+  get '/workshop_lunch_report' do
+    @errors = []
+    @callback_method = '/workshops'
+    if !params[:id].nil?
+      @workshop = Workshop.find(params[:id])
+      @attendees = Guest.where(:workshop_id => @workshop.id)
+      if @attendees
+        erb :workshop_lunch_report2
+      end
+    end
+  end
+
+  get '/workshop_report' do
+    @errors = []
+    @callback_method = '/workshops'
+    if !params[:id].nil?
+      @workshop = Workshop.find(params[:id])
+      @attendees = Guest.where(:workshop_id => @workshop.id)
+      @expenses = WorkshopExpense.where(:workshop_id => @workshop.id)
+      if @attendees
+        erb :workshop_report
+      end
+    end
+  end
+  
+
 get '/new_guest' do
   puts "/new_guest called #{params}"
   puts "client_types #{@client_types.inspect}"
@@ -101,28 +159,28 @@ get '/new_guest' do
   erb :new_guest  
 end
 
-
-get '/edit_guest' do
-  client_types
-
-  puts "/edit_guest called #{params}"
-  puts "client_types #{@client_types.inspect}" 
-  @errors = []
-  @callback_method = '/save_workshop'
-
-  if !params[:id].nil?
-    @id = params[:id]
-    @guest = Guest.find(params[:id])
-    puts "has guest paid? #{@guest.paid}?  what's for lunch #{@guest.lunch}"
-    if @guest
-      erb :edit_guest
+  get '/edit_guest' do
+    client_types
+    @errors = []
+    @callback_method = '/save_guest'
+    if !params[:id].nil?
+        @guest = Guest.find(params[:id])
+      if @guest
+        erb :edit_guest
+      end
     end
   end
 
-  @errors = []
-  @callback_method = '/save_guest'
-  erb :edit_guest  
-end
+  get '/delete_guest' do
+    if params[:id]
+      @guest = Guest.find(params[:id])
+      if @guest
+        workshop_id = @guest.workshop_id
+        @guest.delete
+        redirect "/edit_workshop?id=#{workshop_id}"
+      end
+    end
+  end
 
 post '/save_guest' do
   @errors = []
@@ -135,14 +193,16 @@ post '/save_guest' do
       @guest.paid = params[:paid]
       @guest.client_type = params[:client_type]
       @guest.lunch = params[:lunch]
-      @guest.save
+      if @guest.save
+        redirect "/edit_workshop?id=#{@guest.workshop_id}"
+      else
+        @on_complete_msg = "Unable to save Workshop Attendee Changes."
+      end
     else 
       puts "guest not found id: #{params[:id]}"
+      @on_complete_msg = "Workshop Attendee Not Found.  Unable to save changes."
     end
-     puts "saving guest changes"
-
       @guest.workshop_id = params[:workshop_id]  
-      @on_complete_msg = "Workshop Attendee Changes Saved."
       @on_complete_redirect=  "/edit_workshop?id=#{@guest.workshop_id}"
       @on_complete_method=  "get"
       @param_name = "id"

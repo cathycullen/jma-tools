@@ -1,0 +1,58 @@
+<div class="container" style= "margin-bottom: 50px;">
+  
+  <!-- upper section -->
+  <div class="row">
+    <div class="col-sm-2">
+      <!-- left -->
+      <h3><i class="glyphicon glyphicon-flash"></i> Links</h3> 
+      <hr>
+      <ul class="nav nav-stacked">
+        <li><a href="/workshops"><i class="glyphicon glyphicon-briefcase"></i> Workshops</a></li>
+        <li><a href="/coaches"><i class="glyphicon glyphicon-bullhorn"></i> Coaches</a></li>
+        <li><a href="/categories"><i class="glyphicon glyphicon-align-justify"></i> Categories</a></li>
+        <li><a href="/payments"><i class="glyphicon glyphicon-usd"></i> Payments</a></li>
+    </div><!-- /span-2 -->
+    <div class="col-sm-4">
+      <h3><i class="glyphicon glyphicon-trash"></i> &nbsp Workshop</h3>  
+      <hr>
+      <div class="row">
+       <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <i class="glyphicon glyphicon-trash pull-right"></i>
+              <h4>Delete Workshop</h4>
+            </div>
+          </div>
+          <div class="panel-body">
+            <form class="form form-vertical" action="<%=@callback_method%>?id=<%= @workshop.id %>" method="post" >  
+         
+              <fieldset>
+                <br>
+                <% if !@errors.empty? %>
+                   <legend style="color: red;  font-weight: bold; font-size: 14px;"
+                    <p>The Following Errors Were Encountered: </p>
+                    <% @errors.each do |e| %>
+                      <p><%=e%></p>
+                    <% end %>
+                  </legend>
+                <% end %>
+                <label class="control-label" for="textarea">Workshop Name</label> 
+                <input type="text" class="form-control" name="name" value="<%=@workshop.name%>" required >
+                <label class="control-label" for="textarea">Workshop Date</label>
+                <input type="text" class="form-control" name="amount" value="<%=@workshop.workshop_date%>" required >
+              </fieldset>
+              <hr>
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-danger" title="Delete Workshop">Delete</button>
+                  <button type="reset" class="btn" onclick="history.go(-1);">Cancel</button>
+                </div>
+                <input type="hidden" name="id" value="<%= @workshop.id%>">
+            </form>
+          </div><!-- panel body -->
+      </div><!-- panel default -->
+     
+      </div><!-- row -->
+    </div><!-- col sm 6-->
+  </div><!-- row -->
+  
+</div><!--/container-->

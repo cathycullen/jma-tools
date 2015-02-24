@@ -9,7 +9,7 @@
               <div clsss="row">
                 <div class="col-md-6">
                   <label class="control-label" for="textarea">Workshop Date</label>
-                  <input type="text" class="form-control" name="appt_date"  title="Enter Workshop Date" placeholder="Workshop Date" id="dp1" > 
+                  <input type="text" class="form-control" name="appt_date"  value="<%=@workshop.workshop_date.strftime("%x")%>"title="Enter Workshop Date" placeholder="Workshop Date" id="dp1" > 
                 </div>
                 <div class="col-md-6">
                  <label class="control-label" >Time</label>
@@ -69,6 +69,7 @@
             <br>
             </fieldset>
               <input type="hidden" name="send_callback_method" value="<%= @send_callback_method%>">
+              <input type="hidden" name="workshop_id" value="<%= @workshop.id%>">
               <div class="form-actions">
                 <button type="submit" class="btn btn-success">Preview</button>
                 <button type="reset" class="btn">Cancel</button>

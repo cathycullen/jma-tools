@@ -22,13 +22,13 @@
 
               <label class="control-label" for="textarea">Category</label> 
               <select name="category_id" class="form-control" style="width:100%; "> 
-              <% categories.each do |category|%>         
-                <% if @payment.category_id == category.id%>
-                   <option value="<%= category.id %>" selected><%= category.name %></option>
-                <%else%>
-                  <option value="<%= category.id %>"><%= category.name %></option>
+                <% categories.each do |category|%>         
+                  <% if @payment.category_id == category.id%>
+                     <option value="<%= category.id %>" selected><%= category.name %></option>
+                  <%else%>
+                    <option value="<%= category.id %>"><%= category.name %></option>
+                  <% end %>
                 <% end %>
-              <% end %>
               </select>
 
               <input type="hidden" name="payment_id" value="<%= @payment.id%>">
@@ -47,6 +47,7 @@
                 <button type="submit" class="btn btn-danger" title="Delete Payment Information">Delete</button>
                 <button type="reset" class="btn">Cancel</button>
               </div>
+            </div>
         </fieldset>
       </form>
     </div>
