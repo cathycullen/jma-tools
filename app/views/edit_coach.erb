@@ -1,41 +1,69 @@
-<section id="forms"  style="margin-left: 15%;">
-    <div class="col-md-10">
-    <br>
-      <form class="form-horizontal well" action="<%=@callback_method%>?id=<%= @coach.id %>" method="post" >   
-        <fieldset>
-          <legend>Edit Coach</legend>
-          <br>
-          <% if !@errors.empty? %>
-             <legend style="color: red;  font-weight: bold; font-size: 14px;"
-              <p>The Following Errors Were Encountered: </p>
-              <% @errors.each do |e| %>
-                <p><%=e%></p>
-              <% end %>
-            </legend>
-          <% end %>
-          <div class = "row">
-            <div class = "col-md-3">
-              <div class="control-group" >
-                <label class="control-label" for="textarea">Name</label> 
-                <input type="text" class="form-control" name="name" value="<%=@coach.name%>" required >
-              </div>
+<div class="container" style= "margin-bottom: 50px;">
+  
+  <!-- upper section -->
+  <div class="row">
+    <div class="col-sm-2">
+      <!-- left -->
+      <h3><i class="glyphicon glyphicon-flash"></i> Links</h3> 
+      <hr>
+      <ul class="nav nav-stacked">
+        <li><a href="/new_workshop"><i class="glyphicon glyphicon-plus"></i> Add Workshop</a></li>
+        <li><a href="/workshops"><i class="glyphicon glyphicon-briefcase"></i> Workshops</a></li>
+        <li><a href="/coaches"><i class="glyphicon glyphicon-bullhorn"></i> Coaches</a></li>
+        <li><a href="/categories"><i class="glyphicon glyphicon-align-justify"></i> Categories</a></li>
+    </div><!-- /span-2 -->
+    <div class="col-sm-5">
+      <h3><i class="glyphicon glyphicon-pencil"></i> &nbsp Coach</h3>  
+      <hr>
+      <div class="row">
+       <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <i class="glyphicon glyphicon-pencil pull-right"></i>
+              <h4>Edit Coach</h4>
             </div>
-            <div class = "col-md-3">
-              <label class="control-label" for="textarea">Email</label>
-              <input type="text" class="form-control" name="email"  title="Enter Coach Date" value="<%=@coach.email%>" placeholder="Coach Date" id="dp1" >
-            </div>  
-            <div class = "col-md-3">
-              <label class="control-label" for="textarea">Phone</label>
-              <input type="text" class="form-control" name="phone"  title="Enter Coach Date" value="<%=@coach.phone%>" placeholder="Coach Date" id="dp1" >
-            </div>  
           </div>
-        <hr>
-        <div class="form-actions">
-          <button type="submit" value="Submit" name="commit" class="btn btn-success" title="Select to Save Coach">Save</button>
-          <button type="reset" class="btn" onclick="history.go(-1);">Cancel</button>
-        </div>
-        <input type="hidden" name="id" value="<%= @coach.id%>">
-      </fieldset>
-    </form>
-  </div>
-</section>
+          <div class="panel-body">
+            <form class="form form-vertical" action="<%= @submit_callback %>" method="post" > 
+       
+              <fieldset>
+                <br>
+                <% if !@errors.empty? %>
+                   <legend style="color: red;  font-weight: bold; font-size: 14px;"
+                    <p>The Following Errors Were Encountered: </p>
+                    <% @errors.each do |e| %>
+                      <p><%=e%></p>
+                    <% end %>
+                  </legend>
+                <% end %>
+                <div class="control-group" >
+                  <div class = "row">
+                    <div class = "col-md-12">
+                      <label class="control-label" for="textarea">Name</label> 
+                      <input type="text" class="form-control" name="name"  title="Name" value="<%=@coach.name%>" required >
+                    </div>
+                    <div class = "col-md-12">
+                      <label class="control-label" for="textarea">Email</label> 
+                      <input type="text" class="form-control" name="email"  title="Email" value="<%=@coach.email%>" required >
+                    </div>
+                    <div class = "col-md-12">
+                      <label class="control-label" for="textarea">Phone</label> 
+                      <input type="text" class="form-control" name="phone"  title="Phone" value="<%=@coach.phone%>" required >
+                    </div>
+                  </div>
+              </fieldset>
+              <input type="hidden" name="id" value="<%= @coach.id%>">
+              <hr>
+                <div class="form-actions">
+                  <button type="submit" value="Submit" name="commit" class="btn btn-success">Save</button>
+                  <button type="reset" class="btn" onclick="history.go(-1);">Cancel</button>
+                </div>
+            </form>
+          </div><!-- panel body -->
+      </div><!-- panel default -->
+      </div><!-- row -->
+    </div><!-- col sm 10-->
+       <hr>
+  </div><!-- row -->
+  
+</div><!--/container-->

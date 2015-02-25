@@ -6,7 +6,7 @@ class Category < ActiveRecord::Base
 
 
   def self.all_entries
-    Category.all
+    Category.all.order('id')
   end
 
 end

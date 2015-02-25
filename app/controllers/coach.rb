@@ -1,13 +1,14 @@
 
 get '/coaches' do
   @errors = []
-  @coaches = Coach.all
+  @coaches = Coach.all.order('id')
   erb :coaches
 end
 
 get '/new_coach' do
   @errors = []
   @submit_callback = "/save_new_coach"
+  puts "submit_callback #{@submit_callback}"
   erb :add_coach
 end
 
@@ -23,13 +24,7 @@ post '/save_new_coach' do
       @coach.email = params[:email]
       retval = @coach.save
       if retval
-        puts "retval from save:  #{retval}"
-        puts "coach #{@coach.name} added"
-        @on_complete_msg = "Coach #{@coach_name} has been added."
-        @on_complete_redirect=  "/coaches"
-        @on_complete_method=  "get"
-        puts "on_complete_msg #{@on_complete_msg}"
-        erb :done
+        redirect "/coaches"
       else
         puts "Add Coach returned and error and was not saved"
         @on_complete_msg = "Add Coach returned and error and was not saved"
@@ -55,12 +50,7 @@ post '/save_coach' do
       @coach.name = @coach_name
       retval = @coach.save
       if retval
-        puts "retval from save:  #{retval}"
-        puts "coach #{@coach.name} saved"
-        @on_complete_msg = "Coach #{@coach_name} has been saved."
-        @on_complete_redirect=  "/categories"
-        @on_complete_method=  "get"
-        erb :done
+        redirect "/coaches"
       else
         puts "Save Coach returned and error and was not saved"
         @on_complete_msg = "Save Coach returned and error and was not saved"
@@ -77,32 +67,33 @@ end
 
 get '/delete_coach' do
 
-  @errors = []
-  puts "/save_coach #{params}"
-   if !params[:id].nil?
-    @coach = Coach.find(params[:id])
-    if @coach
-      @coach_name = @coach.name
-      @coach.delete
-    else 
-      puts "coach not found id: #{params[:id]}"
+    @errors = []
+    puts "/delete_coach #{params}"
+     if !params[:id].nil?
+      @coach = Coach.find(params[:id])
+      if @coach
+        @coach_name = @coach.name
+        if @coach.delete
+          redirect "/coaches"
+        else
+          @on_complete_msg = "Error.  Unable to delete Coach."
+        end
+      else 
+        @on_complete_msg =  "coach not found id: #{params[:id]}"
+      end
+    else
+      puts "/delete_coach params :id not found "
+      @on_complete_msg =   "No Coach Id provided. Coach not deleted."
+      @on_complete_redirect=  "/coaches"
+      @on_complete_method=  "get"
+      erb :done
     end
-    puts "delete coach"
-    @on_complete_msg = "Coach #{@coach_name} has been removed."
-    @on_complete_redirect=  "/coaches"
-    @on_complete_method=  "get"
-    erb :done
-  else
-    puts "/delete_coach params :id not found "
-    @errors << "Coach Not Found"
-    erb :coaches
   end
-end
 
 
 get '/edit_coach' do
   @errors = []
-  @callback_method = '/save_coach'
+  @submit_callback = '/save_coach'
   if !params[:id].nil?
     @coach = Coach.find(params[:id])
     if @coach

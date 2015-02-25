@@ -6,7 +6,7 @@ class CoachHelper
   end
 
   def categories
-    @coaches ||= Coach.all
+    @coaches ||= Coach.all.order('id')
   end
 
   def get_coaches

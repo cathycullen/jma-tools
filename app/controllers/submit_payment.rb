@@ -23,11 +23,11 @@ helpers do
   puts "helpers called"
   def categories
     puts "is nil categories? #{@categories.nil?}"
-    @categories ||= Category.all
+    @categories ||= Category.all.order('id')
   end
 
   def coaches
-    @coaches ||= Coach.all
+    @coaches ||= Coach.all.order('id')
   end
 
   def url_root

@@ -3,7 +3,7 @@
     @template = "yelp_request"
     @preview_callback_method = "/yelp_request_preview"
     @send_callback_method = "/yelp_request_send"
-    @callback_method = '/yelp_request_preview'
+    @submit_callback = '/yelp_request_preview'
     erb :yelp_request_template
     #, :layout => false
   end

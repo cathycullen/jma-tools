@@ -6,7 +6,7 @@ class CategoryHelper
   end
 
   def categories
-    @categories ||= Category.all
+    @categories ||= Category.all.order('id')
   end
 
   def get_categories

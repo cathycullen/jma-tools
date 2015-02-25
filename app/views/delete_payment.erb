@@ -1,54 +1,80 @@
-<section id="forms"  style="margin-left: 30%;">
-    <div class="col-md-5">
-    <br>
-      <form class="form-horizontal well" action="/delete_payment" method="post" > 
-        <fieldset>
-          <legend>Delete Payment?</legend>
-          <br>
-          <% if !@errors.empty? %>
-             <legend style="color: red;  font-weight: bold; font-size: 14px;"
-              <p>The Following Errors Were Encountered: </p>
-              <% @errors.each do |e| %>
-                <p><%=e%></p>
-              <% end %>
-            </legend>
-          <% end %>
-
-          <div class="control-group" >
-              <label class="control-label" for="textarea">Name</label> 
-              <input type="text" class="form-control" name="name" value="<%=@payment.name%>" required >
-              <label class="control-label" for="textarea">Payment Amount</label>
-              <input type="text" class="form-control" name="amount" value="<%=@payment.amount%>" required >
-
-              <label class="control-label" for="textarea">Category</label> 
-              <select name="category_id" class="form-control" style="width:100%; "> 
-                <% categories.each do |category|%>         
-                  <% if @payment.category_id == category.id%>
-                     <option value="<%= category.id %>" selected><%= category.name %></option>
-                  <%else%>
-                    <option value="<%= category.id %>"><%= category.name %></option>
-                  <% end %>
-                <% end %>
-              </select>
-
-              <input type="hidden" name="payment_id" value="<%= @payment.id%>">
-              <label class="control-label" for="textarea">Coach</label>  
-              <select name="coach_id" class="form-control" style="width:100%; ">
-                <% coaches.each do |coach|%>         
-                  <% if @payment.coach_id == coach.id%>
-                    <option value="<%= coach.id %>" selected><%= coach.name %></option>
-                  <%else%>
-                    <option value="<%= coach.id %>"><%= coach.name %></option>
-                  <% end %>
-                <% end %>
-              </select>
-              <hr>
-              <div class="form-actions">
-                <button type="submit" class="btn btn-danger" title="Delete Payment Information">Delete</button>
-                <button type="reset" class="btn">Cancel</button>
-              </div>
+<div class="container" style= "margin-bottom: 50px;">
+  
+  <!-- upper section -->
+  <div class="row">
+    <div class="col-sm-2">
+      <!-- left -->
+      <h3><i class="glyphicon glyphicon-flash"></i> Links</h3> 
+      <hr>
+      <ul class="nav nav-stacked">
+        <li><a href="/payments"><i class="glyphicon glyphicon-usd"></i> Payments</a></li>
+        <li><a href="/workshops"><i class="glyphicon glyphicon-briefcase"></i> Workshops</a></li>
+        <li><a href="/coaches"><i class="glyphicon glyphicon-bullhorn"></i> Coaches</a></li>
+        <li><a href="/categories"><i class="glyphicon glyphicon-align-justify"></i> Categories</a></li>
+    </div><!-- /span-2 -->
+    <div class="col-sm-4">
+      <h3><i class="glyphicon glyphicon-pencil"></i> &nbsp Payment</h3>  
+      <hr>
+      <div class="row">
+       <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <i class="glyphicon glyphicon-trash pull-right" style="color:red;"></i>
+              <h4>Delete Payment</h4>
             </div>
-        </fieldset>
-      </form>
-    </div>
-</section>
+          </div>
+          <div class="panel-body">
+            <form class="form form-vertical" action="<%=@submit_callback%>?id=<%= @payment.id %>" method="post" >  
+         
+              <fieldset>
+                <br>
+                <% if !@errors.empty? %>
+                   <legend style="color: red;  font-weight: bold; font-size: 14px;"
+                    <p>The Following Errors Were Encountered: </p>
+                    <% @errors.each do |e| %>
+                      <p><%=e%></p>
+                    <% end %>
+                  </legend>
+                <% end %>
+                <label class="control-label" for="textarea">Name</label> 
+                <input type="text" class="form-control" name="name" value="<%=@payment.name%>" required >
+                <label class="control-label" for="textarea">Payment Amount</label>
+                <input type="text" class="form-control" name="amount" value="<%=@payment.amount%>" required >
+
+                <label class="control-label" for="textarea">Category</label> 
+                <select name="category_id" class="form-control" style="width:100%; "> 
+                  <% categories.each do |category|%>         
+                    <% if @payment.category_id == category.id%>
+                       <option value="<%= category.id %>" selected><%= category.name %></option>
+                    <%else%>
+                      <option value="<%= category.id %>"><%= category.name %></option>
+                    <% end %>
+                  <% end %>
+                </select>
+
+                <input type="hidden" name="payment_id" value="<%= @payment.id%>">
+                <label class="control-label" for="textarea">Coach</label>  
+                <select name="coach_id" class="form-control" style="width:100%; ">
+                  <% coaches.each do |coach|%>         
+                    <% if @payment.coach_id == coach.id%>
+                      <option value="<%= coach.id %>" selected><%= coach.name %></option>
+                    <%else%>
+                      <option value="<%= coach.id %>"><%= coach.name %></option>
+                    <% end %>
+                  <% end %>
+                </select>
+              </fieldset>
+              <hr>
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-danger" title="Delete Payment Information">Delete</button>
+                  <button type="reset" class="btn" onclick="history.go(-1);">Cancel</button>
+                </div>
+                <input type="hidden" name="id" value="<%= @payment.id%>">
+            </form>
+          </div><!-- panel body -->
+      </div><!-- panel default -->
+      </div><!-- row -->
+    </div><!-- col sm 6-->
+  </div><!-- row -->
+  
+</div><!--/container-->

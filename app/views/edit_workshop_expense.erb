@@ -7,27 +7,24 @@
       <h3><i class="glyphicon glyphicon-flash"></i> Links</h3> 
       <hr>
       <ul class="nav nav-stacked">
-        <li><a href="/new_guest?workshop_id=<%= @workshop.id%>"><i class="glyphicon glyphicon-plus"></i> Add Workshop Attendee</a></li>
-        <li><a href="/new_workshop_expense?workshop_id=<%= @workshop.id%>"><i class="glyphicon glyphicon-plus"></i> Add Expense</a></li>
         <li><a href="/new_workshop"><i class="glyphicon glyphicon-plus"></i> Add Workshop</a></li>
         <li><a href="/workshops"><i class="glyphicon glyphicon-briefcase"></i> Workshops</a></li>
         <li><a href="/coaches"><i class="glyphicon glyphicon-bullhorn"></i> Coaches</a></li>
         <li><a href="/categories"><i class="glyphicon glyphicon-align-justify"></i> Categories</a></li>
     </div><!-- /span-2 -->
     <div class="col-sm-5">
-      <h3><i class="glyphicon glyphicon-plus"></i> &nbsp Workshop</h3>  
+      <h3><i class="glyphicon glyphicon-usd"></i> &nbsp Workshop Expense</h3>  
       <hr>
       <div class="row">
        <div class="panel panel-default">
           <div class="panel-heading">
             <div class="panel-title">
-              <i class="glyphicon glyphicon-wrench pull-right"></i>
-              <h4>Add Workshop</h4>
+              <i class="glyphicon glyphicon-usd pull-right"></i>
+              <h4>Edit Workshop Expense</h4>
             </div>
           </div>
           <div class="panel-body">
             <form class="form form-vertical" action="<%=@submit_callback%>" method="post" >  
-       
               <fieldset>
                 <br>
                 <% if !@errors.empty? %>
@@ -38,33 +35,32 @@
                     <% end %>
                   </legend>
                 <% end %>
-                <div class = "row">
-                  <div class = "col-md-12">
-                    <div class="control-group" >
-                      <label class="control-label" for="textarea">Name</label> 
-                      <input type="text" class="form-control" name="name"  title="Name" required >
+                <div class="control-group" >
+                  <div class = "row">
+                    <div class = "col-md-12">
+                      <label class="control-label" for="textarea">Description</label> 
+                      <input type="text" class="form-control" name="description"  title="Description" placeholder="Description" value="<%=@workshop_expense.description%>" required >
                     </div>
                   </div>
-                </div>
-                <div class = "row">
-                  <div class = "col-md-5">
-                    <label class="control-label" for="textarea">Workshop Date</label>
-                    <input type="text" class="form-control" name="date"  title="Enter Workshop Date"  placeholder="Workshop Date" id="dp1" >
-                  </div>  
-                </div>
+                  <div class = "row">
+                    <div class = "col-md-3">
+                      <label class="control-label" for="textarea">Amount</label>
+                      <input type="text" class="form-control" name="amount" title="Amount"  placeholder="Amount" value="<%=@workshop_expense.amount%>" required>
+                    </div> 
+                  </div>
+                  <input type="hidden" name="workshop_id" value = "<%= @workshop_id%>">
+                  <input type="hidden" name="id" value = "<%= @workshop_expense.id%>">
                 </div>
               </fieldset>
               <hr>
-                <div class="form-actions">
-                  <button type="submit" class="btn btn-success" title="Select to Save Workshop Information">Save</button>
-                  <button type="reset" class="btn" onclick="history.go(-1);">Cancel</button>
-                </div>
+              <div class="form-actions">
+                <button type="submit" value="Submit" name="commit" class="btn btn-success">Save</button>
+                <button type="reset" class="btn" onclick="history.go(-1);">Cancel</button>
+              </div>
             </form>
           </div><!-- panel body -->
       </div><!-- panel default -->
-      </div><!-- row -->
-    </div><!-- col sm 10-->
-       <hr>
+      </div><!-- col sm 5 -->
+    </div><!-- col sm 2-->
   </div><!-- row -->
-  
 </div><!--/container-->

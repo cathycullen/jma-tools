@@ -1,7 +1,7 @@
 
 get '/categories' do
   @errors = []
-  @categories = Category.all
+  @categories = Category.all.order('id')
   erb :categories
 end
 
@@ -12,12 +12,15 @@ get '/new_category' do
 end
 
 post '/save_new_category' do
+  puts "/save_new_category"
+  puts "#{params}"
   if params[:commit] == 'Submit'
     @category_name = params[:name]
     @category = Category.find_by_name(@category_name)
     if @category.nil?
       @category = Category.new
       @category.name = @category_name
+      puts "/save_new_category #{@category.name}"
       retval = @category.save
       if retval
         puts "retval from save:  #{retval}"
@@ -50,12 +53,7 @@ post '/save_category' do
       @category.name = @category_name
       retval = @category.save
       if retval
-        puts "retval from save:  #{retval}"
-        puts "category #{@category.name} saved"
-        @on_complete_msg = "Category #{@category_name} has been saved."
-        @on_complete_redirect=  "/categories"
-        @on_complete_method=  "get"
-        erb :done
+        redirect "/categories"
       else
         puts "Save Category returned and error and was not saved"
         @on_complete_msg = "Save Category returned and error and was not saved"
@@ -98,7 +96,7 @@ end
 
 get '/edit_category' do
   @errors = []
-  @callback_method = '/save_category'
+  @submit_callback = '/save_category'
   if !params[:id].nil?
     @category = Category.find(params[:id])
     if @category

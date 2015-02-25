@@ -7,8 +7,8 @@
       <h3><i class="glyphicon glyphicon-flash"></i> Links</h3> 
       <hr>
       <ul class="nav nav-stacked">
-        <li><a href="/new_workshop"><i class="glyphicon glyphicon-plus"></i> Add Workshop Attendee</a></li>
-        <li><a href="/new_workshop"><i class="glyphicon glyphicon-plus"></i> Add Expense</a></li>
+        <li><a href="/new_guest?workshop_id=<%= @workshop.id%>"><i class="glyphicon glyphicon-plus"></i> Add Workshop Attendee</a></li>
+        <li><a href="/new_workshop_expense?workshop_id=<%= @workshop.id%>"><i class="glyphicon glyphicon-plus"></i> Add Expense</a></li>
         <li><a href="/new_workshop"><i class="glyphicon glyphicon-plus"></i> Add Workshop</a></li>
         <li><a href="/workshops"><i class="glyphicon glyphicon-briefcase"></i> Workshops</a></li>
         <li><a href="/coaches"><i class="glyphicon glyphicon-bullhorn"></i> Coaches</a></li>
@@ -26,8 +26,8 @@
             </div>
           </div>
           <div class="panel-body">
-            <form class="form form-vertical" action="<%=@callback_method%>?id=<%= @workshop.id %>" method="post" >  
-        <!--  <form class="form-horizontal well" action="<%=@callback_method%>?id=<%= @workshop.id %>" method="post" > -->  
+            <form class="form form-vertical" action="<%=@submit_callback%>?id=<%= @workshop.id %>" method="post" >  
+        <!--  <form class="form-horizontal well" action="<%=@submit_callback%>?id=<%= @workshop.id %>" method="post" > -->  
               <fieldset>
                 <br>
                 <% if !@errors.empty? %>

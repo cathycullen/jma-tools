@@ -13,7 +13,7 @@ end
 
 get '/password' do
   @errors = []
-  @callback_method = "/password"
+  @submit_callback = "/password"
   erb :password
 end
 
@@ -148,11 +148,11 @@ post '/filter_payments' do
 
   get '/delete_payment' do
     @errors = []
-    @callback_method = "/delete_payment"
+    @submit_callback = "/delete_payment"
     puts "/delete_payment get"
     if !params[:payment_id].nil?
       @payment = Payment.find(params[:payment_id])
-      erb :delete_payment2
+      erb :delete_payment
     else
       puts "Unable to find payment id for delete #{params[:payment_id]}"
       @on_complete_msg = "Unable to Delete Payment.  Payment not Found for id #{params[:payment_id]}"

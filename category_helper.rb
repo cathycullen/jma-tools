@@ -9,7 +9,7 @@ class CategoryHelper
   end
 
   def get_categories
-    Category.all
+    Category.all.order('id')
   end
 
 end
