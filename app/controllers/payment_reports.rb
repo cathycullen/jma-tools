@@ -29,6 +29,7 @@ end
 get '/payments' do
   #@payments = Payment.all_paid_entries
   @name_search = nil 
+  @submit_callback = "/filter_payments"
   
     @coach_filter= map_all(Coach)
     @category_filter = map_all(Category)
@@ -50,7 +51,12 @@ get '/payments' do
       @name_search = params[:search]
     end
     payment_totals
-  erb :payments
+    puts "**** @payments count #{@payments.size}  is it true?   #{@payments != nil && @payments.size > 0 }"
+
+    @payments.each do |payment|
+      puts "payment: id: #{payment.id}  name: #{payment.name}"
+    end
+  erb :payments2
 end
 
 def map_all(obj)
@@ -96,7 +102,7 @@ post '/filter_payments' do
   
   payment_totals
 
-  erb :payments
+  erb :payments2
   end
 
   get '/edit_payment' do
