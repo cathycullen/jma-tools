@@ -104,6 +104,8 @@ end
   end
 
 get '/deposit_check_form' do
+  @errors = []
+  @submit_callback = '/submit_deposit_check'
   erb :deposit_check_form
 end
 
@@ -145,6 +147,7 @@ end
 
 get '/arrow_payment_form' do
   @errors = []
+  @submit_callback = '/submit_arrow_payment'
   erb :arrow_payment_form
 end
 
