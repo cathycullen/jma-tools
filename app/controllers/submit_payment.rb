@@ -110,6 +110,7 @@ get '/deposit_check_form' do
 end
 
 post '/submit_deposit_check' do
+  @errors = []
   puts "/submit_deposit_check"
   @payment_details = PaymentDetails.new
   @payment_details.name=params[:name].strip()
@@ -142,7 +143,7 @@ post '/submit_deposit_check' do
   payment[:status] = PAID
   payment.save
     
-  erb :deposit_check_completed
+  erb :deposit_check_form
 end
 
 get '/arrow_payment_form' do
@@ -210,7 +211,7 @@ post '/submit_arrow_payment' do
     puts "calling arrow_payment_form"
       erb :arrow_payment_form
   else
-    erb :arrow_payment_completed
+    erb :arrow_payment_form
   end
 end
                                      
