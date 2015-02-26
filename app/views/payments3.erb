@@ -1,88 +1,12 @@
-<div class="container" style="width:97%;">
+<div class="container" style="width:100%;">
   
-  <!--
-  <div class="row">
-    <div class="col-sm-3"></div>
-    <div class="col-sm-9">
-      <div class="col-md-3">
-        <h4 style="margin-left: 2em;">This Year: $<%= @sum_this_year  %></h4>
-      </div>
-      <div class="col-md-3">
-        <h4>This Month: $<%= @sum_this_month  %></h4>
-      </div>
-      <div class="col-md-3">
-        <h4>This Week:$<%= @sum_this_week  %></h4>
-      </div>
-      <div class="col-md-3">
-        <h4>Today:$<%= @sum_today  %></h4>
-      </div>
-    </div>
-  </div>
--->
-
-  <div class="row">
-
-    <div class="col-sm-3"></div>
-    <div class="col-sm-2">
-      <div class="panel panel-default  text-center price-headline">
-        <div class="panel-heading">
-          <div class="panel-title">
-            <h4>Today:</h4>
-          </div>
-        </div>
-        <div class="panel-body text-center price-headline">
-          <h4>$<%= @sum_today  %></h4>
-        </div>
-      </div><!-- panel default -->
-    </div><!-- col-sm-3 -->
-    
-    <div class="col-sm-2">
-      <div class="panel panel-default  text-center price-headline">
-        <div class="panel-heading">
-          <div class="panel-title">
-            <h4>This Week:</h4>
-          </div>
-        </div>
-        <div class="panel-body text-center price-headline">
-          <h4>$<%= @sum_this_week  %></h4>
-        </div>
-      </div><!-- panel default -->
-    </div><!-- col-sm-3 -->
-
-
-    <div class="col-sm-2">
-      <div class="panel panel-default text-center price-headline">
-        <div class="panel-heading">
-          <div class="panel-title">
-            <h4>This Month:</h4>
-          </div>
-        </div>
-        <div class="panel-body text-center price-headline">
-          <h4>$<%= @sum_this_month  %></h4>
-        </div>
-      </div><!-- panel default -->
-    </div><!-- col-sm-3 -->
-
-    <div class="col-sm-2">
-      <div class="panel panel-default  text-center">
-        <div class="panel-heading">
-          <div class="panel-title">
-            <h4>This Year:</h4>
-          </div>
-        </div>
-        <div class="panel-body text-center price-headline">
-          <h4>$<%= @sum_this_year  %></h4>
-        </div>
-      </div><!-- panel default -->
-    </div><!-- col-sm-3 -->
-
-  </div><!-- row -->
-  
- 
   <!-- upper section -->
   <div class="row">
     <div class="col-sm-3">
       <!-- left -->
+      <h3><i class="fa fa-filter"></i> Filters</h3> 
+
+
        <div class="panel panel-default">
           <div class="panel-heading">
             <div class="panel-title">
@@ -168,7 +92,7 @@
               </fieldset>
               <hr>
                 <div class="form-actions">
-                  <button type="submit" value="Submit" name="commit" class="btn btn-success">Submit</button>
+                  <button type="submit" value="Submit" name="commit" class="btn btn-success">Save</button>
                   <button type="reset" class="btn" onclick="history.go(-1);">Cancel</button>
                 </div>
             </form>
@@ -213,68 +137,82 @@
           </div><!-- panel default -->
         </div><!-- col -->
       </div><!-- row -->
-    </div><!-- col-sm-3 -->
+
+    </div><!-- col -->
 
     <div class="col-sm-9">
       <div class="row">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <div class="panel-title">
-              <i class="fa fa-money fa-2x pull-left"></i>
-              <div class="col-md-3"><h4>Payments Received</h4></div>
-              <div class="col-md-3"></div>
-                <div class="col-md-4>">
-                  <form class="navbar-form" role="search" action="/payments" method="get">
-                    <div class="input-group add-on">
-                      <input type="text" class="form-control" placeholder="Search" name="search" id="search" value="<%=@name_search%>">
-                      <div class="input-group-btn">
-                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                      </div>
-                    </div>
-                  </form> 
-                </div><!-- col-md-4 -->
-            </div><!-- panel title -->
-          </div><!-- panel heading -->
-          <div class="panel-body" style="padding:0;"> 
+        <div class = "col-md-6">
+          <h3><i class="fa fa-money "></i> &nbsp JMA Payments</h3>  
+        </div>
+        <div class = "col-md-6">
+      <form class="navbar-form" role="search" action="/payments" method="get">
+        <div class="input-group add-on">
+          <input type="text" class="form-control" placeholder="Search" name="search" id="search" value="<%=@name_search%>">
+        <div class="input-group-btn">
+          <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+        </div>
+        </div>
+      </form> 
+        </div>
+      </div>
+      <div class="row">
+        <div class="row">
+          <div class="col-md-3">
+            <h4 style="margin-left: 2em;">This Year: $<%= @sum_this_year  %></h4>
+          </div>
+          <div class="col-md-3">
+            <h4>This Month: $<%= @sum_this_month  %></h4>
+          </div>
+          <div class="col-md-3">
+            <h4>This Week:$<%= @sum_this_week  %></h4>
+          </div>
+          <div class="col-md-3">
+            <h4>Today:$<%= @sum_today  %></h4>
+          </div>
+        </div>
+        </div>
+        <div class="row">
+          <div class = "col-md-12">
             <table class="table table-condensed table-bordered table-striped table-hover table-responsive" style="display:block; height:500px; width: 100%;">
-            <thead>
-              <tr>
-              <th>#</th>
-              <th>Payment Date</th>
-              <th>Name</th>
-              <th>Amount</th>
-              <th>Coach</th>
-              <th>Category</th>
-              <th>Status</th>
-              <th>Msg</th>
-              <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody> 
-              <% if @payments != nil && @payments.size > 0 %>
-                <% total_amount=0 %>
-                <% @payments.each do |entry| %>
-                  <tr>
-                    <td><%= entry[:id]%></td>
-                    <td><%= entry[:payment_date].strftime("%m/%d/%Y") %></td>
-                    <td><%= entry[:name] %></td>
-                    <td>$<%= entry[:amount] %></td>
-                    <td><%= Coach.find_by_id(entry[:coach_id]).name %></td>
-                    <td><%= Category.find_by_id(entry[:category_id]).name %></td>
-                    <td><%= entry[:status] %></td>
-                    <td><%= entry[:msg] %></td>
-                    <% if entry[:status] == 'paid' %>
-                      <% total_amount = total_amount + entry[:amount].to_f %>
-                    <% end %>
-                    <td>
-                    <a href="/edit_payment?payment_id=<%= entry[:id]%>" class="btn btn-primary btn-xs">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </a>
-                    <a href="/delete_payment?payment_id=<%= entry[:id]%>" class="btn btn-danger btn-xs">
-                        <span class="glyphicon glyphicon-trash"></span>
-                    </a>
-                    </td>
-                  </tr> 
+              <thead>
+                <tr>
+                <th>#</th>
+                <th>Payment Date</th>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Coach</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Msg</th>
+                <th>Actions</th>
+                </tr>
+              </thead>
+            <tbody>
+            <% if @payments != nil && @payments.size > 0 %>
+              <% total_amount=0 %>
+              <% @payments.each do |entry| %>
+                <tr>
+                  <td><%= entry[:id]%></td>
+                  <td><%= entry[:payment_date].strftime("%m/%d/%Y") %></td>
+                  <td><%= entry[:name] %></td>
+                  <td>$<%= entry[:amount] %></td>
+                  <td><%= Coach.find_by_id(entry[:coach_id]).name %></td>
+                  <td><%= Category.find_by_id(entry[:category_id]).name %></td>
+                  <td><%= entry[:status] %></td>
+                  <td><%= entry[:msg] %></td>
+                  <% if entry[:status] == 'paid' %>
+                    <% total_amount = total_amount + entry[:amount].to_f %>
+                  <% end %>
+                  <td>
+                  <a href="/edit_payment?payment_id=<%= entry[:id]%>" class="btn btn-primary btn-xs">
+                      <span class="glyphicon glyphicon-pencil"></span>
+                  </a>
+                  <a href="/delete_payment?payment_id=<%= entry[:id]%>" class="btn btn-danger btn-xs">
+                      <span class="glyphicon glyphicon-trash"></span>
+                  </a>
+                  </td>
+                </tr> 
                 <% end %> 
                 <tr>
                   <td>Total Amount:</td>
@@ -289,23 +227,23 @@
                 </tr> 
               <% end %> 
             </tbody>
-            </table>
-          </div><!-- panel body -->
-        </div><!-- panel default -->
-      </div><!-- row -->
-      <div class="row">
-        <div class="col-md-3" id="leftCol">
+          </table>
+          </div><!-- col -->
+        </div> <!-- row -->
+         <hr>
+        <div class="row">
+          <div class="col-md-3" id="leftCol">
+          </div>
+          <div class="col-md-9">
+            <h3>Income By Category</h3>
+          </div>
         </div>
-        <div class="col-md-9">
-          <h3>Income By Category</h3>
-        </div>
-      </div><!-- row -->
-      <div class="row">
         <div class="col-md-9">
           <%= pie_chart @category_chart %>
         </div>
-      </div><!-- row-->
-    </div><!-- col-sm-9 -->
-  </div><!-- row -->
+        </div>
+      </div>
+    </div> 
+  </div> 
   
 </div><!--/container-->
