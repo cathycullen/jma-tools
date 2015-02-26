@@ -46,7 +46,7 @@ end
       @workshop.workshop_date = Date.strptime(@workshop_date, "%m/%d/%Y") 
       
       if @workshop.save!
-        @on_complete_msg = "Workshop Added."
+        redirect "/workshops"
       else
         @on_complete_msg = "New Workshp returned and error and was not saved"
       end
@@ -65,7 +65,7 @@ end
         @workshop.name = params[:name]
         @workshop.workshop_date = Date.strptime(params[:date], "%m/%d/%Y")
         if @workshop.save
-          @on_complete_msg = "Workshop Added."
+          redirect "/workshops"
         else
           @on_complete_msg = "Save Workshp returned and error and was not saved"
         end
