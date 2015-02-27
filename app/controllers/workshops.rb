@@ -196,6 +196,7 @@ post '/save_guest' do
       @guest.paid = params[:paid]
       @guest.client_type = params[:client_type]
       @guest.lunch = params[:lunch]
+      @guest.amount = params[:amount]
       if @guest.save
         redirect "/edit_workshop?id=#{@guest.workshop_id}"
       else
