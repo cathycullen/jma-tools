@@ -9,6 +9,8 @@
       <hr>
       
       <ul class="nav nav-stacked">
+        <li><a href="/new_guest?workshop_id=<%= @workshop.id%>"><i class="glyphicon glyphicon-plus"></i> Add Workshop Attendee</a></li>
+        <li><a href="/new_workshop_expense?workshop_id=<%= @workshop.id%>"><i class="glyphicon glyphicon-plus"></i> Add Expense</a></li>
         <li><a href="/workshops"><i class="glyphicon glyphicon-briefcase"></i> Workshops</a></li>
         <li><a href="/accountability_mirror_pre_workshop?id=<%=@workshop.id%>"><i class="glyphicon glyphicon-envelope"></i> Send Pre Workshop Email</a></li>
         <li><a href="/workshops"><i class="glyphicon glyphicon-envelope"></i> Send Post Workshop Email</a></li>
@@ -56,8 +58,8 @@
             <% end %>  
             <tr>
             <td></td>
-            <td></td>
             <td>Total Amount:</td>
+            <td></td>
             <td>$<%= total_amount  %></td>
             <td></td>
             <td></td>
@@ -104,7 +106,7 @@
             <% end %>  
             <tr>
             <td></td>
-            <td>Total Amount:</td>
+            <td>Total Expenses:</td>
             <td>$<%= total_amount.round(2)   %></td>
             <td></td>
           </tr> 
