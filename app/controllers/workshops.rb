@@ -84,8 +84,8 @@ end
     @submit_callback = '/save_workshop'
     if !params[:id].nil?
       @workshop = Workshop.find(params[:id])
-      @attendees = Guest.where(:workshop_id => @workshop.id)
-      @workshop_expenses = WorkshopExpense.where(:workshop_id => @workshop.id)
+      @attendees = Guest.where(:workshop_id => @workshop.id).order('id')
+      @workshop_expenses = WorkshopExpense.where(:workshop_id => @workshop.id).order('id')
       if @workshop
         erb :edit_workshop
       end
@@ -196,6 +196,8 @@ post '/save_guest' do
       @guest.paid = params[:paid]
       @guest.client_type = params[:client_type]
       @guest.lunch = params[:lunch]
+      @guest.phone = params[:phone]
+      @guest.notes = params[:notes]
       @guest.amount = params[:amount]
       if @guest.save
         redirect "/edit_workshop?id=#{@guest.workshop_id}"
@@ -267,6 +269,12 @@ post '/save_new_guest' do
     @guest.paid = params[:paid]  
     if params[:lunch]
      @guest.lunch = params[:lunch]
+   end 
+    if params[:phone]
+     @guest.lunch = params[:phone]
+   end 
+    if params[:notes]
+     @guest.lunch = params[:notes]
    end
     @guest.client_type = params[:client_type]  
     @guest.workshop_id = params[:workshop_id]  

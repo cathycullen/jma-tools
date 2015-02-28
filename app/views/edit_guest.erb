@@ -60,7 +60,7 @@
                   <div class = "row">
                     <div class = "col-md-6">
                       <label class="control-label" for="textarea">Email</label>
-                      <input type="text" class="form-control" name="email" title="Email"  placeholder="Email" value="<%=@guest.email%>" required>
+                      <input type="text" class="form-control" name="email" title="Email"  placeholder="Email" value="<%=@guest.email%>" >
                     </div> 
                     <div class = "col-md-6">
                       <label class="control-label" for="textarea">Amount</label>
@@ -68,6 +68,10 @@
                     </div>   
                   </div>
                   <div class = "row">
+                    <div class = "col-md-6">
+                      <label class="control-label" for="textarea">Phone</label>
+                      <input type="text" class="form-control" name="phone" title="Phone"  placeholder="Phone" value="<%=@guest.phone%>" >
+                    </div> 
                     <div class="col-md-6">
                       <label class="control-label" for="textarea">Paid</label>  
                       <select name="paid"  class="form-control" class="form-control" style="width:100%; ">
@@ -79,7 +83,13 @@
                   <div class = "row">
                     <div class = "col-md-12">
                       <label class="control-label" for="textarea">Lunch</label>
-                      <textarea type="text" class="form-control" rows="4" name="lunch" title="Lunch"  placeholder="Place Lunch Order Here"  required ><%=@guest.lunch%></textarea>
+                      <textarea type="text" class="form-control" rows="4" name="lunch" title="Lunch"  placeholder="Place Lunch Order Here"  ><%=@guest.lunch%></textarea>
+                    </div> 
+                  </div>
+                  <div class = "row">
+                    <div class = "col-md-12">
+                      <label class="control-label" for="textarea">Notes</label>
+                      <textarea type="text" class="form-control" rows="4" name="notes" title="Notes"  placeholder="Additional Notes"  ><%=@guest.notes%></textarea>
                     </div> 
                   </div>
                   <input type="hidden" name="id" value = "<%= @guest.id%>">

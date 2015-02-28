@@ -9,6 +9,9 @@
       <ul class="nav nav-stacked">
         <li><a href="/new_guest?workshop_id=<%= @workshop.id%>"><i class="glyphicon glyphicon-plus"></i> Add Workshop Attendee</a></li>
         <li><a href="/new_workshop_expense?workshop_id=<%= @workshop.id%>"><i class="glyphicon glyphicon-plus"></i> Add Expense</a></li>
+        <li><a href="/accountability_mirror_pre_workshop?id=<%=@workshop.id%>"><i class="glyphicon glyphicon-envelope"></i> Send Pre Workshop Email</a></li>
+        <li><a href="/workshop_lunch_report?id=<%=@workshop.id%>"><i class="fa fa-cutlery"></i>&nbspWorkshop Lunch Report</a></li>
+        <li><a href="/workshops"><i class="glyphicon glyphicon-envelope"></i> Send Post Workshop Email</a></li>
         <li><a href="/new_workshop"><i class="glyphicon glyphicon-plus"></i> Add Workshop</a></li>
         <li><a href="/workshops"><i class="glyphicon glyphicon-briefcase"></i> Workshops</a></li>
         <li><a href="/coaches"><i class="glyphicon glyphicon-bullhorn"></i> Coaches</a></li>
@@ -67,6 +70,8 @@
           <tr>
             <th>#</th>
             <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
             <th>Amount</th>
             <th>Type</th>
             <th>Paid?</th>
@@ -79,15 +84,17 @@
               <tr>
                 <td><%= entry[:id]%></td>
                 <td><%= entry[:name]%></td>
+                <td><%= entry[:email]%></td>
+                <td><%= entry[:phone]%></td>
                 <td>$<%= entry[:amount] %></td>
                 <td><%= entry[:client_type] %></td>
                 <% if entry[:paid] %>
-                <td><i class="fa fa-check"></i></td>
+                  <% total_paid = total_paid + entry[:amount].to_f %>
+                  <td><i class="fa fa-check"></i></td>
                 <% else %>
-                <td><i class="fa fa-times"></i></td>
+                  <td><i class="fa fa-times"></i></td>
                  <% end %>
                 <td>
-                <% total_paid = total_paid + entry[:amount].to_f %>
                 <td><a href="/edit_guest?id=<%= entry[:id]%>" class="btn btn-primary btn-xs">
                     <span class="glyphicon glyphicon-pencil"></span></a>
                 </td>
@@ -98,6 +105,8 @@
               <% end %> 
               <tr>
                 <td>Total Amount:</td>
+                <td></td>
+                <td></td>
                 <td></td>
                 <td>$<%= total_paid  %></td>
                 <td></td>

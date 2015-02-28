@@ -158,6 +158,7 @@ post '/filter_payments' do
     puts "/delete_payment get"
     if !params[:payment_id].nil?
       @payment = Payment.find(params[:payment_id])
+      puts "deleting payment for #{@payment.payment_date}, #{@payment.name}, #{@payment.amount}, #{Date.today}"
       erb :delete_payment
     else
       puts "Unable to find payment id for delete #{params[:payment_id]}"
@@ -174,6 +175,7 @@ post '/filter_payments' do
     @errors = []
     if !params[:payment_id].nil?
       @payment = Payment.find(params[:payment_id])
+      puts "deleting payment for #{@payment.payment_date}, #{@payment.name}, #{@payment.amount}, #{Date.today}"
       @payment.delete
 
       puts "Payment Was Deleted {@payment.id}"

@@ -1,7 +1,7 @@
 
 get '/categories' do
   @errors = []
-  @categories = Category.all.order('id')
+  @categories = Category.all.order('name')
   erb :categories
 end
 
