@@ -14,6 +14,8 @@ class Payment < ActiveRecord::Base
   scope :by_year, lambda { |year| where('extract(year from payment_date) = ?', year) }
   scope :by_month, lambda { |month| where('extract(month from payment_date) = ?', month) }
 
+  scope :group_by_month,  lambda { group("date_trunc('month', payment_date) ") }
+
   def populate(name, amount, coach, category)
     self.name = name
     self.payment_date = Date.today
@@ -140,6 +142,32 @@ class Payment < ActiveRecord::Base
   def self.last_12_months
     range = (Time.now.beginning_of_month - 11.months)..Time.now.end_of_month
     group_by_month(:payment_date, Time.zone, range).sum(:payment_amount)  
+  end
+
+  def self.monthly_summary
+    results = []
+    month_results = Payment.group("date_trunc('month', payment_date)").sum('amount')
+    month_results.each do |entry|
+      puts "entry[0] #{entry[0]}"
+      key = "#{entry[0].strftime("%b")}  #{entry[0].strftime("%Y")}"
+      results << {:month => key, :sum => entry[1]}
+    end
+  end
+  #add monthly sum by category
+  def self.monthly_summary_by_category
+    results = []
+    xx = []
+    categories = Category.all
+    categories.each do |category|
+      month_results = Payment.where(:status => PAID, :category_id => category.id).group("DATE_TRUNC('month', payment_date)").sum('amount')
+      month_results.each do |entry|
+        puts "#{category.name}: #{entry[0]} #{entry[1]}"
+        xx << "#{category.name}: #{entry[0]} #{entry[1]}"
+        key = "#{entry[0].strftime("%b")}  #{entry[0].strftime("%Y")}"
+        results << {:month => key, :sum => entry[1]}
+      end
+    end
+      Payment.where(:status => PAID).group_by_month().sum('amount').to_i
   end
 
   def self.search(name)

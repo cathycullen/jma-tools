@@ -203,6 +203,7 @@ post '/save_guest' do
       @guest.phone = params[:phone]
       @guest.notes = params[:notes]
       @guest.amount = params[:amount]
+      Log.new_entry "Workshop attendee changed Name: #{@guest.name}"
       if @guest.save
         redirect "/edit_workshop?id=#{@guest.workshop_id}"
       else
@@ -282,6 +283,7 @@ post '/save_new_guest' do
    end
     @guest.client_type = params[:client_type]  
     @guest.workshop_id = params[:workshop_id]  
+    @workshop = Workshop.find(@guest.workshop_id)
     puts "guest name #{@guest.name} date #{@guest.amount}"  
     if @guest.save
       Log.new_entry "Workshop attendee added: #{@workshop.name} Name: #{@guest.name}"
