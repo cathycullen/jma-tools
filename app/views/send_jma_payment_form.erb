@@ -1,39 +1,73 @@
-
-        
-<section id="forms" style="margin-left: 30%;">
-    <div class="col-md-5">
-      <br>
-      <form class="form-horizontal well" action="/send_payment_email" method="post" >
-        <fieldset>
-          <legend>Generate Client Credit Card Email</legend>
-          <div class="control-group" >
-            <div class="col-md-10">
+<div class="container" style= "margin-bottom: 50px;">
+  <!-- upper section -->
+  <div class="row">
+    <div class="col-sm-2">
+      <!-- left -->
+      <h3><i class="glyphicon glyphicon-flash"></i> Links</h3> 
+      <hr>
+      <ul class="nav nav-stacked">
+        <li><a href="/arrow_payment_form"><i class="fa fa-credit-card"></i>&nbspArrow Quick Pay</a></li>
+        <li><a href="/deposit_check_form"><i class="fa fa-money "></i>&nbspDeposit Check</a></li>
+        <li><a href="/workshops"><i class="glyphicon glyphicon-briefcase"></i>&nbsp Workshops</a></li>
+        <li><a href="/coaches"><i class="glyphicon glyphicon-bullhorn"></i>&nbsp Coaches</a></li>
+        <li><a href="/categories"><i class="glyphicon glyphicon-align-justify"></i> &nbspCategories</a></li>
+      </ul>
+    </div><!-- /span-2 -->
+    <div class="col-sm-4 col-md-offset-2">
+      <h3><i class="fa fa-envelope"></i> &nbsp Generate Credit Card Email</h3>  
+      <hr>
+      <div class="row">
+       <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <i class="fa fa-envelope-o pull-right"></i>
+              <h4>Email Link Payment Link</h4>
+            </div>
+          </div>
+          <div class="panel-body">
+      <form class="form form-vertical" action="<%=@send_callback_method %>" method="post" > 
+      <fieldset>
+        <div class="control-group" >
+          <div class = "row">
+            <div class = "col-md-10">
               <label class="control-label" for="textarea">Name</label> 
               <input type="text" class="form-control" name="name" title="Enter Recipients Name" placeholder="Name" required >
-              <label class="control-label" for="textarea">Email</label>
-              <input type="text" class="form-control" name="email"  title="Enter Recipients Email" placeholder="Email" required >
-              <label class="control-label" for="textarea">Payment Amount</label>
-              <input type="text" class="form-control" name="amount"  title="Enter Payment Amount" placeholder="Optional Amount" >
-
+            </div>
+            <div class = "col-md-10">
+              <label class="control-label" for="textarea">Email</label> 
+              <input type="text" class="form-control" name="email" title="Enter Recipients Email" placeholder="Email" required >
+            </div>
+            <div class = "col-md-10">
+              <label class="control-label" for="textarea">Amount</label> 
+              <input type="text" class="form-control" name="amount" title="Enter Amount" placeholder="Optional Amount"  >
+            </div>
+            <div class = "col-md-10">
               <label class="control-label" for="textarea">Category</label>  
-                <select name="category" class="form-control" style="width:100%; ">
-                  <% categories.each do |category|%>         
-                    <option value="<%= category.name %>"><%= category.name %></option>
-                  <% end %>
-                </select>
-                <label class="control-label" for="textarea">Coach</label>  
-                <select name="coach_name" class="form-control" style="width:100%; ">
-                  <% coaches.each do |coach|%>         
-                    <option value="<%= coach.name %>"><%= coach.name %></option>
-                  <% end %>
-                </select>
-              <hr>
-              <div class="form-actions">
-                <button type="submit" class="btn btn-success" title="Select to Send Payment Link to Client">Send Email</button>
-                <button type="reset" class="btn">Cancel</button>
+              <select name="category" class="form-control" style="width:100%; ">
+                <% categories.each do |category|%>         
+                  <option value="<%= category.name %>"><%= category.name %></option>
+                <% end %>
+              </select>
+            </div>
+            <div class = "col-md-10">
+              <label class="control-label" for="textarea">Coach</label> 
+              <select name="coach_name" class="form-control" style="width:100%; ">
+                <% coaches.each do |coach|%>         
+                  <option value="<%= coach.name %>"><%= coach.name %></option>
+                <% end %>
+              </select>
+            </div>
+          </div>  
+          <hr>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-success">Send Email</button>
+              <button type="reset" class="btn" onclick="history.go(-1);">Cancel</button>
             </div>
           </div>
         </fieldset>
       </form>
-    </div>
-</section>
+    </div><!-- col sm 2-->
+  </div><!-- row -->
+</div><!--/container-->
+
+

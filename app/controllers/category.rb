@@ -75,21 +75,24 @@ get '/delete_category' do
    if !params[:id].nil?
     @category = Category.find(params[:id])
     if @category
-      @category_name = @category.name
-      @category.delete
+      #make sure no payments are associated with this category
+      payments = Payment.where(category_id: category)
+      if !payments.nil?
+        @on_complete_msg = "This category is associated with a payment and cannot be deleted #{@category_name}"
+      else
+        @category_name = @category.name
+        @category.delete
+        erb :categories
+      end
     else 
-      puts "category not found id: #{params[:id]}"
+      @on_complete_msg =  "category not found id: #{params[:id]}"
     end
-    puts "delete category"
-    @on_complete_msg = "Category #{@category_name} has been removed."
-    @on_complete_redirect=  "/categories"
-    @on_complete_method=  "get"
-    erb :done
   else
-    puts "/delete_category params :id not found "
-    @errors << "Category Not Found"
-    erb :categories
+    @on_complete_msg =  "/delete_category params :id not found "
   end
+  @on_complete_redirect=  "/categories"
+  @on_complete_method=  "get"
+  erb :done
 end
 
 

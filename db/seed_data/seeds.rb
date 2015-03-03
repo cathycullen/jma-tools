@@ -13,11 +13,13 @@ category = Category.create(name: "Trader Coaching")
 category = Category.create(name: "Career Strategy")
 category = Category.create(name: "Interview Coaching")
 category = Category.create(name: "Psychotherapy")
-category = Category.create(name: "Accountability Mirror Workshop")
+category = Category.create(name: "Accountability Mirror")
 category = Category.create(name: "ELI Workshop")
 category = Category.create(name: "ELI")
 category = Category.create(name: "Wellness Coaching")
 category = Category.create(name: "Personal Branding")
+category = Category.create(name: "Resume Rewrite")
+
 
 workshop = Workshop.create(name: "Jan 2015 Workshop", date: Date.today)
 

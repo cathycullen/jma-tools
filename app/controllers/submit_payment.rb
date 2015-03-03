@@ -45,6 +45,7 @@ get '/' do
     categories
     coaches
     url_root
+    @callback_method = "/send_payment_email"
     erb :send_jma_payment_form
     rescue Exception => e
       puts e.backtrace
@@ -53,6 +54,7 @@ get '/' do
 end
 
 get '/send_payment_email' do
+    @callback_method = "/send_payment_email"
     erb :send_jma_payment_form
 end
 
@@ -217,6 +219,13 @@ end
                                      
 get '/jma_payment_form' do
   puts "hello /jma_payment_form"
+
+  #spinner = Spinner.new
+
+# Add a task block
+#spinner.task("Number 1") do
+  #sleep(5) # simulate taking a while to do something awesome
+
   
   #fill in default values for testing
   @payment_details = PaymentDetails.jma_template_payment
@@ -238,7 +247,8 @@ get '/jma_payment_form' do
     @payment_details.coach = Coach.find_by_id(params[:coach_id])
     puts "@payment_details.coach #{@payment_details.coach}"
   end
-  erb :payment_form, :layout => :min_layout
+  #erb :payment_form2, :layout => :min_layout
+  erb :payment_form2
 end
 
 post '/jma_submit_payment' do
@@ -280,7 +290,7 @@ post '/jma_submit_payment' do
 
    if !@payment_details.valid?
     @submit_callback = '/jma_submit_payment'
-    erb :payment_form, :layout => :jma_layout
+    erb :payment_form2, :layout => :min_layout
   else
     description='Jody Michael Associates'
     puts "call ArrowPayment.new"
@@ -356,7 +366,7 @@ post '/jma_submit_payment' do
       end
     else
       @payment_details.errors = [payment_error]
-      erb :payment_form
+      erb :payment_form2, :layout => :min_layout
     end
   end
 end

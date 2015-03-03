@@ -1,0 +1,157 @@
+<div class="container" style= "margin-bottom: 50px;">
+  <!-- upper section -->
+
+  <form class="form form-vertical" action="<%=@submit_callback%>" method="post" > 
+  <div class="row">
+    <div class="col-sm-5 col-md-offset-4">
+      <h3><i class="fa fa-credit-card"></i> &nbsp JMA Secure Payment</h3>  
+      <hr>
+      <div class="row">
+       <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <i class="fa fa-credit-card pull-right"></i>
+              <h4>Customer Information</h4>
+            </div>
+          </div>
+          <div class="panel-body">
+            <% if !@payment_details.errors.empty? %>
+              <legend style="color: red;  font-weight: bold; font-size: 14px;"
+              <p>The Following Errors Were Encountered: </p>
+              <% @payment_details.errors.each do |e| %>
+                <p><%=e%></p>
+              <% end %>
+              </legend>
+            <% end %>
+            <fieldset>
+              <div >
+                <legend >Customer Information</legend>
+              </div>
+
+              <div class="control-group" >
+                <div class = "row">
+                  <div class = "col-md-10">
+                    <label class="control-label">Name</label>
+                    <input type="text" class="form-control" name="name" value="<%= @payment_details.name %>" required >
+                  </div>
+                  <div class = "col-md-10">
+                    <label class="control-label" >Email</label>
+                    <input type="text" class="form-control" name="email" value="<%= @payment_details.email %>" required >
+                  </div>
+                  <div class = "col-md-10">
+                    <label class="control-label" >Phone</label>
+                    <input type="text" class="form-control" name="phone"  value="<%= @payment_details.phone %>" >
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div >
+                <legend >Credit Card Information</legend>
+              </div>
+              <div class = "row">
+                <div class = "col-md-10">
+                  <label class="control-label" >Card Number</label>
+                  <input type="text" class="form-control" name="cc_number"  value="<%= @payment_details.cc_number %>" required >
+                </div>
+              </div>
+              <div class="row">
+                <div class = "col-md-4">
+                  <label class="control-label" >Exp Month</label>
+                  <input type="text" class="form-control" name="cc_month"  value="<%= @payment_details.exp_month %>" required >
+                </div>
+                <div class = "col-md-4">
+                  <label class="control-label" >Exp Year</label>
+                  <input type="text" class="form-control" name="cc_year"  value="<%= @payment_details.exp_year %>" required >
+                </div>
+                <div class = "col-md-4">
+                  <label class="control-label" >CCV</label>
+                  <input type="text" class="form-control" name="ccv"  value="<%= @payment_details.ccv %>" required >
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div >
+                <legend >Billing  Address</legend>
+              </div>
+
+              <div class = "row">
+                <div class = "col-md-10">
+                  <label class="control-label" >Address</label>
+                  <input type="text" class="form-control" name="address"  value="<%= @payment_details.address %>" required >
+                </div>
+              </div>
+              <div class="row">
+                <div class = "col-md-6">
+                  <label class="control-label" >City</label>
+                  <input type="text" class="form-control" name="city"  value="<%= @payment_details.city %>" required >
+                </div>
+                <div class = "col-md-3">
+                  <label class="control-label" >State</label>
+                  <input type="text" class="form-control" name="state"  value="<%= @payment_details.state %>" required >
+                </div>
+                <div class = "col-md-3">
+                  <label class="control-label" >Zip</label>
+                  <input type="text" class="form-control" name="zip"  value="<%= @payment_details.zip %>" required >
+                </div>
+              </div>
+            </fieldset>
+           <fieldset>
+              <div >
+                <% if @payment_details.amount > 0 %>
+                  <legend >Submit Payment</legend>
+                <% else %>
+                  <legend >Submit Payment Information</legend>
+                <% end %>
+              </div>
+              <% if @payment_details.amount > 0 %>
+                <div class="control-group" style="display:block;">
+                  <div  style="position:relative;">
+                    <label class="control-label" >Amount</label>
+                    <input type="text" class="form-control" name="amount"  value="<%= @payment_details.amount %>" style="width: 25%!important;" required value="250">
+                  </div>
+                </div>
+               <% end %>
+                <div style="position:relative;">
+                <% if @payment_details.coach.nil? %>
+                  <label class="control-label" for="textarea" >Coach</label>  
+                  <select name="coach_name" class="form-control" >
+                    <% coaches.each do |coach|%>         
+                      <option value="<%= coach.name %>"><%= coach.name %></option>
+                    <% end %>
+                  </select>
+                <% else %>
+                  <div  style="position:relative;">
+                    <input type="hidden" class="form-control" name="coach_id"  value="<%= @payment_details.coach.id%>" style="width: 25%">
+                  </div>
+                <% end %>
+              </div>
+              <div>
+                <% if @payment_details.category.nil? %>
+                  <label class="control-label" for="textarea" >Category</label>  
+                  <select name="category_name" class="form-control" >
+                    <% categories.each do |category|%>         
+                      <option value="<%= category.name %>"><%= category.name %></option>
+                    <% end %>
+                  </select>
+                <% else %>
+                  <div  style="position:relative;">
+                    <input type="hidden" class="form-control" name="category_id"  value="<%= @payment_details.category.id%>" style="width: 25%">
+                  </div>
+                <% end %>
+              </div>
+
+              <div class="control-group">
+                <div >
+                  <button class="btn btn-success" style="margin-top: 15px;">Submit</button>
+                </div>
+              </div>
+              </div>
+          </fieldset>
+        </div><!-- panel body -->
+      </div><!-- panel default -->
+    </div><!-- col sm 5 -->
+  </div><!-- row -->
+  </div><!-- form -->
+</div><!--/container-->
+
