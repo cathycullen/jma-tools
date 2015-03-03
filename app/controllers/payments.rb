@@ -111,6 +111,7 @@ post '/weekly_payment_entries' do
       email.deliver
       puts "call results summary"
       erb :weekly_results_summary
+      Log.new_entry "Weekly Payments were processed"
     
       rescue Exception => e
         puts "rescue caught in process_payments #{e.message}"

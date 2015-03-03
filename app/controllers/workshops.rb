@@ -46,6 +46,8 @@ end
       @workshop.workshop_date = Date.strptime(@workshop_date, "%m/%d/%Y") 
       
       if @workshop.save!
+        Log.new_entry "New workshop added: #{@workshop.name} Date: #{@workshop.workshop_date}"
+  
         redirect "/workshops"
       else
         @on_complete_msg = "New Workshp returned and error and was not saved"
@@ -65,6 +67,7 @@ end
         @workshop.name = params[:name]
         @workshop.workshop_date = Date.strptime(params[:date], "%m/%d/%Y")
         if @workshop.save
+          Log.new_entry "Workshop saved: #{@workshop.name} Date: #{@workshop.workshop_date}"
           redirect "/workshops"
         else
           @on_complete_msg = "Save Workshp returned and error and was not saved"
@@ -109,6 +112,7 @@ end
     @errors = []
     if !params[:id].nil?
       @workshop = Workshop.find(params[:id])
+      Log.new_entry "Workshop deleted: #{@workshop.name} Date: #{@workshop.workshop_date}"
       @workshop.delete
 
       puts "Workshop Was Deleted {@workshop.id}"
@@ -280,6 +284,7 @@ post '/save_new_guest' do
     @guest.workshop_id = params[:workshop_id]  
     puts "guest name #{@guest.name} date #{@guest.amount}"  
     if @guest.save
+      Log.new_entry "Workshop attendee added: #{@workshop.name} Name: #{@guest.name}"
       redirect "/edit_workshop?id=#{params[:workshop_id]}"
     else
       puts "Error saving new workshop attendee #{@guest.name}"

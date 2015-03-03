@@ -139,7 +139,8 @@ post '/filter_payments' do
 
           puts "payment:  #{@payment}"
           puts "transaction type #{@payment.transaction_type}, #{@payment.payment_date}, #{@payment.amount}, #{@payment.name}, #{@payment.coach_id}, "
-          @payment.save
+          Log.new_entry "Payment saved #{@payment.payment_date.strftime("%m/%d/%Y") }, #{@payment.name}, $#{@payment.amount}, #{Date.today}"
+        @payment.save
         end
       end
     end
@@ -150,7 +151,6 @@ post '/filter_payments' do
     @on_complete_method=  "get"
     erb :done
   end
-
 
   get '/delete_payment' do
     @errors = []
@@ -169,13 +169,13 @@ post '/filter_payments' do
     end
   end
 
-
   post '/delete_payment' do
     puts "/delete_payment post called"
     @errors = []
     if !params[:payment_id].nil?
       @payment = Payment.find(params[:payment_id])
       puts "deleting payment for #{@payment.payment_date}, #{@payment.name}, #{@payment.amount}, #{Date.today}"
+      Log.new_entry "Payment deleted #{@payment.payment_date.strftime("%m/%d/%Y") }, #{@payment.name}, $#{@payment.amount}, #{Date.today}"
       @payment.delete
 
       puts "Payment Was Deleted {@payment.id}"

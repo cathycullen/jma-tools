@@ -296,6 +296,9 @@ post '/send' do
   )
   email.deliver
   #redirect to some thank you page
+
+  puts "sending template: #{@template.humanize.titleize} coach #{@coach} #{@category}"
+  Log.new_entry "#{@template.humanize.titleize} sent to #{@name} #{@email} coach: #{@coach} #{@category}"
   @on_complete_msg = "Welcome Email Sent."
   @on_complete_redirect=  "/done"
   @on_complete_method=  "post"
@@ -317,6 +320,7 @@ post '/send_initial_contact_email_with_pricing' do
   )
   email.deliver
   #redirect to some thank you page
+  Log.new_entry "Send initial contact email sent to #{@name} #{@email}"
   @on_complete_msg = "Initial Contact With Pricing Email Sent."
   @on_complete_redirect=  "/done"
   @on_complete_method=  "post"
@@ -396,6 +400,7 @@ post '/send_pre_workshop_email'  do
     email.deliver
   end
   #redirect to some thank you page
+  Log.new_entry "Pre workshop email sent to #{@guest.name} #{@eguest.mail}"
   @on_complete_msg = "Pre Workshop Email Sent."
   @on_complete_redirect=  "/done"
   @on_complete_method=  "post"
@@ -447,6 +452,7 @@ post '/send_perceptual_lens_email'  do
   )
   email.deliver
   #redirect to some thank you page
+  Log.new_entry "Perceptual Lens email was sent to #{@name} #{@email}"
   @on_complete_msg = "Perceptual Lense Email Sent."
   @on_complete_redirect=  "/done"
   @on_complete_method=  "post"

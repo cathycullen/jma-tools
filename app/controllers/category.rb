@@ -23,12 +23,9 @@ post '/save_new_category' do
       puts "/save_new_category #{@category.name}"
       retval = @category.save
       if retval
-        puts "retval from save:  #{retval}"
-        puts "category #{@category.name} added"
-        @on_complete_msg = "Category #{@category_name} has been added."
-        @on_complete_redirect=  "/categories"
-        @on_complete_method=  "get"
-        erb :done
+        
+        Log.new_entry "Category Added #{@category_name}"
+        redirect "/categories"
       else
         puts "Add Category returned and error and was not saved"
         @on_complete_msg = "Add Category returned and error and was not saved"
@@ -53,6 +50,7 @@ post '/save_category' do
       @category.name = @category_name
       retval = @category.save
       if retval
+        Log.new_entry "Category Saved #{@category_name}"
         redirect "/categories"
       else
         puts "Save Category returned and error and was not saved"
@@ -71,18 +69,19 @@ end
 get '/delete_category' do
 
   @errors = []
-  puts "/save_category #{params}"
+  puts "/delete_category #{params}"
    if !params[:id].nil?
     @category = Category.find(params[:id])
     if @category
       #make sure no payments are associated with this category
-      payments = Payment.where(category_id: category)
-      if !payments.nil?
+      payments = Payment.where(category_id: @category.id)
+      if payments.size > 0
         @on_complete_msg = "This category is associated with a payment and cannot be deleted #{@category_name}"
       else
         @category_name = @category.name
+        Log.new_entry "Category Deleted #{@category_name}"
         @category.delete
-        erb :categories
+        redirect "/categories"
       end
     else 
       @on_complete_msg =  "category not found id: #{params[:id]}"

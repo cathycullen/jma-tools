@@ -58,7 +58,6 @@ get '/send_payment_email' do
     erb :send_jma_payment_form
 end
 
-#tested
 post '/send_payment_email' do
   # send payment form.   read parameters, generate html, and send email.
   puts "/send_payment_email called params:  #{params}"
@@ -87,6 +86,11 @@ post '/send_payment_email' do
   )
   email.deliver
   #redirect to some thank you page
+  @amount = 0
+  if !@payment_details.amount.nil?
+    @amount = @payment_details.amount
+  end
+  Log.new_entry "Payment email sent to #{@payment_details.name} #{@payment_details.email} amount: $#{@amount}"
   @on_complete_msg = "Payment Email Sent."
   @on_complete_redirect=  "/done"
   @on_complete_method=  "post"
@@ -144,7 +148,8 @@ post '/submit_deposit_check' do
   payment.transaction_type = CHECK
   payment[:status] = PAID
   payment.save
-    
+
+  Log.new_entry "Check Deposit from: #{@payment_details.name} amount: $#{@payment_details.amount} for: #{@payment_details.category.name} coach: #{@payment_details.coach.name}"
   erb :deposit_check_form
 end
 
@@ -204,6 +209,9 @@ post '/submit_arrow_payment' do
       payment.transaction_type = CREDIT_CARD
       payment[:status] = PAID
       payment.save
+
+    Log.new_entry "Submit Arrow Payment from: #{@payment_details.name} amount: $#{@payment_details.amount} for: #{@payment_details.category} coach: #{@payment_details.coach}"
+  
     else
       @errors = [payment_error]
       puts "Error Encountered #{payment_error}  error_count:  #{@errors.count}"
@@ -218,7 +226,6 @@ post '/submit_arrow_payment' do
 end
                                      
 get '/jma_payment_form' do
-  puts "hello /jma_payment_form"
 
   #spinner = Spinner.new
 
@@ -247,8 +254,7 @@ get '/jma_payment_form' do
     @payment_details.coach = Coach.find_by_id(params[:coach_id])
     puts "@payment_details.coach #{@payment_details.coach}"
   end
-  #erb :payment_form2, :layout => :min_layout
-  erb :payment_form2
+  erb :payment_form2, :layout => :min_layout
 end
 
 post '/jma_submit_payment' do
@@ -325,6 +331,13 @@ post '/jma_submit_payment' do
       end
       @payment_details.created_at = Time.now
       @payment_details.save!
+
+      @amount = 0
+      if !@payment_details.amount.nil?
+        @amount = @payment_details.amount
+      end
+      Log.new_entry "New client credit card payment submitted: #{@payment_details.name} amount: $#{@amount} for: #{@payment_details.category} coach: #{@payment_details.coach}"
+  
       
        #create client
       client = Client.find_by_name(@payment_details.name)

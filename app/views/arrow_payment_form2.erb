@@ -7,25 +7,26 @@
       <h3><i class="glyphicon glyphicon-flash"></i> Links</h3> 
       <hr>
       <ul class="nav nav-stacked">
-        <li><a href="/new_workshop"><i class="glyphicon glyphicon-plus"></i> Add Workshop</a></li>
+        <li><a href="/"><i class="glyphicon glyphicon-plus"></i>Arrow Quick Pay</a></li>
+        <li><a href="/"><i class="glyphicon glyphicon-plus"></i>Submit Check Deposit</a></li>
         <li><a href="/workshops"><i class="glyphicon glyphicon-briefcase"></i> Workshops</a></li>
         <li><a href="/coaches"><i class="glyphicon glyphicon-bullhorn"></i> Coaches</a></li>
         <li><a href="/categories"><i class="glyphicon glyphicon-align-justify"></i> Categories</a></li>
         <li><a href="/logs"><i class="glyphicon glyphicon-align-justify"></i> Logs</a></li>
     </div><!-- /span-2 -->
     <div class="col-sm-5">
-      <h3><i class="glyphicon glyphicon-plus"></i> &nbsp Category</h3>  
+      <h3><i class="fa fa-cc-visa"></i> &nbsp Arrow Quick Pay</h3>  
       <hr>
       <div class="row">
        <div class="panel panel-default">
           <div class="panel-heading">
             <div class="panel-title">
-              <i class="glyphicon glyphicon-plus pull-right"></i>
-              <h4>Add Category</h4>
+              <i class="fa fa-cc-visa pull-right"></i>
+              <h4>Submit Arrow Payment</h4>
             </div>
           </div>
           <div class="panel-body">
-            <form class="form form-vertical" action="<%= @submit_callback %>" method="post" > 
+            <form class="form form-vertical" action="<%=@submit_callback%>" method="post" >  
        
               <fieldset>
                 <br>
@@ -41,9 +42,22 @@
                   <div class = "row">
                     <div class = "col-md-12">
                       <label class="control-label" for="textarea">Name</label> 
-                      <input type="text" class="form-control" name="name"  title="Name" required >
+                      <input type="text" class="form-control" name="name" title="Enter Recipients Name" placeholder="Name" required >
                     </div>
                   </div>
+                <div class = "row">
+                  <div class = "col-md-5">
+                    <label class="control-label" for="textarea">Email</label>
+                    <input type="text" class="form-control" name="email" title="Email"  placeholder="Email">
+                  </div>  
+                </div>
+                <div class = "row">
+                  <div class = "col-md-5">
+                    <label class="control-label" for="textarea">Phone</label>
+                    <input type="text" class="form-control" name="phone" title="Phone"  placeholder="Phone">
+                  </div>  
+                </div>
+              </div>
               </fieldset>
               <hr>
                 <div class="form-actions">
