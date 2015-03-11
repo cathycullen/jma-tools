@@ -30,11 +30,10 @@
         </thead>
         <tbody>
           <% if @logs != nil && @logs.size > 0 %>
-          <% Time.zone = "America/Chicago"%>
             <% @logs.each do |entry| %>
               <tr>
                 <td><%= entry[:id]%></td>
-                <td><%= entry[:entry_date].localtime.strftime("%m/%d/%Y %H:%M %p %Z")  %></td>
+                <td><%= entry[:entry_date].localtime.strftime("%m/%d/%Y %H:%M %p")  %></td>
                 <td><%= entry[:entry] %></td>
               </tr> 
             <% end %> 
