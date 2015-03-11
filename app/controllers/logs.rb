@@ -1,5 +1,8 @@
 get '/logs' do
+
+  Time.zone = "America/Chicago"
   @logs = Log.entries
+  puts "last entry: #{Log.last.entry}"
   erb :logs 
 end
 

@@ -5,12 +5,14 @@ class Log < ActiveRecord::Base
 def self.new_entry(entry)
     log = self.new
     log.entry = entry
-    log.entry_date = Date.today
+    Time.zone = "America/Chicago"
+    log.entry_date = Time.now
+    puts "log entry: #{entry}"
     log.save
   end
 
   def self.entries
-    Log.all.order('entry_date desc')
+    Log.all.order('id desc')
   end
 
   def self.search(name)

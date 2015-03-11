@@ -19,7 +19,7 @@ class Payment < ActiveRecord::Base
 
   def populate(name, amount, coach, category)
     self.name = name
-    self.payment_date = Date.today
+    self.payment_date = Time.now
     self.amount = amount
     if !coach.nil?
       self.coach = coach
@@ -188,6 +188,10 @@ class Payment < ActiveRecord::Base
       payment.save
     end
   end
+
+  #def self.sum_this_category()
+  #   Payment.where( :status => PAID), :group => "month_year".)by_category(1).sum('amount').to_i
+  #end
 
 
   def self.search(name)

@@ -302,13 +302,21 @@ post '/send' do
     @template,
     @payment_text,
     @greeting,
-    @closing_text,
-    @include_pricing_info
+    @closing_text
   )
   email.deliver
   #redirect to some thank you page
 
-  puts "sending template: #{@template.humanize.titleize} coach #{@coach} #{@category}"
+  puts "sending template: #{@template.humanize.titleize} "
+  coach_name = ""
+  category_name = ""
+  if @coach
+    coach_name = @coach.name
+  end
+  if @cateogory
+    category_name = @category.name
+  end
+
   Log.new_entry "#{@template.humanize.titleize} sent to #{@name} #{@email} coach: #{@coach} #{@category}"
   @on_complete_msg = "Welcome Email Sent."
   @on_complete_redirect=  "/done"

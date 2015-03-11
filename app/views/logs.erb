@@ -25,15 +25,16 @@
           <tr>
             <th>#</th>
             <th >Transaction Date</th>
-            <th>Entry</th>
+            <th>Entry  Count :  <%=@logs.size%></th>
           </tr>
         </thead>
         <tbody>
           <% if @logs != nil && @logs.size > 0 %>
+          <% Time.zone = "America/Chicago"%>
             <% @logs.each do |entry| %>
               <tr>
                 <td><%= entry[:id]%></td>
-                <td><%= entry[:entry_date].strftime("%m/%d/%Y")  %></td>
+                <td><%= entry[:entry_date].localtime.strftime("%m/%d/%Y %H:%M %p %Z")  %></td>
                 <td><%= entry[:entry] %></td>
               </tr> 
             <% end %> 
