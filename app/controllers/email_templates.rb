@@ -77,6 +77,7 @@ def get_params(params)
   @interview_text3 = params[:interview_text3]
   @template = params[:template]
   @payment_text = params[:payment_text]
+  @include_pricing_info = params[:include_pricing_info]
 
   if params[:amount] && params[:amount].size > 0
     @amount=params[:amount].to_f
@@ -104,30 +105,22 @@ def get_params(params)
   if @category.nil?
     @errors << "Please Enter Category Name"
   end
-
 end
 
 def show_param_results
   puts "#{@name}"
   puts "#{@email}"
   puts "#{@appt_date}"
-  puts "#{@appt_date_formatted}"
-  puts "#{@payment_date}"
-  puts "#{@payment_date_formatted}"
-  puts "#{@amount}"
-  puts "#{@appt_start}"
-  puts "#{@appt_end}"
   if @coach
     puts "#{@coach.name}"
   end
   if @category
     puts "#{@category.name}"
   end
-  puts "#{@location}"
-  puts "#{@text1}"
-  puts "interview_text1: #{@interview_text1}"
   puts "#{@template}"
-  puts "greeting:  #{@greeting}"
+  if @include_pricing_info
+    puts "include_pricing_info:  #{@include_pricing_info}"
+  end
 end
 
 def populate_template
@@ -196,6 +189,22 @@ I know, I know … everyone hates these (despite their effectiveness). Therefore
 We are looking forward to seeing you!"
 end
 
+def populate_post_workshop_email
+  @errors = []
+  @preview_callback_method = "/preview_post_workshop_email"
+  @send_callback_method = "/send_post_workshop_email"
+  @greeting = "I hope you all enjoyed the Accountability Mirror workshop!"
+  @text1 = "Attached is your post-workshop homework template that can be filled out on your computer.  It is due "
+  @text2 = "on or before"
+  @text4 = "CST."
+  @text5 = "To earn your free 30-minute follow-up session, remember to complete all the questions in the attachment (for either a personal or professional goal), and don't forget the Conversations for Accountability piece of the homework.  This piece can be submitted in your email response or as another attachment.
+
+Once you submit, Jody will review for completion and we will get back to you to confirm if you qualify.
+
+Thank you and good luck with your goals!"  
+@closing_text = "Best Regards,"
+end
+
 def populate_perceptual_lens_email
   @errors = []
   @preview_callback_method = "/preview_perceptual_lens_email"
@@ -243,7 +252,7 @@ get '/initial_contact_with_pricing_email_template'  do
   populate_template
   populate_initial_contact_template
   @template = "initial_contact"
-  puts "@template:  #{@template}"
+  puts "@include_pricing_info:  #{@include_pricing_info}"
   erb :initial_contact_template
 
   end
@@ -260,7 +269,8 @@ post '/preview_initial_contact_email' do
   # read user parameters, display preview of email
  
   get_params(params)
-  puts "/preview_initial_contact_email text3:  #{@text3}"
+  show_param_results
+  puts "/preview_initial_contact_email:  #{@include_pricing_info}"
   erb :preview_initial_contact_email
 end
 
@@ -292,7 +302,8 @@ post '/send' do
     @template,
     @payment_text,
     @greeting,
-    @closing_text
+    @closing_text,
+    @include_pricing_info
   )
   email.deliver
   #redirect to some thank you page
@@ -308,6 +319,8 @@ end
 post '/send_initial_contact_email_with_pricing' do
   #read user parameters and send formatted email
   get_params(params)
+  show_param_results
+  puts "/send_initial:  #{@include_pricing_info}"
 
   email = Mailer.send_initial_contact_email_with_pricing(
     @name,
@@ -316,7 +329,8 @@ post '/send_initial_contact_email_with_pricing' do
     @text2,
     @text3,
     @text4,
-    @closing_text
+    @closing_text,
+    @include_pricing_info
   )
   email.deliver
   #redirect to some thank you page
@@ -343,8 +357,23 @@ get '/accountability_mirror_pre_workshop' do
   end
 end
 
-post '/preview_pre_workshop_email' do
 
+get '/accountability_mirror_post_workshop' do
+
+  # send in workshop id
+  # get workshop
+  get_params(params)
+  if !params[:id].nil?
+    @workshop = Workshop.find(params[:id])
+    if @workshop
+      @template = "accountability_mirror_post_workshop"
+      populate_post_workshop_email
+      erb :post_workshop_template
+    end
+  end
+end
+
+post '/preview_pre_workshop_email' do
   #puts "/preview_pre_workshop_email #{@params}"
   #workshop_id is hidden
   # read user parameters, display preview of email
@@ -358,16 +387,27 @@ post '/preview_pre_workshop_email' do
   end
 
   erb :preview_pre_workshop_email
+end
 
+post '/preview_post_workshop_email' do
+  
+  @workshop_id = params[:workshop_id]
+ 
+  get_params(params)
+  temp_greeting = @greeting.split("|")
+  if temp_greeting.size == 2 
+    @greeting1 = temp_greeting[0]
+    @greeting2 = temp_greeting[1]
+  end
+
+  erb :preview_pre_workshop_email
 end
 
 post '/send_pre_workshop_email'  do
   get_params(params)
   @workshop_id = params[:workshop_id]
   puts "*** workshop_id #{@workshop_id}"
-  #show_param_results
-
-  #send in a workshop id
+  
   # get all guests associated with workshop
   #send email to each attendee
 
@@ -402,6 +442,50 @@ post '/send_pre_workshop_email'  do
   #redirect to some thank you page
   Log.new_entry "Pre workshop email sent to #{@guest.name} #{@eguest.mail}"
   @on_complete_msg = "Pre Workshop Email Sent."
+  @on_complete_redirect=  "/done"
+  @on_complete_method=  "post"
+  erb :done
+  end
+
+  post '/send_post_workshop_email'  do
+  get_params(params)
+  @workshop_id = params[:workshop_id]
+  puts "*** workshop_id #{@workshop_id}"
+  
+  # get all guests associated with workshop
+  #send email to each attendee
+
+  @attendees = Guest.where(:workshop_id => @workshop_id)
+  @attendees.each do | guest|
+    email = Mailer.send_post_workshop_email(
+      guest.name,
+      guest.email,
+      guest.amount,
+      @appt_date_formatted,
+      @payment_date_formatted,
+      @appt_start,
+      @appt_end,
+      @location,
+      @text1,
+      @text2,
+      @text3,
+      @text4,
+      @text5,
+      @interview_text1,
+      @interview_text2,
+      @interview_text3,
+      @template,
+      @payment_text,
+      @greeting1,
+      @greeting2,
+      @closing_text
+    )
+    puts "sending post workshop email to #{guest.name}"
+    email.deliver
+  end
+  #redirect to some thank you page
+  Log.new_entry "Post workshop email sent to #{@guest.name} #{@eguest.mail}"
+  @on_complete_msg = "Post Workshop Email Sent."
   @on_complete_redirect=  "/done"
   @on_complete_method=  "post"
   erb :done

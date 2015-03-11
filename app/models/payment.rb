@@ -15,6 +15,7 @@ class Payment < ActiveRecord::Base
   scope :by_month, lambda { |month| where('extract(month from payment_date) = ?', month) }
 
   scope :group_by_month,  lambda { group("date_trunc('month', payment_date) ") }
+  scope :by_category, lambda { |category_id| where('category_id= ?', category_id) }
 
   def populate(name, amount, coach, category)
     self.name = name
@@ -153,6 +154,17 @@ class Payment < ActiveRecord::Base
       results << {:month => key, :sum => entry[1]}
     end
   end
+   def self.monthly_summary2
+    results = []
+    month_results = Payment.group("month_year").sum('amount')
+    month_results.each do |entry|
+      puts "entry[0] #{entry[0]}"
+      key = "#{entry[0].strftime("%b")}  #{entry[0].strftime("%Y")}"
+      results << {:month => key, :sum => entry[1]}
+    end
+  end
+
+
   #add monthly sum by category
   def self.monthly_summary_by_category
     results = []
@@ -169,6 +181,14 @@ class Payment < ActiveRecord::Base
     end
       Payment.where(:status => PAID).group_by_month().sum('amount').to_i
   end
+
+  def self.update_payment_month
+    Payment.all.each do |payment|
+      payment.month_year = payment.payment_date.strftime("%b") + " " + payment.payment_date.strftime("%Y")
+      payment.save
+    end
+  end
+
 
   def self.search(name)
      Payment.where("name like '%#{name}%'")

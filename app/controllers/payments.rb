@@ -49,6 +49,7 @@ post '/weekly_payment_entries' do
       end
       if row[CATEGORY]
         category_name = (row[CATEGORY].gsub /"/, '')
+        puts "Category Name:  #{category_name}"
         category = Category.find_by_name(category_name)
         if category.nil?
           puts "Please Enter a Valid Coach for #{fullname}"

@@ -123,7 +123,7 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
       end
     end
 
-    def send_initial_contact_email_with_pricing(name, email, text1, text2, text3, text4, closing_text)
+    def send_initial_contact_email_with_pricing(name, email, text1, text2, text3, text4, closing_text, include_pricing_info)
       @name = name
       @email = email
       @text1 = text1
@@ -131,6 +131,7 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
       @text3 = text3
       @text4 = text4
       @closing_text = closing_text
+      @include_pricing_info = include_pricing_info
 
       begin
         
@@ -143,8 +144,10 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
           :password       => ENV['JMA_PASS'],
           :enable_starttls_auto => true,
         }
-        puts "send_initial_contact_email_with_pricing #{@name}, #{@email}"
-        attachments['2015 JMA Career Discovery Package.pdf'] = File.read('public/images/2015 JMA Career Discovery Package.pdf')
+        puts "send_initial_contact_email #{@name}, #{@email}  #{@include_pricing_info}"
+        if !@include_pricing_info.nil? && @include_pricing_info == "on"
+          attachments['2015 JMA Career Discovery Package.pdf'] = File.read('public/images/2015 JMA Career Discovery Package.pdf')
+        end
                 mail( 
           :to      =>  @email,
           :from    => ENV['KELLY_USER'],

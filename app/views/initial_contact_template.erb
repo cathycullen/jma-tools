@@ -52,9 +52,15 @@
                   </textarea>
                 </div>
               </div>
-                <input type="hidden" name="template" value="<%= @template %>">
+              <br>
+              <div clsss="row">
+                <div class="col-md-12">
+                  <input class="faChkSqr 2x" checked="on" name="include_pricing_info"type="checkbox"><label>Include Pricing Information?</label>
+                </div>
+              </div>
+              <input type="hidden" name="template" value="<%= @template %>">
+              <br>
               <hr>
-
               <input type="hidden" name="send_callback_method" value="<%= @send_callback_method%>">
               <div class="form-actions">
                 <button type="submit" class="btn btn-success">Preview</button>
