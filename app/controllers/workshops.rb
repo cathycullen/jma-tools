@@ -139,6 +139,21 @@ end
     end
   end
 
+
+  get '/workshop_notes' do
+    @errors = []
+    @submit_callback = '/workshops'
+    if !params[:id].nil?
+      @workshop = Workshop.find(params[:id])
+      @attendees = Guest.where(:workshop_id => @workshop.id)
+      if @attendees
+        erb :workshop_notes
+      end
+    end
+  end
+  
+
+
   get '/workshop_report' do
     @errors = []
     @submit_callback = '/workshops'
@@ -262,6 +277,11 @@ post '/save_new_guest' do
   else
     @errors << "Please enter client type."
   end
+  if params[:phone]
+    @phone = params[:phone]
+  else
+    @errors << "Please enter client phone."
+  end
   
  if !@errors.empty?
     erb :new_guest 
@@ -276,10 +296,10 @@ post '/save_new_guest' do
      @guest.lunch = params[:lunch]
    end 
     if params[:phone]
-     @guest.lunch = params[:phone]
+     @guest.phone = params[:phone]
    end 
     if params[:notes]
-     @guest.lunch = params[:notes]
+     @guest.notes = params[:notes]
    end
     @guest.client_type = params[:client_type]  
     @guest.workshop_id = params[:workshop_id]  

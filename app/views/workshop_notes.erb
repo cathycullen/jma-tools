@@ -1,0 +1,52 @@
+<div class="container">
+  
+  <!-- upper section -->
+  <div class="row">
+    <div class="col-sm-2">
+      <!-- left -->
+      <h3><i class="glyphicon glyphicon-flash"></i> Links</h3> 
+
+      <hr>
+      
+      <ul class="nav nav-stacked">
+        <li><a href="/workshops"><i class="glyphicon glyphicon-briefcase"></i> Workshops</a></li>
+    </div><!-- /span-3 -->
+    <div class="col-sm-10">
+      <!-- column 2 --> 
+       <h3><i class="fa fa-file-text-o"></i> &nbsp Workshop Notes </h3>  
+       <hr>
+        <!--<table class="table table-condensed table-bordered table-striped table-hover table-responsive" > -->
+        <table class="table table-striped table-bordered table-striped table-hover">
+         <thead>
+          <tr>
+            <th>#</th>
+            <th> Name</th>
+            <th> Phone</th>
+            <th style="width:70%;">Notes</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>x
+          <% if @attendees != nil && @attendees.size > 0 %>
+            <% total_amount=0 %>
+            <% @attendees.each do |entry| %>
+              <tr>
+                <td><%= entry[:id]%></td>
+                <td><%= entry[:name] %></td>
+                <td><%= entry[:phone] %></td>
+                <td><%= entry[:notes] %></td>
+                <td>
+                <a href="/edit_guest?id=<%= entry[:id]%>"  class="btn btn-primary btn-xs">
+                    <!--<span class="glyphicon glyphicon-pencil"></span> -->
+                    <span class="fa fa-pencil"></span>
+                </a></td>
+              </tr> 
+            <% end %> 
+          <% end %> 
+        </tbody>
+      </table>
+      </div>
+    </div>
+    <div class="row">  
+  
+</div><!--/container-->
