@@ -1,0 +1,102 @@
+<div class="container" style= "margin-bottom: 50px;">
+  
+  <div class="row">
+    
+    <div class="col-md-10 "> 
+      <h3><i class="fa fa-users"></i> &nbsp <%= @template.humanize.titleize%> Template</h3>  
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <i class="fa fa-paw pull-right"></i>
+              <h4><%= @template.humanize.titleize%> Template</h4>
+            </div>
+          </div><!-- panel-heading -->
+          <div class="panel-body">
+            <form class="form form-vertical" action="<%= @preview_callback_method %>" method="post" >  
+              <fieldset>
+                <br>
+                <div clsss="row" >
+                  <div class="col-md-6" >
+                    <div class="fac fac-checkbox fac-danger " style="font-size:1.5em; margin-top:15px;"><span></span>
+                      <input id="box-example-2" type="checkbox" value="1" name="email_all" checked><label for="box-example-2">Send To All Participants?</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6" >
+                      <label class="control-label" for="textarea">Email</label>
+                      <input type="text" class="form-control" name="email"  title="Enter Recipients Email" placeholder="Email" >
+                  </div>
+                </div>
+                <div clsss="row">
+                  <div class="col-md-3">
+                    <label class="control-label" for="textarea">Workshop Date</label>
+                    <input type="text" class="form-control" name="appt_date"  value="<%=@workshop.workshop_date.strftime("%x")%>"title="Enter Workshop Date" placeholder="Workshop Date" id="dp1" > 
+                  </div>
+                  <div class="col-md-3">
+                   <label class="control-label" >Time</label>
+                      <select class="form-control" name="appt_start">
+                      <option value="7:00 am">7:00 am</option>
+                      <option value="8:00 am" selected >8:00 am</option>
+                      <option value="9:00 am">9:00 am</option>
+                      <option value="10:00 am">10:00 am</option>
+                      <option value="11:00 am">11:00 am</option>
+                      </select>     
+                  </div> 
+                  <div class="col-md-6">
+                    <label class="control-label" for="textarea">Location</label>
+                    <textarea class="form-control" name="text1" rows="5"><%=@text1 %>
+                    </textarea>
+                  </div>     
+                </div>
+                <div clsss="row">
+                  <div class="col-md-12">
+                  <label class="control-label" for="textarea">Food</label>
+                  <textarea class="form-control" name="text2" rows="4"><%=@text2 %>
+                  </textarea>
+                  </div>
+                </div>
+                <div clsss="row">
+                  <div class="col-md-12">
+                  <label class="control-label" for="textarea">Heads-up</label>
+                  <textarea class="form-control" name="text3" rows="8"><%=@text3 %>
+                  </textarea>
+                  </div>
+                </div>
+                <div clsss="row">
+                  <div class="col-md-12">
+                  <label class="control-label" for="textarea">The Icebreaker:</label>
+                  <textarea class="form-control" name="text4" rows="5"><%=@text4 %>
+                  </textarea>
+                  </div>
+                </div>
+                <div clsss="row">
+                  <div class="col-md-12">
+                  <label class="control-label" for="textarea">Pre-Work</label>
+                  <textarea class="form-control" name="closing_text" rows="4"><%=@closing_text %>
+                  </textarea>
+                  </div>
+                </div>
+                <input type="hidden" name="template" value="<%= @template %>">
+                <input type="hidden" name="greeting" value="<%= @greeting %>">
+                <input type="hidden" name="send_callback_method" value="<%= @send_callback_method%>">
+                <input type="hidden" name="workshop_id" value="<%= @workshop.id%>">
+                <br>
+                <hr>
+              </fieldset>
+              <div clsss="row">
+                <div class="col-md-12">
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-success">Preview</button>
+                    <button type="reset" class="btn">Cancel</button>
+                  </div>
+                </div>
+              </div><!-- row -->
+            </form>
+          </div><!-- panel-body -->
+          </div><!-- panel-default -->
+        </div><!-- col-md-12 -->
+      </div><!-- row -->
+    </div><!-- col-md-10 -->
+  </div><!-- row -->
+</div>

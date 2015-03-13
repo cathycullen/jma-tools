@@ -183,12 +183,11 @@ def populate_pre_workshop_email
 
 Chicago, IL 60640
 Please let yourself in the middle door at the top of the stairs.  Street parking is available."
-  @text2 = "To prepare for the training, we will need you to complete an online assessment in advance.   Here are the directions:"
-  @text3 = "There will be Starbucks coffee and snacks available during workshop breaks, and lunch will be provided. It is advisable to eat a full breakfast before you arrive."
-  @text4 = "I’d like to give you an idea of what to expect when you arrive.  We will begin by doing a quick group icebreaker exercise so that we can all get to know each other a little and become comfortable with one another right away. I believe this will make the rest of the day more enjoyable for everyone.
+  @text2 = "There will be Starbucks coffee and snacks available during workshop breaks, and lunch will be provided. It is advisable to eat a full breakfast before you arrive."
+  @text3 = "I’d like to give you an idea of what to expect when you arrive.  We will begin by doing a quick group icebreaker exercise so that we can all get to know each other a little and become comfortable with one another right away. I believe this will make the rest of the day more enjoyable for everyone.
  
 I know, I know … everyone hates these (despite their effectiveness). Therefore, I have decided to let you know ahead of time how I open the workshop so that, if you choose, you can ponder and prepare beforehand and not feel rushed or put on the spot."
-  @text5 = "You will be asked to share something about yourself that meets one of the following criteria: (1) something most people don't know about you when they first meet you, (2) an interesting story about yourself, (3) a passionate interest or hobby of yours or (4) an experience that would help people quickly get to know a bit about who you are."
+  @text4 = "You will be asked to share something about yourself that meets one of the following criteria: (1) something most people don't know about you when they first meet you, (2) an interesting story about yourself, (3) a passionate interest or hobby of yours or (4) an experience that would help people quickly get to know a bit about who you are."
   @closing_text = "Finally - please complete and bring the attached pre-work with you on the day of the workshop!
  
 We are looking forward to seeing you!"
@@ -364,7 +363,7 @@ get '/accountability_mirror_pre_workshop' do
     if @workshop
       @template = "accountability_mirror_pre_workshop"
       populate_pre_workshop_email
-      erb :pre_workshop_template
+      erb :pre_workshop_template2
     end
   end
 end
@@ -380,7 +379,7 @@ get '/accountability_mirror_post_workshop' do
     if @workshop
       @template = "accountability_mirror_post_workshop"
       populate_post_workshop_email
-      erb :post_workshop_template
+      erb :post_workshop_template2
     end
   end
 end
@@ -422,7 +421,11 @@ post '/send_pre_workshop_email'  do
   # get all guests associated with workshop
   #send email to each attendee
 
-  @attendees = Guest.where(:workshop_id => @workshop_id)
+if @email_all
+    @attendees = Guest.where(:workshop_id => @workshop_id)
+  else
+    @attendees = Guest.find_by_email(params[:email])
+  end
   @attendees.each do | guest|
     email = Mailer.send_pre_workshop_email(
       guest.name,
@@ -438,9 +441,6 @@ post '/send_pre_workshop_email'  do
       @text3,
       @text4,
       @text5,
-      @interview_text1,
-      @interview_text2,
-      @interview_text3,
       @template,
       @payment_text,
       @greeting1,
@@ -448,12 +448,15 @@ post '/send_pre_workshop_email'  do
       @closing_text
     )
     email.deliver
+    Log.new_entry "Pre workshop email sent to #{guest.name} #{guest.email}"
   end
   #redirect to some thank you page
-  Log.new_entry "Pre workshop email sent to #{@guest.name} #{@guest.mail}"
+  
   @on_complete_msg = "Pre Workshop Email Sent."
-  @on_complete_redirect=  "/done"
-  @on_complete_method=  "post"
+  @on_complete_method=  "get"
+  @on_complete_redirect=  "/edit_workshop"
+  @param_name = "id"
+  @param_value = @workshop_id
   erb :done
   end
 
@@ -476,6 +479,7 @@ post '/send_pre_workshop_email'  do
         @appt_date_formatted,
         @payment_date_formatted,
         @appt_start,
+        @greeting,
         @text1,
         @text2,
         @text3,
@@ -488,8 +492,11 @@ post '/send_pre_workshop_email'  do
     end
   #redirect to some thank you page
   @on_complete_msg = "Post Workshop Email Sent."
-  @on_complete_redirect=  "/done"
-  @on_complete_method=  "post"
+  @on_complete_redirect=  "/edit_workshop"
+  @param_name = "id"
+  @param_value = @workshop_id
+
+  @on_complete_method=  "get"
   erb :done
   end
 

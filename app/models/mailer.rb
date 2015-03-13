@@ -165,12 +165,10 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
 
 
     def send_pre_workshop_email(name, email, amount, appt_date, payment_date, appt_start, appt_end, location,
-      text1, text2, text3, text4, text5, interview_text1, interview_text2, interview_text3, template, payment_text, greeting1, greeting2,
-      closing_text)
+      text1, text2, text3, text4, text5, template, payment_text, greeting1, greeting2, closing_text)
       @name = name
       @email = email
       @amount = amount
-      @location = location
       @appt_date_formatted = appt_date
       @payment_date_formatted = payment_date
       @appt_start = appt_start
@@ -180,15 +178,11 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
       @text3 = text3
       @text4 = text4
       @text5 = text5
-      @interview_text1 = interview_text1
-      @interview_text2 = interview_text2
-      @interview_text3 = interview_text3
       @template = template
       @payment_text = payment_text
       @greeting1 = greeting1
       @greeting2 = greeting2
       @closing_text = closing_text
-
       begin
         
         ActionMailer::Base.smtp_settings = {
@@ -219,11 +213,12 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
       end
     end
 
-    def send_post_workshop_email(email, appt_date, payment_date, appt_start, text1, text2, text3, template, closing_text)
+    def send_post_workshop_email(email, appt_date, payment_date, appt_start, greeting, text1, text2, text3, template, closing_text)
       @email = email
       @appt_date_formatted = appt_date
       @payment_date_formatted = payment_date
       @appt_start = appt_start
+      @greeting = greeting
       @text1 = text1
       @text2 = text2
       @text3 = text3
