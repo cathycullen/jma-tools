@@ -1,0 +1,107 @@
+<section id="forms" style="margin-left: 10%;">
+    <div class="col-md-10">
+      <br>
+      <form class="form-horizontal well" action="<%= @preview_callback_method %>" method="post" >
+        <fieldset>
+          <legend><%= @template.humanize.titleize%> Template</legend>
+          <div class="control-group" >
+            <div class="col-md-12">
+               
+              <div clsss="row">
+                <div class="col-md-5">
+                  <label class="control-label" for="textarea">Homework Due Date</label>
+                  <input type="text" class="form-control" name="appt_date"  value="<%=@workshop.workshop_date.strftime("%x")%>"title="Enter Workshop Date" placeholder="Workshop Date" id="dp1" > 
+                </div>
+                <div class="col-md-5">
+                 <label class="control-label" >Time</label>
+                  <select class="form-control" name="appt_start">
+                    <option value="10:00 am">10:00 am</option>
+                    <option value="11:00 am">11:00 am</option>
+                    <option value="12:00 pm" selected >12:00 pm</option>
+                    <option value="1:00 pm">1:00 pm</option>
+                    <option value="2:00 pm">2:00 pm</option>
+                    <option value="3:00 pm">3:00 pm</option>
+                  </select>     
+                </div>   
+              </div>
+              <div clsss="row">
+                <div class="col-md-5">
+                  <label class="control-label" for="textarea">Email</label>
+                  <input type="text" class="form-control" name="email"  title="Enter Recipients Email" placeholder="Email" >
+                </div>  
+                <div class="col-md-5">
+                  <div class="fac fac-checkbox fac-danger " style="font-size:1.5em; margin-top:25px;"><span></span>
+                    <input id="box-example-2" type="checkbox" value="1" name="email_all" ><label for="box-example-2">Send To All Participants?</label>
+                  </div>      
+                </div>
+              </div>
+
+
+              <div clsss="row">
+                <div class="col-md-10">
+                <label class="control-label" for="textarea">Greeting</label>
+                <textarea class="form-control" name="greeting" rows="2"><%=@greeting %>
+                </textarea>
+                </div>
+              </div> <div clsss="row">
+                <div class="col-md-10">
+                <label class="control-label" for="textarea">Text1</label>
+                <textarea class="form-control" name="text1" rows="2"><%=@text1 %>
+                </textarea>
+                </div>
+              </div>
+              <div clsss="row">
+                <div class="col-md-10">
+                <label class="control-label" for="textarea">Text2</label>
+                <textarea class="form-control" name="text2" rows="7"><%=@text2 %>
+                </textarea>
+                </div>
+              </div>
+              <div clsss="row">
+                <div class="col-md-10">
+                <label class="control-label" for="textarea">Text3</label>
+                <textarea class="form-control" name="text3" rows="3"><%=@text3 %>
+                </textarea>
+                </div>
+              </div>
+              <div clsss="row">
+                <div class="col-md-10">
+                <label class="control-label" for="textarea">Closing</label>
+                <textarea class="form-control" name="closing_text" rows="4"><%=@closing_text %>
+                </textarea>
+                </div>
+              </div>
+              <input type="hidden" name="template" value="<%= @template %>">
+              <input type="hidden" name="greeting" value="<%= @greeting %>">
+              <br>
+            </div>
+            <br>
+            </fieldset>
+            <br>
+            <div class="row">
+              <div >
+                <input type="hidden" name="send_callback_method" value="<%= @send_callback_method%>">
+                <input type="hidden" name="workshop_id" value="<%= @workshop.id%>">
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-success">Preview</button>
+                  <button type="reset" class="btn">Cancel</button>
+                </div>
+              </div>
+          </div>
+      </form>
+    </div>
+</section>
+<!--
+  <script type='text/javascript' src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type='text/javascript' src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+  <script type='text/javascript'>
+  $(document).ready(function() {
+  
+  });
+  </script>
+        
+    </body>
+</html>
+
+-->

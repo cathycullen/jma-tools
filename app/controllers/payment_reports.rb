@@ -52,10 +52,6 @@ get '/payments' do
     end
     payment_totals
     puts "**** @payments count #{@payments.size}  is it true?   #{@payments != nil && @payments.size > 0 }"
-
-    @payments.each do |payment|
-      puts "payment: id: #{payment.id}  name: #{payment.name}"
-    end
   erb :payments2
 end
 

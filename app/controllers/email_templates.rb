@@ -84,6 +84,11 @@ def get_params(params)
   else 
     @amount = 0
   end
+  puts "params[:email_all]? #{params[:email_all]}    #{params[:email_all] == true}"
+  if !params[:email_all].nil?
+    @email_all=params[:email_all]
+  end
+  puts "@email_all #{@email_all}"
   if !@coach_name.nil?  && @coach_name.size
     @coach = Coach.find_by_name(@coach_name)
   end
@@ -195,13 +200,12 @@ def populate_post_workshop_email
   @send_callback_method = "/send_post_workshop_email"
   @greeting = "I hope you all enjoyed the Accountability Mirror workshop!"
   @text1 = "Attached is your post-workshop homework template that can be filled out on your computer.  It is due "
-  @text2 = "on or before"
-  @text4 = "CST."
-  @text5 = "To earn your free 30-minute follow-up session, remember to complete all the questions in the attachment (for either a personal or professional goal), and don't forget the Conversations for Accountability piece of the homework.  This piece can be submitted in your email response or as another attachment.
+  
+  @text2 = "To earn your free 30-minute follow-up session, remember to complete all the questions in the attachment (for either a personal or professional goal), and don't forget the Conversations for Accountability piece of the homework.  This piece can be submitted in your email response or as another attachment."
+ 
+  @text3 = "Once you submit, Jody will review for completion and we will get back to you to confirm if you qualify.
 
-Once you submit, Jody will review for completion and we will get back to you to confirm if you qualify.
-
-Thank you and good luck with your goals!"  
+Thank you and good luck with your goals!"
 @closing_text = "Best Regards,"
 end
 
@@ -408,13 +412,12 @@ post '/preview_post_workshop_email' do
     @greeting2 = temp_greeting[1]
   end
 
-  erb :preview_pre_workshop_email
+  erb :preview_post_workshop_email
 end
 
 post '/send_pre_workshop_email'  do
   get_params(params)
   @workshop_id = params[:workshop_id]
-  puts "*** workshop_id #{@workshop_id}"
   
   # get all guests associated with workshop
   #send email to each attendee
@@ -444,11 +447,10 @@ post '/send_pre_workshop_email'  do
       @greeting2,
       @closing_text
     )
-    puts "sending email to #{guest.name}"
     email.deliver
   end
   #redirect to some thank you page
-  Log.new_entry "Pre workshop email sent to #{@guest.name} #{@eguest.mail}"
+  Log.new_entry "Pre workshop email sent to #{@guest.name} #{@guest.mail}"
   @on_complete_msg = "Pre Workshop Email Sent."
   @on_complete_redirect=  "/done"
   @on_complete_method=  "post"
@@ -463,36 +465,28 @@ post '/send_pre_workshop_email'  do
   # get all guests associated with workshop
   #send email to each attendee
 
-  @attendees = Guest.where(:workshop_id => @workshop_id)
-  @attendees.each do | guest|
-    email = Mailer.send_post_workshop_email(
-      guest.name,
-      guest.email,
-      guest.amount,
-      @appt_date_formatted,
-      @payment_date_formatted,
-      @appt_start,
-      @appt_end,
-      @location,
-      @text1,
-      @text2,
-      @text3,
-      @text4,
-      @text5,
-      @interview_text1,
-      @interview_text2,
-      @interview_text3,
-      @template,
-      @payment_text,
-      @greeting1,
-      @greeting2,
-      @closing_text
-    )
-    puts "sending post workshop email to #{guest.name}"
-    email.deliver
+  if @email_all
+    @attendees = Guest.where(:workshop_id => @workshop_id)
+  else
+    @attendees = Guest.find_by_email(params[:email])
   end
+    @attendees.each do | guest|
+      email = Mailer.send_post_workshop_email(
+        guest.email,
+        @appt_date_formatted,
+        @payment_date_formatted,
+        @appt_start,
+        @text1,
+        @text2,
+        @text3,
+        @template,
+        @closing_text
+      )
+      puts "sending post workshop email to #{guest.name}"
+      email.deliver
+      Log.new_entry "Post workshop email sent to #{guest.name} #{guest.email}"
+    end
   #redirect to some thank you page
-  Log.new_entry "Post workshop email sent to #{@guest.name} #{@eguest.mail}"
   @on_complete_msg = "Post Workshop Email Sent."
   @on_complete_redirect=  "/done"
   @on_complete_method=  "post"

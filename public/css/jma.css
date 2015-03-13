@@ -29,6 +29,23 @@ color: #5e605d;
     
     This version adds support for IE 10+ and Firefox.
 */
+
+.checkbox-with-style input[type="checkbox"]
+{
+    width: 0;
+    height: 1em;
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    text-decoration: inherit;
+    margin-right: 1em;
+    font-size: 2em;
+    color: inherit;
+    vertical-align: text-bottom;
+    visibility: hidden;
+}
+
  
 .glyphicon-refresh-animate {
     -animation: spin .7s infinite linear;

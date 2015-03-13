@@ -218,6 +218,48 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
         puts e.backtrace 
       end
     end
+
+    def send_post_workshop_email(email, appt_date, payment_date, appt_start, text1, text2, text3, template, closing_text)
+      @email = email
+      @appt_date_formatted = appt_date
+      @payment_date_formatted = payment_date
+      @appt_start = appt_start
+      @text1 = text1
+      @text2 = text2
+      @text3 = text3
+      @template = template
+      @closing_text = closing_text
+      begin
+        
+        ActionMailer::Base.smtp_settings = {
+          :address   => ENV['JMA_ADDRESS'],
+          :port      => ENV['JMA_PORT'],
+          :domain    => ENV['JMA_DOMAIN'],
+          :authentication => :"login",
+          :user_name      => ENV['JMA_USER'],
+          :password       => ENV['JMA_PASS'],
+          :enable_starttls_auto => true,
+        }
+        #need a list of recipient emails here
+        @email = "cathy@softwareoptions.com"
+        puts "sending email to #{@name}"
+        attachments['JMA_getting_results.pdf'] = File.read('public/images/JMA_Getting_Results.pdf')
+        mail( 
+          :to      =>  @email,
+          :from    => ENV['JMA_FROM_ADDRESS'],
+          :subject => "Welcome To Jody Michael Associates",
+        ) do |format|
+          format.html
+          format.text
+        end
+      rescue Exception => e
+        puts "rescue caught in send_welcome_email #{e.message}"
+        @error_message = e.message
+        puts e.backtrace 
+      end
+    end
+    
+ 
     
     def send_perpetual_lens_email(name, email, amount, appt_date, payment_date, appt_start, appt_end, location,
       text1, text2, text3, text4, text5, interview_text1, interview_text2, interview_text3, template, payment_text, greeting,
