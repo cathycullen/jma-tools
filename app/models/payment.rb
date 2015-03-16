@@ -119,9 +119,9 @@ class Payment < ActiveRecord::Base
 
   def self.sum_today(name, coach, category, transaction_type)
     if !name.nil?
-     Payment.where(name: name, :payment_date => Date.today,coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).sum(:amount).to_i
+     Payment.where(name: name, :payment_date => (Time.now.beginning_of_day..Time.now.end_of_day),c oach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).sum(:amount).to_i
    else
-     Payment.where(:payment_date => Date.today, coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).sum(:amount).to_i
+     Payment.where(:payment_date => (Time.now.beginning_of_day..Time.now.end_of_day), coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).sum(:amount).to_i
     end
   end
   def self.cagetory_groups(coach, category, transaction_type)
