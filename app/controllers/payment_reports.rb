@@ -14,7 +14,7 @@ end
 get '/password' do
   @errors = []
   @submit_callback = "/password"
-  erb :password2
+  erb :password
 end
 
 post '/password' do
