@@ -13,6 +13,11 @@ class Payment < ActiveRecord::Base
 
   scope :by_year, lambda { |year| where('extract(year from payment_date) = ?', year) }
   scope :by_month, lambda { |month| where('extract(month from payment_date) = ?', month) }
+  scope :today, lambda { {
+      :conditions => ["payment_date >= ?", Time.zone.now.beginning_of_day]
+    }
+  }
+
 
   scope :group_by_month,  lambda { group("date_trunc('month', payment_date) ") }
   scope :by_category, lambda { |category_id| where('category_id= ?', category_id) }
@@ -36,19 +41,19 @@ class Payment < ActiveRecord::Base
 
 
   def self.valid_entries
-    Payment.where(:payment_date => Date.today, :status => VALID)
+    Payment.where(:payment_date => (Time.now.beginning_of_day..Time.now.end_of_day), :status => VALID)
   end
   def self.invalid_entries
-    Payment.where(:payment_date => Date.today, :status => ERROR)
+    Payment.where(:payment_date => (Time.now.beginning_of_day..Time.now.end_of_day), :status => ERROR)
   end
   def self.paid_entries
     Payment.where(:status => PAID).order('payment_date desc')
   end
   def self.paid_entries_today
-    Payment.where(:payment_date => Date.today, :status => PAID).order(:payment_date)
+    Payment.where(:payment_date => (Time.now.beginning_of_day..Time.now.end_of_day), :status => PAID).order(:payment_date)
   end
   def self.total_payments_today
-    Payment.where(:payment_date => Date.today, :status => PAID).sum(:amount)
+    Payment.where(:payment_date => (Time.now.beginning_of_day..Time.now.end_of_day), :status => PAID).sum(:amount)
   end
   def self.total_payments
     Payment.where(:status => PAID).sum(:amount)
@@ -57,7 +62,10 @@ class Payment < ActiveRecord::Base
     Payment.where(:status => ERROR).delete_all
   end
   def self.pending_entries
-    Payment.where(:payment_date => Date.today, :status => PENDING)
+    Payment.where(:payment_date => (Time.now.beginning_of_day..Time.now.end_of_day), :status => PENDING)
+  end
+  def self.pending_entries_new
+    Payment.where(:payment_date => (Time.now.beginning_of_day..Time.now.end_of_day), :status => PENDING)
   end
   def self.delete_pending_entries
     Payment.where(:status => PENDING).delete_all

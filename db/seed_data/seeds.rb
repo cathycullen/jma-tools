@@ -19,6 +19,25 @@ category = Category.create(name: "ELI")
 category = Category.create(name: "Wellness Coaching")
 category = Category.create(name: "Personal Branding")
 category = Category.create(name: "Resume Rewrite")
+category = Category.create(name: "Leadership Speaking Engagement")
+
+# 1 Career Coaching
+# 2 Executive Coaching
+# 3 Executive Coaching Individual
+# 4 Life Coaching
+# 5 Trader Coaching
+# 6 Career Strategy
+# 7 Interview Coaching
+# 8 Psychotherapy
+# 9 Accountability Mirror
+# 10 ELI Workshop
+# 11 ELI
+# 12 Wellness Coaching
+# 13 Personal Branding
+# 14 Resume Rewrite
+# 15 Leadership Speaking Engagement
+
+
 
 
 workshop = Workshop.create(name: "Jan 2015 Workshop", date: Date.today)
