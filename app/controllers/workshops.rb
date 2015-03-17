@@ -218,7 +218,7 @@ post '/save_guest' do
       @guest.phone = params[:phone]
       @guest.notes = params[:notes]
       @guest.amount = params[:amount]
-      Log.new_entry "Workshop attendee changed Name: #{@guest.name}"
+      Log.new_entry "Workshop attendee information changed for : #{@guest.name}"
       if @guest.save
         redirect "/edit_workshop?id=#{@guest.workshop_id}"
       else

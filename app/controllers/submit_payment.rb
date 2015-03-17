@@ -210,7 +210,7 @@ post '/submit_arrow_payment' do
       payment[:status] = PAID
       payment.save
 
-    Log.new_entry "Submit Arrow Payment from: #{@payment_details.name} amount: $#{@payment_details.amount} for: #{@payment_details.category} coach: #{@payment_details.coach}"
+    Log.new_entry "Submit Arrow Payment from: #{@payment_details.name} amount: $#{@payment_details.amount} for: #{@payment_details.category.name} coach: #{@payment_details.coach.name}"
   
     else
       @errors = [payment_error]
@@ -336,7 +336,7 @@ post '/jma_submit_payment' do
       if !@payment_details.amount.nil?
         @amount = @payment_details.amount
       end
-      Log.new_entry "New client credit card payment submitted: #{@payment_details.name} amount: $#{@amount} for: #{@payment_details.category} coach: #{@payment_details.coach}"
+      Log.new_entry "New client credit card payment submitted: #{@payment_details.name} amount: $#{@amount} for: #{@payment_details.category.name} coach: #{@payment_details.coach.name}"
   
       
        #create client

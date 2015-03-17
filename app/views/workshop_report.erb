@@ -27,6 +27,8 @@
             <th>#</th>
             <th> Name</th>
             <th>Email</th>
+            <th>Phone</th>
+            <th>Type</th>
             <th>Amount</th>
             <th>Paid?</th>
             <th>Actions</th>
@@ -41,7 +43,7 @@
                 <td><%= entry[:name] %></td>
                 <td><%= entry[:email]%></td>
                 <td><%= entry[:phone]%></td>
-                <td><%= entry[:email] %></td>
+                <td><%= entry[:client_type] %></td>
                 <td><%= entry[:amount] %></td>
                 <% if entry[:paid] %>
                   <% total_amount = total_amount + entry[:amount].to_f %>
