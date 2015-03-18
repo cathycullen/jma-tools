@@ -73,14 +73,104 @@
                       <label class="control-label" for="textarea">Phone</label>
                       <input type="text" class="form-control" name="phone" title="Phone"  placeholder="Phone" value="<%=@guest.phone%>" >
                     </div> 
-                    <div class="col-md-6">
-                      <label class="control-label" for="textarea">Paid</label>  
-                      <select name="paid"  class="form-control" class="form-control" style="width:100%; ">
-                          <option value="true">Yes</option>
-                          <option value="false" selected>No</option>
-                      </select>
-                    </div> 
                   </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="fac fac-checkbox fac-success " style="font-size:1.25em; margin-top:15px;margin-left:15px;"><span></span>
+                        <input id="paid" type="checkbox" value="<%=@guest.paid%>" name="paid" name="paid" 
+                        <% if @guest.paid%>
+                        checked
+                        <% end %>
+                        ><label for="paid">Paid?</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="fac fac-checkbox fac-success " style="font-size:1.25em; margin-top:15px;margin-left:15px;"><span></span>
+                        <input id="email_sent" type="checkbox" value="<%=@guest.email_sent%>" name="email_sent" 
+                        <% if @guest.email_sent%>
+                        checked
+                        <% end %>
+                        ><label for="email_sent">Email Sent?</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="fac fac-checkbox fac-success " style="font-size:1.25em; margin-top:10px;margin-left:15px;"><span></span>
+                        <input id="in_both" type="checkbox" value="<%=@guest.in_both%>" name="in_both" 
+                        <% if @guest.in_both%>
+                          checked
+                        <% end %>
+                        ><label for="in_both">In Both?</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="fac fac-checkbox fac-success " style="font-size:1.25em; margin-top:10px;margin-left:15px;"><span></span>
+                        <input id="hw_complete" type="checkbox" value="<%=@guest.hw_complete%>" name="hw_complete" 
+                        <% if @guest.hw_complete%>
+                        checked
+                        <% end %>
+                        ><label for="hw_complete">HW Complete?</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <% if @workshop.workshop_type == ELI %>
+                   <hr>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="fac fac-checkbox fac-success " style="font-size:1.25em; margin-top:10px;margin-left:15px;"><span></span>
+                          <input id="eli_released" type="checkbox" value="<%=@guest.eli_released%>" name="eli_released" 
+                          <% if @guest.eli_released%>
+                          checked
+                          <% end %>
+                          ><label for="eli_released">ELI Released?</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="fac fac-checkbox fac-success " style="font-size:1.25em; margin-top:10px;margin-left:15px;"><span></span>
+                          <input id="results_back" type="checkbox" value="<%=@guest.results_back%>" name="results_back" 
+                          <% if @guest.results_back%>
+                          checked
+                          <% end %>
+                          ><label for="results_back">Results Back?</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="fac fac-checkbox fac-success " style="font-size:1.25em; margin-top:10px;margin-left:15px;"><span></span>
+                          <input id="follow_up_email" type="checkbox" value="<%=@guest.follow_up_email%>" name="follow_up_email" 
+                          <% if @guest.follow_up_email%>
+                          checked
+                          <% end %>
+                          ><label for="follow_up_email">Follow Up Email?</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="fac fac-checkbox fac-success " style="font-size:1.25em; margin-top:10px;margin-left:15px;"><span></span>
+                          <input id="results_prepared" type="checkbox" value="<%=@guest.results_prepared%>" name="results_prepared" 
+                          <% if @guest.results_prepared%>
+                          checked
+                          <% end %>
+                          ><label for="results_prepared">Results Prepared?</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="fac fac-checkbox fac-success " style="font-size:1.25em; margin-top:10px;margin-left:15px;"><span></span>
+                          <input id="follow_up_session" type="checkbox" value="<%=@guest.follow_up_session%>" name="follow_up_session" 
+                          <% if @guest.follow_up_session%>
+                          checked
+                          <% end %>
+                          ><label for="follow_up_session">Follow up Session?</label>
+                        </div>
+                      </div>
+                    </div>
+
+                  <% end %>
+
                   <div class = "row">
                     <div class = "col-md-12">
                       <label class="control-label" for="textarea">Lunch</label>

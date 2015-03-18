@@ -32,10 +32,10 @@ category = Category.create(name: "Leadership Speaking Engagement")
 # 9 Accountability Mirror
 # 10 ELI Workshop
 # 11 ELI
-# 12 Wellness Coaching
+# 12 Wellness Coaching  nothing for this yet
 # 13 Personal Branding
-# 14 Resume Rewrite
-# 15 Leadership Speaking Engagement
+# 14 Resume Rewrite  is listed as 15 because it was deleted then re added
+# 15 Leadership Speaking Engagement is listed as 16
 
 
 

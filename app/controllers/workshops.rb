@@ -38,11 +38,16 @@ end
     else
       @errors << "Please enter workshop date."
     end
+
+    if params[:workshop_type]
+      @workshop_type = params[:workshop_type]
+    end
    if !@errors.empty?
       erb :new_workshop 
     else
       @workshop = Workshop.new 
       @workshop.name = @name
+      @workshop.workshop_type = @workshop_type
       @workshop.workshop_date = Date.strptime(@workshop_date, "%m/%d/%Y") 
       
       if @workshop.save!
@@ -65,9 +70,11 @@ end
       @workshop = Workshop.find(params[:id])
       if @workshop
         @workshop.name = params[:name]
+
+        @workshop.workshop_type = params[:workshop_type]
         @workshop.workshop_date = Date.strptime(params[:date], "%m/%d/%Y")
         if @workshop.save
-          Log.new_entry "Workshop saved: #{@workshop.name} Date: #{@workshop.workshop_date}"
+          Log.new_entry "Workshop saved: #{@workshop.name} Date: #{@workshop.workshop_date} Type: #{@workshop.workshop_type}"
           redirect "/workshops"
         else
           @on_complete_msg = "Save Workshp returned and error and was not saved"
@@ -174,6 +181,8 @@ get '/new_guest' do
   client_types
 
   @workshop_id = params[:workshop_id]
+  @workshop = Workshop.find(@workshop_id)
+
   @errors = []
   @submit_callback = '/save_new_guest'
   erb :new_guest  
@@ -187,6 +196,7 @@ end
         @guest = Guest.find(params[:id])
       if @guest
         @workshop_id = @guest.workshop_id
+        @workshop = Workshop.find(@workshop_id)
         puts "/edit_guest lunch:  #{@guest.lunch}"
         erb :edit_guest
       end
@@ -212,12 +222,58 @@ post '/save_guest' do
     if @guest
       @guest.name = params[:name]
       @guest.email = params[:email]
-      @guest.paid = params[:paid]
       @guest.client_type = params[:client_type]
       @guest.lunch = params[:lunch]
       @guest.phone = params[:phone]
       @guest.notes = params[:notes]
       @guest.amount = params[:amount]
+
+          
+      if params[:paid]
+        @guest.paid  = true
+      else
+        @guest.paid  = false
+      end 
+      if params[:follow_up_email]
+        @guest.follow_up_email  = true
+      else
+        @guest.follow_up_email  = false
+      end
+      if params[:email_sent]
+        @guest.email_sent  = true
+      else
+        @guest.email_sent  = false
+      end
+      if params[:follow_up_session]
+        @guest.follow_up_session  = true
+      else
+        @guest.follow_up_session  = false
+      end
+      if params[:hw_complete]
+        @guest.hw_complete  = true
+      else
+        @guest.hw_complete  = false
+      end
+      if params[:in_both]
+        @guest.in_both  = true
+      else
+        @guest.in_both  = false
+      end
+      if params[:results_back]
+        @guest.results_back  = true
+      else
+        @guest.results_back  = false
+      end
+      if params[:results_prepared]
+        @guest.results_prepared  = true
+      else
+        @guest.results_prepared  = false
+      end
+      if params[:eli_released]
+        @guest.eli_released  = true
+      else
+        @guest.eli_released  = false
+      end
       Log.new_entry "Workshop attendee information changed for : #{@guest.name}"
       if @guest.save
         redirect "/edit_workshop?id=#{@guest.workshop_id}"
@@ -247,6 +303,8 @@ end
 post '/save_new_guest' do
   @errors = []
 
+  #read required parameters
+
   if params[:name]
     @name = params[:name]
   else
@@ -261,11 +319,6 @@ post '/save_new_guest' do
     @amount = params[:amount]
   else
     @errors << "Please enter guest amount."
-  end
-  if params[:paid]
-    @paid = params[:paid]
-  else
-    @errors << "Please enter guest paid."
   end
   if params[:workshop_id]
     @workshop_id = params[:workshop_id]
@@ -282,16 +335,67 @@ post '/save_new_guest' do
   else
     @errors << "Please enter client phone."
   end
-  
- if !@errors.empty?
+
+  # check required parameters
+  if !@errors.empty?
     erb :new_guest 
   else
     @guest = Guest.new
     puts "guest:  #{@guest}"  
     @guest.name = params[:name]
-    @guest.email = params[:email] 
-    @guest.amount = params[:amount] 
-    @guest.paid = params[:paid]  
+    @guest.email = params[:email]  
+    @guest.phone = params[:phone]
+    @guest.client_type = params[:client_type]  
+    @guest.workshop_id = params[:workshop_id]  
+    @workshop = Workshop.find(@guest.workshop_id) 
+
+    # get optional parameters and save
+
+    if params[:paid]
+      @guest.paid  = true
+    else
+      @guest.paid  = false
+    end 
+    if params[:follow_up_email]
+      @guest.follow_up_email  = true
+    else
+      @guest.follow_up_email  = false
+    end
+    if params[:email_sent]
+      @guest.email_sent  = true
+    else
+      @guest.email_sent  = false
+    end
+    if params[:follow_up_session]
+      @guest.follow_up_session  = true
+    else
+      @guest.follow_up_session  = false
+    end
+    if params[:hw_complete]
+      @guest.hw_complete  = true
+    else
+      @guest.hw_complete  = false
+    end
+    if params[:in_both]
+      @guest.in_both  = true
+    else
+      @guest.in_both  = false
+    end
+    if params[:results_back]
+      @guest.results_back  = true
+    else
+      @guest.results_back  = false
+    end
+    if params[:results_prepared]
+      @guest.results_prepared  = true
+    else
+      @guest.results_prepared  = false
+    end
+    if params[:eli_released]
+      @guest.eli_released  = true
+    else
+      @guest.eli_released  = false
+    end
     if params[:lunch]
      @guest.lunch = params[:lunch]
    end 
@@ -301,9 +405,6 @@ post '/save_new_guest' do
     if params[:notes]
      @guest.notes = params[:notes]
    end
-    @guest.client_type = params[:client_type]  
-    @guest.workshop_id = params[:workshop_id]  
-    @workshop = Workshop.find(@guest.workshop_id)
     puts "guest name #{@guest.name} date #{@guest.amount}"  
     if @guest.save
       Log.new_entry "Workshop attendee added: #{@workshop.name} Name: #{@guest.name}"

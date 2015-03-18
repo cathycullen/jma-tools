@@ -71,14 +71,84 @@
                       <label class="control-label" for="textarea">Phone</label>
                       <input type="text" class="form-control" name="phone" title="Phone"  placeholder="Phone"  >
                     </div> 
-                    <div class="col-md-6">
-                      <label class="control-label" for="textarea">Paid</label>  
-                      <select name="paid"  class="form-control" class="form-control" style="width:100%; ">
-                          <option value="true">Yes</option>
-                          <option value="false" selected>No</option>
-                      </select>
-                    </div> 
                   </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="fac fac-checkbox fac-success " style="font-size:1.25em; margin-top:15px;margin-left:15px;"><span></span>
+                        <input id="paid" type="checkbox" value="false" name="paid" name="paid" 
+                        
+                        ><label for="paid">Paid?</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="fac fac-checkbox fac-success " style="font-size:1.25em; margin-top:15px;margin-left:15px;"><span></span>
+                        <input id="email_sent" type="checkbox" value="false" name="email_sent" 
+                        ><label for="email_sent">Email Sent?</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="fac fac-checkbox fac-success " style="font-size:1.25em; margin-top:10px;margin-left:15px;"><span></span>
+                        <input id="in_both" type="checkbox" value="false" name="in_both" 
+                        
+                        ><label for="in_both">In Both?</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="fac fac-checkbox fac-success " style="font-size:1.25em; margin-top:10px;margin-left:15px;"><span></span>
+                        <input id="hw_complete" type="checkbox" value="false" name="hw_complete" 
+                        
+                        ><label for="hw_complete">HW Complete?</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <% if @workshop.workshop_type == ELI %>
+                   <hr>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="fac fac-checkbox fac-success " style="font-size:1.25em; margin-top:10px;margin-left:15px;"><span></span>
+                          <input id="eli_released" type="checkbox" value="false" name="eli_released" 
+                          
+                          ><label for="eli_released">ELI Released?</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="fac fac-checkbox fac-success " style="font-size:1.25em; margin-top:10px;margin-left:15px;"><span></span>
+                          <input id="results_back" type="checkbox" value="false" name="results_back" 
+                          
+                          ><label for="results_back">Results Back?</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="fac fac-checkbox fac-success " style="font-size:1.25em; margin-top:10px;margin-left:15px;"><span></span>
+                          <input id="follow_up_email" type="checkbox" value="false" name="follow_up_email" 
+                          
+                          ><label for="follow_up_email">Follow Up Email?</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="fac fac-checkbox fac-success " style="font-size:1.25em; margin-top:10px;margin-left:15px;"><span></span>
+                          <input id="results_prepared" type="checkbox" value="false" name="results_prepared" 
+                          
+                          ><label for="results_prepared">Results Prepared?</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="fac fac-checkbox fac-success " style="font-size:1.25em; margin-top:10px;margin-left:15px;"><span></span>
+                          <input id="follow_up_session" type="checkbox" value="false" name="follow_up_session" 
+                          
+                          ><label for="follow_up_session">Follow up Session?</label>
+                        </div>
+                      </div>
+                    </div>
+
+                  <% end %>
                   <div class = "row">
                     <div class = "col-md-12">
                       <label class="control-label" for="textarea">Lunch</label>

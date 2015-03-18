@@ -46,10 +46,17 @@
                   </div>
                 </div>
                 <div class = "row">
-                  <div class = "col-md-5">
+                  <div class = "col-md-6">
                     <label class="control-label" for="textarea">Workshop Date</label>
                     <input type="text" class="form-control" name="date"  title="Enter Workshop Date"  placeholder="Workshop Date" id="dp1" >
                   </div>  
+                  <div class="col-md-6">
+                    <label class="control-label" for="textarea">Workshop Type</label>  
+                    <select name="workshop_type"  class="form-control" class="form-control" style="width:100%; ">
+                        <option value="<%=ACCOUNTABILITY_MIRROR%>" selected><%=ACCOUNTABILITY_MIRROR%></option>
+                        <option value="<%=ELI%>" ><%=ELI%></option>
+                    </select>
+                  </div> 
                 </div>
                 </div>
               </fieldset>

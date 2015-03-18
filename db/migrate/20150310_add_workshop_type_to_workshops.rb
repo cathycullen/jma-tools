@@ -1,4 +1,4 @@
-class AddWorkshopTyhpeToWorkshops < ActiveRecord::Migration
+class AddWorkshopTypeToWorkshops < ActiveRecord::Migration
   def change
     add_column :workshops, :workshop_type, :string
   end

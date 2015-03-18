@@ -16,11 +16,9 @@ require './payment_details'
 PaymentDetails.auto_upgrade!
 
 configure do
-  puts "configure called"
 end
 
 helpers do
-  puts "helpers called"
   def categories
     puts "is nil categories? #{@categories.nil?}"
     @categories ||= Category.all.order('id')
