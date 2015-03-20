@@ -234,7 +234,7 @@ def submit_new_client_payment(payment, description)
         @error_message = e.message
         #puts e.backtrace 
       else
-        puts "Transaction successful #{transaction}"
+        puts "submit_recurring_payment Transaction successful "
       end
     else
       @error_message = 'No valid payment method found for client #{name}'

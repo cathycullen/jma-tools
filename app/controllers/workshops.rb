@@ -4,8 +4,6 @@ configure do
 end
 
 helpers do
-  puts "workshops helpers called"
-
   def client_types
     @client_types ||= YAML.load_file('client_types.yml')
   end
@@ -34,7 +32,6 @@ end
     end
     if params[:date]
       @workshop_date = params[:date]
-      puts "**************** workshop date class #{@workshop_date.class}"
     else
       @errors << "Please enter workshop date."
     end
@@ -158,8 +155,6 @@ end
       end
     end
   end
-  
-
 
   get '/workshop_report' do
     @errors = []
@@ -203,12 +198,35 @@ end
     end
   end
 
+
   get '/delete_guest' do
+    @errors = []
+    @submit_callback = "/delete_guest"
+    puts "/delete_payment get"
+    if !params[:id].nil?
+      @guest = Guest.find(params[:id])
+      puts "deleting guest: #{@guest.id}, #{@guest.name}"
+      erb :delete_guest
+    else
+      puts "Unable to find guest id for delete #{params[:id]}"
+      @on_complete_msg = "Unable to Delete Guest.  Guest not Found for id #{params[:id]}"
+      @on_complete_redirect=  "/workshops"
+      @on_complete_method=  "get"
+      erb :done
+    end
+  end
+
+  # add are you sure here.
+  post '/delete_guest' do
     if params[:id]
       @guest = Guest.find(params[:id])
       if @guest
         workshop_id = @guest.workshop_id
+        guest_name = @guest.name
+        guest_id = @guest.id
         @guest.delete
+        puts "/delete_guest called for id: #{guest_id} #{guest_name} workshop: #{workshop_id}"
+        Log.new_entry "Guest deleted id: #{guest_id} #{guest_name} workshop: #{workshop_id}"
         redirect "/edit_workshop?id=#{workshop_id}"
       end
     end
@@ -274,7 +292,7 @@ post '/save_guest' do
       else
         @guest.eli_released  = false
       end
-      Log.new_entry "Workshop attendee information changed for : #{@guest.name}"
+      Log.new_entry "Workshop attendee information changed for : #{@guest.id} #{@guest.name}"
       if @guest.save
         redirect "/edit_workshop?id=#{@guest.workshop_id}"
       else
@@ -289,8 +307,6 @@ post '/save_guest' do
       @on_complete_method=  "get"
       @param_name = "id"
       @param_value = @guest.workshop_id
-
-      puts "on complete:  #{ @on_complete_redirect}"
       erb :done
   else
     puts "/save_guest params :id not found "
@@ -341,10 +357,10 @@ post '/save_new_guest' do
     erb :new_guest 
   else
     @guest = Guest.new
-    puts "guest:  #{@guest}"  
     @guest.name = params[:name]
     @guest.email = params[:email]  
     @guest.phone = params[:phone]
+    @guest.amount = params[:amount]
     @guest.client_type = params[:client_type]  
     @guest.workshop_id = params[:workshop_id]  
     @workshop = Workshop.find(@guest.workshop_id) 
@@ -407,7 +423,7 @@ post '/save_new_guest' do
    end
     puts "guest name #{@guest.name} date #{@guest.amount}"  
     if @guest.save
-      Log.new_entry "Workshop attendee added: #{@workshop.name} Name: #{@guest.name}"
+      Log.new_entry "Workshop attendee added: #{@workshop.name} Id: #{@guest.id} Name: #{@guest.name}"
       redirect "/edit_workshop?id=#{params[:workshop_id]}"
     else
       puts "Error saving new workshop attendee #{@guest.name}"

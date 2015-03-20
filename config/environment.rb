@@ -27,7 +27,7 @@ require 'csv'
 require './lib/arrow_payment'
 require 'chartkick'
 
-use TerseParamsLogger
+#use TerseParamsLogger
 
 require 'erb'
 

@@ -14,7 +14,6 @@ end
 
 helpers do
   def categories
-    puts "is nil categories? #{@categories.nil?}"
     @categories ||= Category.all.order('id')
   end
 
@@ -84,7 +83,6 @@ def get_params(params)
   else 
     @amount = 0
   end
-  puts "params[:email_all]? #{params[:email_all]}    #{params[:email_all] == true}"
   if !params[:email_all].nil?
     @email_all=params[:email_all]
   end
@@ -320,7 +318,7 @@ post '/send' do
     category_name = @category.name
   end
 
-  Log.new_entry "#{@template.humanize.titleize} sent to #{@name} #{@email} coach: #{@coach} #{@category}"
+  Log.new_entry "#{@template.humanize.titleize} sent to #{@name} #{@email} coach: #{@coach_name} #{@category_name}"
   @on_complete_msg = "Welcome Email Sent."
   @on_complete_redirect=  "/done"
   @on_complete_method=  "post"

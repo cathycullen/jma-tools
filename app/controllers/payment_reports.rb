@@ -51,7 +51,6 @@ get '/payments' do
       @name_search = params[:search]
     end
     payment_totals
-    puts "**** @payments count #{@payments.size}  is it true?   #{@payments != nil && @payments.size > 0 }"
   erb :payments2
 end
 

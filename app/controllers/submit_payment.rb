@@ -20,7 +20,6 @@ end
 
 helpers do
   def categories
-    puts "is nil categories? #{@categories.nil?}"
     @categories ||= Category.all.order('id')
   end
 
