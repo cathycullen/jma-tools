@@ -9,3 +9,4 @@ class CreateGuests < ActiveRecord::Migration
     end
   end
 end
+

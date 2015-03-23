@@ -50,8 +50,10 @@ get '/payments' do
       @payments = Payment.where("name like '%#{params[:search]}%'")
       @name_search = params[:search]
     end
+
     payment_totals
-  erb :payments2
+
+    erb :payments2
 end
 
 def map_all(obj)

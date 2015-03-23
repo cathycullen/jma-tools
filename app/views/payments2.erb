@@ -261,8 +261,8 @@
                     <td><%= entry[:payment_date].localtime.strftime("%m/%d/%Y %H:%M %p")  %></td>
                     <td><%= entry[:name] %></td>
                     <td>$<%= entry[:amount] %></td>
-                    <td><%= Coach.find_by_id(entry[:coach_id]).name %></td>
-                    <td><%= Category.find_by_id(entry[:category_id]).name %></td>
+                    <td><%= entry.coach.name %></td>
+                    <td><%= entry.category.name %></td>
                     <td><%= entry[:status] %></td>
                     <td><%= entry[:msg] %></td>
                     <% if entry[:status] == 'paid' %>

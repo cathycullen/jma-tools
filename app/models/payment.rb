@@ -75,7 +75,7 @@ class Payment < ActiveRecord::Base
     if !name.nil?
       self.search(name)
     else
-      Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type).order('payment_date desc')
+      Payment.joins(:category, :coach).joins(:category, :coach).where(coach_id: coach, category_id: category, transaction_type: transaction_type).order('payment_date desc')
     end
     else
       self.filter_entries_by_date(coach, category, transaction_type, start_date, end_date)
@@ -86,7 +86,7 @@ class Payment < ActiveRecord::Base
     if end_date.nil?
       end_date = Date.today
     end
-    Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, payment_date: start_date..end_date).order('payment_date desc')
+    Payment.joins(:category, :coach).where(coach_id: coach, category_id: category, transaction_type: transaction_type, payment_date: start_date..end_date).order('payment_date desc')
   end
 
   def self.all_paid_entries
