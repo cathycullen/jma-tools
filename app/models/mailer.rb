@@ -195,7 +195,6 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
           :enable_starttls_auto => true,
         }
         #need a list of recipient emails here
-        @email = "cathy@softwareoptions.com"
         puts "sending email to #{@name}"
         attachments['JMA_getting_results.pdf'] = File.read('public/images/JMA_Getting_Results.pdf')
         mail( 
@@ -236,7 +235,6 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
           :enable_starttls_auto => true,
         }
         #need a list of recipient emails here
-        @email = "cathy@softwareoptions.com"
         puts "sending email to #{@name}"
         attachments['JMA_getting_results.pdf'] = File.read('public/images/JMA_Getting_Results.pdf')
         mail( 
