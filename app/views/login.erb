@@ -15,7 +15,16 @@
           </div>
           <div class="panel-body">
       <form class="form form-vertical" action="/login" method="post" > 
-      <fieldset>
+      <fieldset> 
+        <br>
+        <% if !@errors.empty? %>
+           <legend style="color: red;  font-weight: bold; font-size: 14px;"
+            <p>The Following Errors Were Encountered: </p>
+            <% @errors.each do |e| %>
+              <p><%=e%></p>
+            <% end %>
+          </legend>
+        <% end %>
         <div class="control-group" >
           <div class = "row">
             <div class = "col-md-10">

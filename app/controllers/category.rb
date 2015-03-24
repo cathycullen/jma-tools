@@ -74,20 +74,26 @@ get '/delete_category' do
   @errors = []
   puts "/delete_category #{params}"
    if !params[:id].nil?
-    @category = Category.find(params[:id])
-    if @category
-      #make sure no payments are associated with this category
-      payments = Payment.where(category_id: @category.id)
-      if payments.size > 0
-        @on_complete_msg = "This category is associated with a payment and cannot be deleted #{@category_name}"
-      else
-        @category_name = @category.name
-        Log.new_entry "Category Deleted #{@category_name}"
-        @category.delete
-        redirect "/categories"
+    begin
+
+      @category = Category.find(params[:id])
+      if @category
+        #make sure no payments are associated with this category
+        payments = Payment.where(category_id: @category.id)
+        if payments.size > 0
+          @on_complete_msg = "This category is associated with a payment and cannot be deleted #{@category_name}"
+        else
+          @category_name = @category.name
+          Log.new_entry "Category Deleted #{@category_name}"
+          @category.delete
+          redirect "/categories"
+        end
+      else 
+        @on_complete_msg =  "category not found id: #{params[:id]}"
       end
-    else 
-      @on_complete_msg =  "category not found id: #{params[:id]}"
+
+    rescue Exception => e
+      puts "excpetion #{e.message}"
     end
   else
     @on_complete_msg =  "/delete_category params :id not found "
@@ -133,10 +139,15 @@ get '/edit_category' do
   @errors = []
   @submit_callback = '/save_category'
   if !params[:id].nil?
-    @category = Category.find(params[:id])
-    if @category
-      erb :edit_category
-    end
+    begin 
+      @category = Category.find(params[:id])
+      if @category
+        erb
+         :edit_category
+      end   
+      rescue Exception => e
+        puts "excpetion #{e.message}"
+      end
   end
 end
 

@@ -64,7 +64,31 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
         format.html
         format.text
       end
+    end 
+    
+    def send_new_user_link(email, username)
+      @email = email
+      @username = username
+    
+      ActionMailer::Base.smtp_settings = {
+        :address   => ENV['JMA_ADDRESS'],
+        :port      => ENV['JMA_PORT'],
+        :domain    => ENV['JMA_DOMAIN'],
+        :authentication => :"login",
+        :user_name      => ENV['JMA_USER'],
+        :password       => ENV['JMA_PASS'],
+        :enable_starttls_auto => true,
+      }
+      mail( 
+        :to      =>  @email,
+        :from    => ENV['JMA_FROM_ADDRESS'],
+        :subject => "Welcome To Jody Michael Associates",
+      ) do |format|
+        format.html
+        format.text
+      end
     end
+      
       
     
     def send_email(name, email, amount, category, appt_date, payment_date, appt_start, appt_end, coach, location,
