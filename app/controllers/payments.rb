@@ -1,5 +1,7 @@
 
+
 get '/prompt_weekly_payment' do
+  redirect "/login" unless session[:user_id]
   erb :prompt_weekly_payment
 end
 

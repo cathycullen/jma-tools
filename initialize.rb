@@ -9,6 +9,7 @@ Dotenv.load
 
 configure do
   set :environment =>  ENV['RACK_ENV']
+  enable :sessions
 end
 
 set :protection, :except => [:http_origin]

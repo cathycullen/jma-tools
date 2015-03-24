@@ -1,5 +1,6 @@
 
   get '/yelp_request' do
+    redirect "/login" unless session[:user_id]
     @template = "yelp_request"
     @preview_callback_method = "/yelp_request_preview"
     @send_callback_method = "/yelp_request_send"

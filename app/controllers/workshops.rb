@@ -12,11 +12,13 @@ end
 
 
 get '/workshops' do
+  redirect "/login" unless session[:user_id]
   @workshops = Workshop.all.order('id')
   erb :workshops  
 end
 
 get '/new_workshop' do
+  redirect "/login" unless session[:user_id]
   @errors = []
   @submit_callback = '/save_new_workshop'
   erb :new_workshop 
@@ -87,6 +89,7 @@ end
 
 
   get '/edit_workshop' do
+  redirect "/login" unless session[:user_id]
     @errors = []
     @submit_callback = '/save_workshop'
     if !params[:id].nil?
@@ -100,6 +103,7 @@ end
   end
 
   get '/delete_workshop' do
+  redirect "/login" unless session[:user_id]
     @errors = []
     @submit_callback = '/delete_workshop'
     if !params[:id].nil?
@@ -112,6 +116,7 @@ end
 
 
   post '/delete_workshop' do
+  redirect "/login" unless session[:user_id]
     puts "/delete_workshop post called"
     @errors = []
     if !params[:id].nil?
@@ -132,6 +137,7 @@ end
 
 
   get '/workshop_lunch_report' do
+  redirect "/login" unless session[:user_id]
     @errors = []
     @submit_callback = '/workshops'
     if !params[:id].nil?
@@ -145,6 +151,7 @@ end
 
 
   get '/workshop_notes' do
+  redirect "/login" unless session[:user_id]
     @errors = []
     @submit_callback = '/workshops'
     if !params[:id].nil?
@@ -157,6 +164,7 @@ end
   end
 
   get '/workshop_report' do
+  redirect "/login" unless session[:user_id]
     @errors = []
     @submit_callback = '/workshops'
     if !params[:id].nil?
@@ -171,6 +179,7 @@ end
   
 
 get '/new_guest' do
+  redirect "/login" unless session[:user_id]
   puts "/new_guest called #{params}"
   puts "client_types #{@client_types.inspect}"
   client_types
@@ -184,6 +193,7 @@ get '/new_guest' do
 end
 
   get '/edit_guest' do
+  redirect "/login" unless session[:user_id]
     client_types
     @errors = []
     @submit_callback = '/save_guest'
@@ -200,6 +210,7 @@ end
 
 
   get '/delete_guest' do
+  redirect "/login" unless session[:user_id]
     @errors = []
     @submit_callback = "/delete_guest"
     puts "/delete_payment get"
@@ -218,6 +229,7 @@ end
 
   # add are you sure here.
   post '/delete_guest' do
+  redirect "/login" unless session[:user_id]
     if params[:id]
       @guest = Guest.find(params[:id])
       if @guest
@@ -441,6 +453,7 @@ end
 
 
 get '/new_workshop_expense' do
+  redirect "/login" unless session[:user_id]
   puts "/new_workshop_expense called #{params}"
   @workshop_id = params[:workshop_id]
   @errors = []
@@ -514,6 +527,7 @@ post '/save_new_workshop_expense' do
   end
 
   get '/edit_workshop_expense' do
+  redirect "/login" unless session[:user_id]
     client_types
     @errors = []
     @submit_callback = '/save_workshop_expense'
@@ -527,6 +541,7 @@ post '/save_new_workshop_expense' do
   end
 
   get '/delete_workshop_expense' do
+  redirect "/login" unless session[:user_id]
     if params[:id]
       @workshop_expense = WorkshopExpense.find(params[:id])
       if @workshop_expense

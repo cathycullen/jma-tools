@@ -1,11 +1,13 @@
 
 get '/categories' do
+  redirect "/login" unless session[:user_id]
   @errors = []
   @categories = Category.all.order('name')
   erb :categories
 end
 
-get '/new_category' do
+get '/new_category' do  
+  redirect "/login" unless session[:user_id]
   @errors = []
   @submit_callback = "/save_new_category"
   erb :add_category
@@ -67,6 +69,7 @@ post '/save_category' do
 end
 
 get '/delete_category' do
+  redirect "/login" unless session[:user_id]
 
   @errors = []
   puts "/delete_category #{params}"
@@ -95,6 +98,7 @@ get '/delete_category' do
 end
 
 post'/delete_category' do
+  redirect "/login" unless session[:user_id]
 
   @errors = []
   puts "/delete_category #{params}"
@@ -125,6 +129,7 @@ end
 
 
 get '/edit_category' do
+  redirect "/login" unless session[:user_id]
   @errors = []
   @submit_callback = '/save_category'
   if !params[:id].nil?

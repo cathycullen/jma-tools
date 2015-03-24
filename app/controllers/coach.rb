@@ -1,11 +1,13 @@
 
 get '/coaches' do
+  redirect "/login" unless session[:user_id]
   @errors = []
   @coaches = Coach.all.order('id')
   erb :coaches
 end
 
 get '/new_coach' do
+  redirect "/login" unless session[:user_id]
   @errors = []
   @submit_callback = "/save_new_coach"
   puts "submit_callback #{@submit_callback}"
@@ -66,6 +68,7 @@ post '/save_coach' do
 end
 
 get '/delete_coach' do
+  redirect "/login" unless session[:user_id]
 
     @errors = []
     puts "/delete_coach #{params}"
@@ -92,6 +95,7 @@ get '/delete_coach' do
 
 
 get '/edit_coach' do
+  redirect "/login" unless session[:user_id]
   @errors = []
   @submit_callback = '/save_coach'
   if !params[:id].nil?

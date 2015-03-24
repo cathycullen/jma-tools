@@ -23,6 +23,24 @@ helpers do
     @categories ||= Category.all.order('id')
   end
 
+  def logged_in?
+    if session[:user_id].nil?
+      puts "false"
+      return false
+    else
+      puts "true"
+      return true
+    end
+  end
+
+  def login?
+    if session[:user_id].nil?
+      return false
+    else
+      return true
+    end
+  end
+
   def coaches
     @coaches ||= Coach.all.order('id')
   end
@@ -51,6 +69,7 @@ get '/xxxx' do
 end
 
 get '/send_payment_email' do
+  redirect "/login" unless session[:user_id]
     categories
     coaches
     url_root
@@ -110,6 +129,7 @@ end
   end
 
 get '/deposit_check_form' do
+  redirect "/login" unless session[:user_id]
   @errors = []
   @submit_callback = '/submit_deposit_check'
   erb :deposit_check_form
@@ -154,6 +174,7 @@ post '/submit_deposit_check' do
 end
 
 get '/arrow_payment_form' do
+  redirect "/login" unless session[:user_id]
   @errors = []
   @submit_callback = '/submit_arrow_payment'
   erb :arrow_payment_form

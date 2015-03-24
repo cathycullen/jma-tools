@@ -1,4 +1,5 @@
 get '/prompt_import_file' do
+    redirect "/login" unless session[:user_id]
     erb :import_transactions
   end
 

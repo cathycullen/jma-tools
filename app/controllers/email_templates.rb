@@ -226,6 +226,7 @@ Please let yourself in the middle door at the top of the stairs.  Street parking
 end
 
 get '/pay_per_session_email_template' do
+  redirect "/login" unless session[:user_id]
   #populate default text for email template and show template
   populate_template
   @template = "pay_per_session"
@@ -233,6 +234,7 @@ get '/pay_per_session_email_template' do
 end
 
 get '/fixed_fee_email_template' do
+  redirect "/login" unless session[:user_id]
   #populate default text for email template and show template
   populate_template
   @template = "fixed_fee"
@@ -241,6 +243,7 @@ get '/fixed_fee_email_template' do
 end
 
 get '/interview_email_template' do
+  redirect "/login" unless session[:user_id]
   #populate default text for email template and show template
   populate_template
   populate_interview_template
@@ -250,6 +253,7 @@ get '/interview_email_template' do
 end
 
 get '/initial_contact_with_pricing_email_template'  do
+  redirect "/login" unless session[:user_id]
   populate_template
   populate_initial_contact_template
   @template = "initial_contact"
@@ -351,6 +355,7 @@ post '/send_initial_contact_email_with_pricing' do
 end
 
 get '/accountability_mirror_pre_workshop' do
+  redirect "/login" unless session[:user_id]
 
   # send in workshop id
   # get workshop
@@ -368,6 +373,7 @@ end
 
 
 get '/accountability_mirror_post_workshop' do
+  redirect "/login" unless session[:user_id]
 
   # send in workshop id
   # get workshop
@@ -499,6 +505,7 @@ if @email_all
   end
 
 get '/perceptual_lens_email_template' do
+  redirect "/login" unless session[:user_id]
 
   @template = "perceptual_lens_email_template"
   populate_perceptual_lens_email

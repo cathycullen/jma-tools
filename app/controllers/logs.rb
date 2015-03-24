@@ -1,4 +1,5 @@
 get '/logs' do
+  redirect "/login" unless session[:user_id]
 
   Time.zone = "America/Chicago"
   @logs = Log.entries

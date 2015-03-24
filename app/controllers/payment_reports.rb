@@ -12,6 +12,7 @@ def payment_totals
 end
 
 get '/password' do
+  redirect "/login" unless session[:user_id]
   @errors = []
   @submit_callback = "/password"
   erb :password
@@ -28,6 +29,9 @@ end
 
 get '/payments' do
   #@payments = Payment.all_paid_entries
+
+  redirect "/login" unless session[:user_id]
+
   @name_search = nil 
   @submit_callback = "/filter_payments"
   
@@ -103,6 +107,7 @@ post '/filter_payments' do
   end
 
   get '/edit_payment' do
+  redirect "/login" unless session[:user_id]
     @errors = []
     if !params[:payment_id].nil?
       @payment = Payment.find(params[:payment_id])
@@ -150,6 +155,7 @@ post '/filter_payments' do
   end
 
   get '/delete_payment' do
+  redirect "/login" unless session[:user_id]
     @errors = []
     @submit_callback = "/delete_payment"
     puts "/delete_payment get"
@@ -167,6 +173,7 @@ post '/filter_payments' do
   end
 
   post '/delete_payment' do
+  redirect "/login" unless session[:user_id]
     puts "/delete_payment post called"
     @errors = []
     if !params[:payment_id].nil?
