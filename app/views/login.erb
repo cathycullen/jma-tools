@@ -1,0 +1,40 @@
+<div class="container" style= "margin-bottom: 50px;">
+  <!-- upper section -->
+  <div class="row">
+    </div><!-- /span-2 -->
+    <div class="col-sm-4 col-md-offset-2">
+      <h3><i class="fa fa-lock"></i> &nbsp Login</h3>  
+      <hr>
+      <div class="row">
+       <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <i class="fa fa-lock pull-right"></i>
+              <h4>Login</h4>
+            </div>
+          </div>
+          <div class="panel-body">
+      <form class="form form-vertical" action="/login" method="post" > 
+      <fieldset>
+        <div class="control-group" >
+          <div class = "row">
+            <div class = "col-md-10">
+              <label class="control-label" for="textarea">Username</label> 
+              <input type="text" class="form-control" name="username" title="Enter User Name" placeholder="User Name" required >
+            </div>
+            <div class = "col-md-10">
+              <label class="control-label" for="textarea">Password</label> 
+              <input type="password" class="form-control" name="password" title="Enter Password" placeholder="Password" required >
+            </div>
+          </div>  
+          <hr>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-success">Submit</button>
+              <button type="reset" class="btn" onclick="history.go(-1);">Cancel</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div><!-- col sm 2-->
+  </div><!-- row -->
+</div><!--/container-->

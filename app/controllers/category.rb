@@ -94,6 +94,34 @@ get '/delete_category' do
   erb :done
 end
 
+post'/delete_category' do
+
+  @errors = []
+  puts "/delete_category #{params}"
+   if !params[:id].nil?
+    @category = Category.find(params[:id])
+    if @category
+      #make sure no payments are associated with this category
+      payments = Payment.where(category_id: @category.id)
+      if payments.size > 0
+        @on_complete_msg = "This category is associated with a payment and cannot be deleted #{@category_name}"
+      else
+        @category_name = @category.name
+        Log.new_entry "Category Deleted #{@category_name}"
+        @category.delete
+        redirect "/categories"
+      end
+    else 
+      @on_complete_msg =  "category not found id: #{params[:id]}"
+    end
+  else
+    @on_complete_msg =  "/delete_category params :id not found "
+  end
+  @on_complete_redirect=  "/categories"
+  @on_complete_method=  "get"
+  erb :done
+end
+
 
 
 get '/edit_category' do

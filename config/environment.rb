@@ -15,6 +15,8 @@ require 'pg'
 require 'active_record'
 require 'logger'
 
+require 'bcrypt'
+
 require 'dotenv'
 require 'action_mailer'
 
@@ -27,7 +29,7 @@ require 'csv'
 require './lib/arrow_payment'
 require 'chartkick'
 
-#use TerseParamsLogger
+use TerseParamsLogger
 
 require 'erb'
 

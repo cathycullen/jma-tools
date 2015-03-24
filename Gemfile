@@ -13,6 +13,9 @@ gem 'faraday', "0.8.9"
 gem 'arrow_payments', "0.1.3"
 gem 'hashie', "2.0.5"
 gem 'json'
+
+gem 'bcrypt'
+
 # PostgreSQL driver
 gem 'pg'
 gem 'chartkick'

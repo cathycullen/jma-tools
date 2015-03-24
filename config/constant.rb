@@ -11,3 +11,6 @@ CHECK  ="Check"
 
 ACCOUNTABILITY_MIRROR = "Accountability Mirror"
 ELI = "ELI"
+
+USER=0
+ADMIN=1

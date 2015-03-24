@@ -43,7 +43,7 @@
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <a href="http://www.jodymichael.com">
-      <img src="http://www.jodymichael.com/filebin/images/logo.png" style="margin-right:100px; height: 65px; margin-left: 5%;margin-top: 2%;margin-right: 200px;margin-top: 5% margin-left: 5% margin-bottom: 2%;"> </a>
+      <img src="http://www.jodymichael.com/filebin/images/logo.png" style="margin-right:100px; height: 65px; margin-left: 5%;margin-top: 2%;margin-top: 5% margin-left: 5% margin-bottom: 2%;"> </a>
 
     </div>
 
@@ -89,6 +89,12 @@
               <li><a href="/categories">Categories</a></li>
               <li><a href="/logs">Logs</a></li>
             </ul>
+          </li>
+           <li>
+            <form method="POST" action="/logout" type="hidden">
+              <input class="btn btn-sm" style="margin-top:10px;" type="submit" value="Logout">
+            </form>
+          </li>
           </li>
       </ul>
     </div><!-- /.navbar-collapse -->

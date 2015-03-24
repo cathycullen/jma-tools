@@ -37,7 +37,7 @@ helpers do
 end
 
 
-get '/' do
+get '/xxxx' do
   begin 
     categories
     coaches
@@ -51,6 +51,9 @@ get '/' do
 end
 
 get '/send_payment_email' do
+    categories
+    coaches
+    url_root
     @callback_method = "/send_payment_email"
     erb :send_jma_payment_form
 end
