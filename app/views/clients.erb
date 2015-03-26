@@ -1,44 +1,66 @@
-<div class="wrapper"style="width:90%;>>
-  <div >
-<h3>JMA Clients</h3>
-  <table class="table table-condensed table-bordered table-striped table-hover style="width:100%;>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Address</th>
-        <th>City</th>
-        <th>State</th>
-        <th>Zip</th>
-        <th>Coach</th>
-        <th>Category</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if Client.all != nil && Client.all.size > 0 %>
-        <% Client.all.each do |entry| %>
-          <tr>
-            <td><%= entry[:name] %></td>
-            <td><%= entry[:email] %></td>
-            <td><%= entry[:phone] %></td>
-            <td><%= entry[:address] %></td>
-            <td><%= entry[:city] %></td>
-            <td><%= entry[:state] %></td>
-            <td><%= entry[:zip] %></td>
-            <td><%= Coach.find_by_id(entry[:coach_id]).name %></td>
-            <td><%= Category.find_by_id(entry[:category_id]).name %></td>
-            
-          </tr>
-      <% end %>	
-      <% end %>	
-    </tbody>
-  </table>	
-	<br>
 
-  <form action="/done_weekly_payments" method="post">
-    <input type="submit" value="Done" name="done" class="btn btn-success"  >
-  </form>
-  <br> 
-</div>
+<div class="container" style="width:97%;">
+  <div class="row">
+      <div class="col-sm-12">
+      <div class="row">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <i class="fa fa-group fa-2x pull-left"></i>
+              <div class="col-md-3"><h4>Clients</h4></div>
+              <div class="col-md-3"></div>
+                <div class="col-md-4>">
+                  <form class="navbar-form" role="search" action="/clients" method="get">
+                    <div class="input-group add-on">
+                      <input type="text" class="form-control" placeholder="Search" name="search" id="search" value="<%=@name_search%>">
+                      <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                      </div>
+                    </div>
+                  </form> 
+                </div><!-- col-md-4 -->
+            </div><!-- panel title -->
+          </div><!-- panel heading -->
+          <div class="panel-body" style="padding:0;"> 
+            <table class="table table-condensed table-bordered table-striped table-hover style="width:100%;>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Address</th>
+                  <th>City</th>
+                  <th>State</th>
+                  <th>Zip</th>
+                  <th>Coach</th>
+                  <th>Category</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if @clients != nil && @clients.size > 0 %>
+                  <% @clients.all.each do |entry| %>
+                    <tr>
+                      <td><%= entry[:name] %></td>
+                      <td><%= entry[:email] %></td>
+                      <td><%= entry[:phone] %></td>
+                      <td><%= entry[:address] %></td>
+                      <td><%= entry[:city] %></td>
+                      <td><%= entry[:state] %></td>
+                      <td><%= entry[:zip] %></td>
+                      <td><%= Coach.find_by_id(entry[:coach_id]).name %></td>
+                      <td><%= Category.find_by_id(entry[:category_id]).name %></td>
+                      <td><a href="/edit_client?id=<%= entry[:id]%>" class="btn btn-primary btn-xs">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    </tr>
+                <% end %> 
+                <% end %> 
+              </tbody>
+            </table>  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

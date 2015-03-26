@@ -23,16 +23,20 @@ end
 post "/login" do
   @errors = []
   @user = User.find_by(name: params[:username])
+  if @user
 
-  if @user.authenticate(params[:password])
-    session[:user_id] = @user.id
-    if @user.confirmed
-      redirect "/profile"
+    if @user.authenticate(params[:password])
+      session[:user_id] = @user.id
+      if @user.confirmed
+        redirect "/profile"
+      else
+        @errors << "Email has not been confirmed"
+      end
     else
-      @errors << "Email has not been confirmed"
+      @errors << "Invalid password"
     end
   else
-    @errors << "Invalid username or password"
+    @errors << "Invalid username"
   end
   erb :login, :layout => :min_layout
 end
@@ -60,6 +64,7 @@ post '/send_confirmation_email' do
   user.email = params[:email]
   user.password = params[:password]
   user.confirmed = false
+  user.user_type = USER
 
   if user.save
     # success.   redirect and send email
@@ -80,6 +85,7 @@ post '/send_confirmation_email' do
 end
 
 get '/confirm_new_user' do
+  puts "/confirm_new_user #{params}"
   if @user = User.find_by(name: params[:id])
     @user.confirmed = true
     @user.save
