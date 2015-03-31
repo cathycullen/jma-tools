@@ -322,8 +322,8 @@ post '/send' do
     category_name = @category.name
   end
 
-  Log.new_entry "#{@template.humanize.titleize} sent to #{@name} #{@email} coach: #{@coach_name} #{@category_name}"
-  @on_complete_msg = "Welcome Email Sent."
+  Log.new_entry "#{@template.humanize.titleize} email sent to #{@name} #{@email} coach: #{@coach.name} #{@category.name} amount: #{@amount}"
+  @on_complete_msg = "#{@template.humanize.titleize} Email Sent."
   @on_complete_redirect=  "/done"
   @on_complete_method=  "post"
   erb :done

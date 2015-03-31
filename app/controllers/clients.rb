@@ -46,3 +46,45 @@ post '/save_client' do
     erb :done
   end
 
+
+  get '/delete_client' do
+  redirect "/login" unless session[:user_id]
+    @errors = []
+    @submit_callback = "/delete_client"
+    puts "/delete_client get"
+    if !params[:id].nil?
+      @client = Client.find(params[:id])
+      puts "deleting client #{@client.name}"
+      erb :delete_client
+    else
+      puts "Unable to find client id for delete #{params[:id]}"
+      @on_complete_msg = "Unable to Delete client.  client not Found for id #{params[:id]}"
+      @on_complete_redirect=  "/clients"
+      @on_complete_method=  "get"
+      erb :done
+    end
+  end
+
+  post '/delete_client' do
+  redirect "/login" unless session[:id]
+    puts "/delete_client post called"
+    @errors = []
+    if !params[:id].nil?
+      @client = client.find(params[:id])
+      puts "deleting client #{@client.name}"
+      Log.new_entry "client deleted  #{@client.name}"
+      @client.delete
+
+      puts "client Was Deleted {@client.id}"
+      @on_complete_msg = "client Was Deleted"
+    else
+      puts "Unable to Delete client.  client not Found for id #{params[:id]}"
+      @on_complete_msg = "Unable to Delete client.  client not Found for id #{params[:id]}"
+    end
+    @on_complete_redirect=  "/clients"
+    @on_complete_method=  "get"
+    erb :done
+  end
+
+
+

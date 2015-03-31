@@ -52,7 +52,10 @@
                       <td><%= Category.find_by_id(entry[:category_id]).name %></td>
                       <td><a href="/edit_client?id=<%= entry[:id]%>" class="btn btn-primary btn-xs">
                         <span class="glyphicon glyphicon-pencil"></span>
-                    </a>
+                        </a><a href="/delete_client?id=<%= entry[:id]%>"  class="btn btn-danger btn-xs">
+                          <span class="glyphicon glyphicon-trash"></span></a>
+                      </form>
+                    </td>
                     </tr>
                 <% end %> 
                 <% end %> 
