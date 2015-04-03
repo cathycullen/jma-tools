@@ -46,7 +46,7 @@
                       <label class="control-label" for="textarea">Client Type</label>  
                       <select name="client_type"  class="form-control" class="form-control" style="width:100%; ">
                         <% i = 0 %>
-                        <% @client_types.each do |client_type|%> 
+                        <% @workshop_guest_types.each do |client_type|%> 
                         <% if i == 0 %>        
                            <option value="<%= client_type %>" selected><%= client_type %></option>
                          <% else %>

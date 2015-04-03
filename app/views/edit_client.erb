@@ -83,7 +83,22 @@
                         <% end %>
                       </select>
                     </div>
-                  </div>         
+                  </div> 
+
+                  <div class = "row">
+                    <div class = "col-md-10">
+                      <label class="control-label" for="textarea">Type</label>  
+                      <select name="client_type" class="form-control" class="form-control" style="width:100%; ">
+                        <% @client_types.each do |client_type|%>        
+                          <% if @client.client_type == client_type %>       
+                              <option value="<%= client_type %>" name="client_type" selected><%= client_type %></option>
+                            <% else %>
+                              <option value="<%= client_type %>" name="client_type" ><%= client_type %></option>
+                            <% end %>
+                        <% end %>
+                      </select>
+                    </div>
+                  </div>        
                   <input type="hidden" name="id" value = "<%= @client.id%>">
                 </div>
               </fieldset>

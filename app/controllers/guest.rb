@@ -3,7 +3,7 @@ get '/new_guest' do
   redirect "/login" unless session[:user_id]
   puts "/new_guest called #{params}"
   puts "client_types #{@client_types.inspect}"
-  client_types
+  workshop_guest_types
 
   @workshop_id = params[:workshop_id]
   @workshop = Workshop.find(@workshop_id)
@@ -15,7 +15,7 @@ end
 
   get '/edit_guest' do
   redirect "/login" unless session[:user_id]
-    client_types
+    workshop_guest_types
     @errors = []
     @submit_callback = '/save_guest'
     if !params[:id].nil?

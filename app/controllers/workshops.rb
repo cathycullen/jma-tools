@@ -4,6 +4,10 @@ configure do
 end
 
 helpers do
+  def workshop_guest_types
+    @workshop_guest_types ||= YAML.load_file('workshop_guest_types.yml')
+  end
+  
   def client_types
     @client_types ||= YAML.load_file('client_types.yml')
   end

@@ -48,7 +48,7 @@
                         <% if @guest.client_type.nil? %>
                         <% @guest.client_type = @client_types[0] %>
                         <% end %>
-                        <% @client_types.each do |client_type|%>   
+                        <% @workshop_guest_types.each do |client_type|%>   
                           <% if @guest.client_type == client_type %>       
                             <option value="<%= client_type %>" name="client_type" selected><%= client_type %></option>
                           <% else %>

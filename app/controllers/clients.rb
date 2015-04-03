@@ -1,3 +1,7 @@
+def client_types
+  ["New","Old", "Returning"]
+end
+
 get '/clients' do
   redirect "/login" unless session[:user_id]
   @clients = Client.all.order('name asc')
@@ -6,6 +10,8 @@ end
 
 get '/edit_client' do
   redirect "/login" unless session[:user_id]
+  @client_types = client_types
+  puts "Client types #{@client_types}"
   @errors = []
   @submit_callback = "/save_client"
   if !params[:id].nil?
@@ -33,6 +39,7 @@ post '/save_client' do
         @client.phone = params[:phone]
         @client.category_id = params[:category_id]
         @client.coach_id = params[:coach_id]
+        @client.client_type = params[:client_type]
 
         puts "saving client:  #{@client.name} #{@client.address}"
         Log.new_entry "Edit Client data saved #{@client.name}"

@@ -220,6 +220,7 @@ post '/submit_arrow_payment' do
         client.name = @payment_details.name
         client.coach = @payment_details.coach
         client.category = @payment_details.category
+        client.client_type = "New"
         client.save
       end
       payment = Payment.new
@@ -374,6 +375,7 @@ post '/jma_submit_payment' do
         client.state = @payment_details.state
         client.zip = @payment_details.zip
         client.phone = @payment_details.phone
+        client.client_type = "New"
         puts "Client created #{client.coach}, #{client.category}"
         client.save
       end
