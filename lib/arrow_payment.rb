@@ -237,10 +237,10 @@ def submit_new_client_payment(payment, description)
         puts "submit_recurring_payment Transaction successful "
       end
     else
-      @error_message = 'No valid payment method found for client #{name}'
+      @error_message = "No valid payment method found for client #{name}"
     end
     else
-      @error_message = 'Client not found. #{name}'
+      @error_message = "Client not found. #{name}"
     end
 
     @error_message

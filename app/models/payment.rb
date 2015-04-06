@@ -95,7 +95,7 @@ class Payment < ActiveRecord::Base
 
   def self.sum_this_week(name, coach, category, transaction_type)
     if !name.nil?
-      Payment.where(name: name, coach_id: coach, category_id: category, transaction_type: transaction_type, payment_date: Date.today.monday..Date.today, :status => PAID).sum('amount').to_i
+      Payment.where(name: name, coach_id: coach, category_id: category, transaction_type: transaction_type, payment_date: Date.today.monday..Date.today.next_day, :status => PAID).sum('amount').to_i
     else
       Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, payment_date: Date.today.monday..Date.today, :status => PAID).sum('amount').to_i
     end
