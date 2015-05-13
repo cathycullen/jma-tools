@@ -46,12 +46,15 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
       time = Time.new
       @date = Time.local(time.year, time.month, time.day) 
       @date = Time.now.strftime("%b %d, %Y")
+
+      #puts "sending to: #{ENV['JMA_ADDRESS']}, #{ENV['JMA_PORT']} #{ENV['JMA_DOMAIN']}, #{ENV['JMA_USER']}, #{ENV['JMA_PASS']},  #{ENV['JMA_FROM_ADDRESS']},"
     
       ActionMailer::Base.smtp_settings = {
         :address   => ENV['JMA_ADDRESS'],
         :port      => ENV['JMA_PORT'],
         :domain    => ENV['JMA_DOMAIN'],
         :authentication => :"login",
+        :tls =>         true,
         :user_name      => ENV['JMA_USER'],
         :password       => ENV['JMA_PASS'],
         :enable_starttls_auto => true,
