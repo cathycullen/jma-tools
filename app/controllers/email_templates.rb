@@ -136,12 +136,10 @@ def populate_template
   @text1 = "Welcome to Jody Michael Associates. We are delighted to have the opportunity to work with you. You are scheduled for the below appointment(s)."
   @text2 = "*If we have not received your payment information in the timeframe above, we will release your time slot. "
   @text3 = "Office locations and phone session procedures (please keep this information to reference for future sessions):"
-  @text4 = "Please sign in with the building's concierge and take the elevators up to the 26th floor. Please let yourself in and have a seat in the waiting area.
+  @text4 = "This building is primarily residential. Please sign in with the concierge and take the elevator to the 26th floor. Let yourself in and have a seat. 
 
-Parking is available for JMA clients - pull all the way up the circle drive and ask the concierge for the Jody Michael Associates garage keys. The parking instructions are in the black leather pouch. If the keys are not available, the client in the time slot before you may have parked – you can wait for the keys and may need to cut into your session time 5-10 minutes to park."
-  @text5 = "Please note that this is a residential building with two main entrances. Please let yourself in the door at the top of the stairs and have a seat in the waiting area.
-
-This is also the location of JMA's career exploration center. You will receive more information if this applies to your coaching process.
+Parking is available—pull all the way up to the circle drive and ask the concierge for the Jody Michael Associates garage keys. The parking instructions are in the black leather pouch. If the keys are not available, the client in the time slot before you may have parked – you can wait for the keys and may need to cut into your session time 5-10 minutes to park."
+  @text5 = "This is a residential building with two main entrances. Let yourself in the door at the top of the stairs and have a seat inside.
 
 Free street parking is available most times. If you need a temporary permit, please let us know when you arrive."
   @closing_text = "We look forward to working with you."

@@ -413,8 +413,8 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
       }
 
       mail( 
-       # :to      => ENV['DEVELOPER_EMAIL'] + ", jody@jodymichael.com, kelly@jodymichael.com",
-        :to      => ENV['DEVELOPER_EMAIL'],
+        :to      => ENV['DEVELOPER_EMAIL'] + ", jody@jodymichael.com, kelly@jodymichael.com",
+       # :to      => ENV['DEVELOPER_EMAIL'],
         :from    => ENV['JMA_FROM_ADDRESS'],
         :subject => "JMA Weekly Payment Processing Summary",
       ) do |format|
