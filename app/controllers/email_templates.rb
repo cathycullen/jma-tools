@@ -249,7 +249,7 @@ get '/hab_email_template' do
   #populate default text for email template and show template
   populate_hab_template
   @template = "hab"
-  erb :email_template
+  erb :hab_template
 end
 
 get '/pay_per_session_email_template' do
@@ -304,6 +304,17 @@ post '/preview_initial_contact_email' do
   show_param_results
   puts "/preview_initial_contact_email:  #{@include_pricing_info}"
   erb :preview_initial_contact_email
+end
+
+
+post '/preview_hab_email' do
+  puts "/preview_hab_email #{@params}"
+  #registration_key is hidden
+  @registration_key = params[:registration_key]
+ 
+  get_params(params)
+
+  erb :preview_hab_email
 end
 
 
