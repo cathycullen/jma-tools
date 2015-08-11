@@ -7,25 +7,26 @@
         <p>Dear <%=@name%>,</p>
         <p><%= @text1%></p>
         <p><%= @text2%></p>
-        <p><%=@text3%></p>
-        <p>Your Registration Key is <%=@registration_key%></p>
-        <p><%=@text4%></p>
-        <p><%=@text5%></p>
-        <p><%=@closing_text%></p>
-        <p>Kelly</p>
-
-        <p>Here are the basics to taking the Highlands Battery online:</p>
+        <p><u>Here are the basics to taking the Highlands Battery online:</u></p>
         <ol>
           <li>Please read the complete instructions (attached).</li>
           <li>Go to www.abilitybattery.com</li>
-          <li>When prompted, enter your <b>Registration Key</b>.  This is your code to enter the test.  No one else may use this code, and you cannot enter the Ability Battery without it.<br> Your <b>Registration Key</b> is <%= @registration_key%></li>
-          <li>Please enter my name, <b><%= @coach.name%></b>, as your Highlands Affiliate</li>
-          <li>Make sure that you choose <b>[REPORT_TYPE]</b> when asked in the registration form. </li>
+          <li>When prompted, enter your <b>Registration Key</b>.  This is your code to enter the test.  No one else may use this code, and you cannot enter the Ability Battery without it.<br> Your <b style="color:red">Registration Key</b> is <u><%= @registration_key%></u></li>
+          <li>Please enter my name, <b><u><%= @coach.name%></b></u>, as your Highlands Affiliate</li>
+          <li>Make sure that you choose <b><u>[REPORT_TYPE]</b></u> when asked in the registration form. </li>
           <li>Follow the prompts during the test.  The entire battery will take approximately three hours; however, you do not need to take the entire test at one sitting. </li>
           <li>My recommendations: Take the Ability Battery in a time and place where you won’t be distracted. Use headphones and a mouse (not trackpad).</li>
           <li> If you encounter any technical problems, please contact Technical Support at 1-866-528-3069.</li>
           <li>You will not receive a report upon completion. It will come to me and I will hand you a copy when we meet for your debrief. If we are meeting via phone, I will send you the reports just prior to our call.</li>
         </ol>
+        
+        <p><%=@text3%></p>
+        <p>Your Registration Key is <%=@registration_key%></p>
+        <p><%=@text4%></p>
+        <p><%=@text5%></p>
+        <p><%=@closing_text%></p>
+        <p><%= @coach.name%></p>
+
 
    <form action="<%=@send_callback_method%>" method="post" >
     <div >
