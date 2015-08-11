@@ -295,7 +295,11 @@ post '/jma_submit_payment' do
   @payment_details.state= params[:state].strip()
   @payment_details.zip=params[:zip].strip()
 
-  if params[:amount] != nil 
+  if @payment_details.exp_month.size == 1
+    @payment_details.exp_month = "0"+ @payment_details.exp_month
+  end
+
+ if params[:amount] != nil 
     @payment_details.amount=params[:amount]
   else 
     @payment_details.amount=0
