@@ -204,7 +204,7 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
       @text3 = text3
       @registration_code = registration_code
       @closing_text = closing_text
-
+      puts "mailer.send_hab_email()"
       begin
         
         ActionMailer::Base.smtp_settings = {
