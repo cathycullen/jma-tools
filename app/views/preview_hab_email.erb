@@ -5,13 +5,14 @@
           <img src="http://www.jodymichael.com/filebin/images/dotted-border-img.png" style="margin-top: 10px; margin-bottom: 20px;">
           <br>
         <p>Dear <%=@name%>,</p>
-        <p><%= @text1%></p>
         <p><%= @text2%></p>
         <p><u>Here are the basics to taking the Highlands Battery online:</u></p>
         <ol>
           <li>Please read the complete instructions (attached).</li>
           <li>Go to www.abilitybattery.com</li>
-          <li>When prompted, enter your <b>Registration Key</b>.  This is your code to enter the test.  No one else may use this code, and you cannot enter the Ability Battery without it.<br> Your <b style="color:red">Registration Key</b> is <u><%= @registration_key%></u></li>
+          <li>When prompted, enter your <b>Registration Key</b>.  This is your code to enter the test.  No one else may use this code, and you cannot enter the Ability Battery without it.<br> 
+          <ul><li>&nbspYour <b >Registration Key</b> is <u style="color:red"><%= @registration_key%></u></li>
+          </ul></li>
           <li>Please enter my name, <b><u><%= @coach.name%></b></u>, as your Highlands Affiliate</li>
           <li>Make sure that you choose <b><u>[REPORT_TYPE]</b></u> when asked in the registration form. </li>
           <li>Follow the prompts during the test.  The entire battery will take approximately three hours; however, you do not need to take the entire test at one sitting. </li>
@@ -22,7 +23,6 @@
         
         <p><%=@text3%></p>
         <p>Your Registration Key is <%=@registration_key%></p>
-        <p><%=@text4%></p>
         <p><%=@text5%></p>
         <p><%=@closing_text%></p>
         <p><%= @coach.name%></p>

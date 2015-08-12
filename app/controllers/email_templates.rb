@@ -227,19 +227,7 @@ def populate_hab_template
   @errors = []
   @preview_callback_method = "/preview_hab_email"
   @send_callback_method = "/send_hab_email"
-  @text1 = "I am thrilled that you will be using the process of the Highlands Ability Battery™ (HAB) and our JMA debrief to gain a greater understanding of your natural abilities and how to use them most effectively. Two  documents are attached with details of how to set up and take the Battery."
-  @text2 = ": My request is that you please register ASAP. This gets you into our system, but you can begin later whenever you are ready."
-  @text3 = "Here are the basics to taking the Highlands Battery online:
-1.  Please read the complete instructions (attached). 
-2.  Go to www.abilitybattery.com
-3.  When prompted, enter your Registration Key.  This is your code to enter the test.  No one else may use this code, and you cannot enter the Ability Battery without it." 
-  @text4 = "
-5.  Make sure that you choose [REPORT_TYPE] when asked in the registration form. 
-6.  Follow the prompts during the test.  The entire battery will take approximately three hours; however, you do not need to take the entire test at one sitting.  
-7.  My recommendations: Take the Ability Battery in a time and place where you won’t be distracted. Use headphones and a mouse (not trackpad). 
-8.  If you encounter any technical problems, please contact Technical Support at 1-866-528-3069.
-9.  You will not receive a report upon completion. It will come to me and I will hand you a copy when we meet for your debrief. If we are meeting via phone, I will send you the reports just prior to our call."
-
+  @text2 = "My request is that you please register ASAP. This gets you into our system, but you can begin later whenever you are ready."
   @text5 = "When you finish the Ability Battery, please send me an email to let me know."
   @closing_text = "I look forward to working with you."
 end
