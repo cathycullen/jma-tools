@@ -320,7 +320,7 @@ post '/send_hab_email' do
     @text1,
     @text2,
     @text3,
-    @registration_key
+    @registration_key,
     @closing_text
   )
   email.deliver
