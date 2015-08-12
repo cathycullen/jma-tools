@@ -235,7 +235,6 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
         puts e.backtrace 
       end
     end
-  )
 
 
 
