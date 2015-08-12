@@ -1,6 +1,5 @@
-class AddPhoneAndNotesToGuests < ActiveRecord::Migration
+class AddMonthYearToPayments < ActiveRecord::Migration
   def change
-    add_column :guests, :phone, :string
-    add_column :guests, :notes, :text, :limit => 1024
+    add_column :payments, :month_year, :string
   end
 end

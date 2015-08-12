@@ -321,12 +321,13 @@ post '/send_hab_email' do
     @text2,
     @text3,
     @registration_key,
+    
     @closing_text
   )
   email.deliver
   #redirect to some thank you page
   Log.new_entry "Send Hab  email sent to #{@name} #{@email}"
-  @on_complete_msg = "Higlands Ability Email Sent."
+  @on_complete_msg = "Highlands Ability Email Sent."
   @on_complete_redirect=  "/done"
   @on_complete_method=  "post"
   erb :done
