@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Jma Welcome Email</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Responsive stuff -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	
+  <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+  <link href="css/jma.css" rel="stylesheet">
+  <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> 
+  <script src="js/jquery.progressTimer.js"></script>
+
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+  <style>
+  h1, h2, h3, h4, h5, legend, p {
+  color: #5e605d;
+}
+  </style>
+</head>
+<body> 
+    <div class="thumbnail" style="width: 600px; margin-left: 10%; margin-top: 2%;">
+       <a href="http://www.jodymichael.com"><img src="http://www.jodymichael.com/filebin/images/logo.png" alt="<= @reference %>"  style="display: block; margin-left: auto;margin-right: auto;"></a>
+        <br>
+          <img src="http://www.jodymichael.com/filebin/images/dotted-border-img.png" style="margin-top: 10px; margin-bottom: 20px;">
+          <br>
+        <p>Hi<%=@name%>,</p>
+        <p>I am thrilled that you will be using the process of the <i>Highlands Ability Battery</i>™ (HAB) and our JMA debrief to gain a greater understanding of your natural abilities and how to use them most effectively. <u>Two  documents</u> are attached with details of how to set up and take the Battery.
+        </p>
+        <p><%= @text1%></p>
+        <p><%=@text2%></p>
+        <p><u>Here are the basics to taking the Highlands Battery online:</u></p>
+        <ol>
+          <li>Please read the complete instructions (attached).</li>
+          <li>Go to <a href="http://www.abilitybattery.com/">www.abilitybattery.com</a></li>
+
+          <li>When prompted, enter your <b>Registration Key</b>.  This is your code to enter the test.  No one else may use this code, and you cannot enter the Ability Battery without it.<br> 
+          <ul><li>&nbspYour <b >Registration Key</b> is <u style="color:red"><%= @registration_key%></u></li>
+          </ul></li>
+          <li>Please enter my name, <b><u><%= @coach.name%></b></u>, as your Highlands Affiliate</li>
+          <li>Make sure that you choose <b><u>[REPORT_TYPE]</b></u> when asked in the registration form. </li>
+          <li>Follow the prompts during the test.  The entire battery will take approximately three hours; however, you do not need to take the entire test at one sitting. </li>
+          <li>My recommendations: Take the Ability Battery in a time and place where you won’t be distracted. Use headphones and a mouse (not trackpad).</li>
+          <li> If you encounter any technical problems, please contact Technical Support at 1-866-528-3069.</li>
+          <li>You will not receive a report upon completion. It will come to me and I will hand you a copy when we meet for your debrief. If we are meeting via phone, I will send you the reports just prior to our call.</li>
+        </ol>
+        
+        <p><%=@text3%></p>
+        <p><%=@closing_text%></p>
+        <p><%= @coach.name%></p>
+</body>
+</html>

@@ -306,6 +306,32 @@ post '/preview_hab_email' do
 end
 
 
+post '/send_hab_email' do
+  #read user parameters and send formatted email
+  get_params(params)
+  show_param_results
+  @registration_key = params[:registration_key]
+  puts "/send_hab_email: "
+
+  email = Mailer.send_hab_email(
+    @name,
+    @email,
+    @coach,
+    @text1,
+    @text2,
+    @text3,
+    @registration_key
+    @closing_text
+  )
+  email.deliver
+  #redirect to some thank you page
+  Log.new_entry "Send Hab  email sent to #{@name} #{@email}"
+  @on_complete_msg = "Higlands Ability Email Sent."
+  @on_complete_redirect=  "/done"
+  @on_complete_method=  "post"
+  erb :done
+end
+
 post '/send' do
   #read user parameters and send formatted email
   get_params(params)

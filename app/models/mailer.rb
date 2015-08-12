@@ -195,6 +195,51 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
     end
 
 
+    def send_hab_email(name, email, coach, text1, text2, text3, registration_code, closing_text)
+      @name = name
+      @email = email
+      @coach  = coach
+      @text1 = text1
+      @text2 = text2
+      @text3 = text3
+      @registration_code = registration_code
+      @closing_text = closing_text
+
+      begin
+        
+        ActionMailer::Base.smtp_settings = {
+          :address   => ENV['JMA_ADDRESS'],
+          :port      => ENV['JMA_PORT'],
+          :domain    => ENV['JMA_DOMAIN'],
+          :authentication => :"login",
+          :tls =>         true,
+          :user_name      => ENV['KELLY_USER'],
+          :password       => ENV['JMA_PASS'],
+          :enable_starttls_auto => true,
+        }
+        puts "send_hab_email #{@name}, #{@email}  "
+
+        #attachments['2015 JMA Career Discovery Package.pdf'] = File.read('public/images/2015 JMA Career Discovery Package.pdf')
+        
+          mail( 
+          :to      =>  @email,
+          :from    => ENV['KELLY_USER'],
+          :subject => "Jody Michael Associates Highlands Ability Test",
+        ) do |format|
+          format.html
+          format.text
+        end
+      rescue Exception => e
+        puts "rescue caught in send_welcome_email #{e.message}"
+        @error_message = e.message
+        puts e.backtrace 
+      end
+    end
+  )
+
+
+
+
     def send_pre_workshop_email(name, email, amount, appt_date, payment_date, appt_start, appt_end, location,
       text1, text2, text3, text4, text5, template, payment_text, greeting1, greeting2, closing_text)
       @name = name
