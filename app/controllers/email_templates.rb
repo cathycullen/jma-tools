@@ -227,8 +227,8 @@ def populate_hab_template
   @errors = []
   @preview_callback_method = "/preview_hab_email"
   @send_callback_method = "/send_hab_email"
-  @text2 = "My request is that you please register ASAP. This gets you into our system, but you can begin later whenever you are ready."
-  @text5 = "When you finish the Ability Battery, please send me an email to let me know."
+  @text1 = "My request is that you please register ASAP. This gets you into our system, but you can begin later whenever you are ready."
+  @text3 = "When you finish the Ability Battery, please send me an email to let me know."
   @closing_text = "I look forward to working with you."
 end
 
