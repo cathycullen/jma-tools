@@ -220,6 +220,7 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
         puts "send_hab_email #{@name}, #{@email}  "
 
         attachments['Instruction Sheet - Highlands Ability Battery.pdf'] = File.read('public/images/Instruction Sheet - Highlands Ability Battery.pdf')
+        attachments['Tips - Highlands Ability Battery.pdf'] = File.read('public/images/Tips - Highlands Ability Battery.pdf')
         
           mail( 
           :to      =>  @email,
