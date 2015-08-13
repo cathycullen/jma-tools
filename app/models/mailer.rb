@@ -195,16 +195,16 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
     end
 
 
-    def send_hab_email(name, email, coach, text1, text2, text3, registration_code, closing_text)
+    def send_hab_email(name, email, coach, text1, text2, text3, registration_key, closing_text)
       @name = name
       @email = email
       @coach  = coach
       @text1 = text1
       @text2 = text2
       @text3 = text3
-      @registration_code = registration_code
+      @registration_key = registration_key
       @closing_text = closing_text
-      puts "mailer.send_hab_email()"
+      puts "mailer.send_hab_email() registration_key: #{@registration_key}"
       begin
         
         ActionMailer::Base.smtp_settings = {
