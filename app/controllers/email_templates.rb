@@ -310,8 +310,9 @@ post '/send_hab_email' do
   #read user parameters and send formatted email
   get_params(params)
   show_param_results
+  puts "params:  #{params}"
   @registration_key = params[:registration_key]
-  puts "post /send_hab_email: registration key: #{@registration_key} coach: #{coach.name}"
+  puts "post /send_hab_email: registration key: #{@registration_key} coach: #{@coach.name}"
 
   email = Mailer.send_hab_email(
     @name,
