@@ -137,7 +137,7 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
           :password       => ENV['JMA_PASS'],
           :enable_starttls_auto => true,
         }
-        puts "send_welcome_email coach #{coach.name} amount #{amount} date #{@appt_date_formatted} payment date #{@payment_date_formatted} start #{@appt_start} end #{@appt_end}"
+        puts "send_email coach #{coach.name} amount #{amount} date #{@appt_date_formatted} payment date #{@payment_date_formatted} start #{@appt_start} end #{@appt_end}"
         mail( 
           :to      =>  @email,
           :from    => ENV['JMA_FROM_ADDRESS'],
@@ -147,7 +147,7 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
           format.text
         end
       rescue Exception => e
-        puts "rescue caught in send_welcome_email #{e.message}"
+        puts "rescue caught in send_mail #{e.message}"
         @error_message = e.message
         puts e.backtrace 
       end
@@ -188,7 +188,7 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
           format.text
         end
       rescue Exception => e
-        puts "rescue caught in send_welcome_email #{e.message}"
+        puts "rescue caught in send_initial_contact_email_with_pricing #{e.message}"
         @error_message = e.message
         puts e.backtrace 
       end
@@ -230,7 +230,7 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
           format.text
         end
       rescue Exception => e
-        puts "rescue caught in send_welcome_email #{e.message}"
+        puts "rescue caught in send_hab_email #{e.message}"
         @error_message = e.message
         puts e.backtrace 
       end
@@ -282,7 +282,7 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
           format.text
         end
       rescue Exception => e
-        puts "rescue caught in send_welcome_email #{e.message}"
+        puts "rescue caught in send_pre_workshop_email #{e.message}"
         @error_message = e.message
         puts e.backtrace 
       end
@@ -323,7 +323,7 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
           format.text
         end
       rescue Exception => e
-        puts "rescue caught in send_welcome_email #{e.message}"
+        puts "rescue caught in send_post_workshop_email #{e.message}"
         @error_message = e.message
         puts e.backtrace 
       end
@@ -379,7 +379,7 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
           format.text
         end
       rescue Exception => e
-        puts "rescue caught in send_welcome_email #{e.message}"
+        puts "rescue caught in send_perpetual_lens_email #{e.message}"
         @error_message = e.message
         puts e.backtrace 
       end

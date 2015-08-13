@@ -311,7 +311,7 @@ post '/send_hab_email' do
   get_params(params)
   show_param_results
   @registration_key = params[:registration_key]
-  puts "post /send_hab_email: registration key: #{@registration_key}"
+  puts "post /send_hab_email: registration key: #{@registration_key} coach: #{coach.name}"
 
   email = Mailer.send_hab_email(
     @name,
