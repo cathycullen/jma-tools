@@ -195,7 +195,7 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
     end
 
 
-    def send_hab_email(name, email, coach, text1, text2, text3, registration_key, closing_text)
+    def send_hab_email(name, email, coach, text1, text2, text3, registration_key, report_type, closing_text)
       @name = name
       @email = email
       @coach  = coach
@@ -203,6 +203,7 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
       @text2 = text2
       @text3 = text3
       @registration_key = registration_key
+      @report_type = report_type
       @closing_text = closing_text
       puts "mailer.send_hab_email() registration_key: #{@registration_key}"
       begin
@@ -225,7 +226,7 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
           mail( 
           :to      =>  @email,
           :from    => ENV['KELLY_USER'],
-          :subject => "Jody Michael Associates Highlands Ability Test",
+          :subject => "Your Highlands Ability Battery Key Code and Instructions",
         ) do |format|
           format.html
           format.text

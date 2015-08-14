@@ -5,7 +5,7 @@
           <img src="http://www.jodymichael.com/filebin/images/dotted-border-img.png" style="margin-top: 10px; margin-bottom: 20px;">
           <br>
         <p>Hi <%=@name%>,</p>
-        <p>I am thrilled that you will be using the process of the <i>Highlands Ability Battery</i>™ (HAB) and our JMA debrief to gain a greater understanding of your natural abilities and how to use them most effectively. <u>Two  documents</u> are attached with details of how to set up and take the Battery.
+        <p>We are thrilled that you will be using the process of the <i>Highlands Ability Battery</i>™ (HAB) and our JMA debrief to gain a greater understanding of your natural abilities and how to use them most effectively. <u>Two  documents</u> are attached with details of how to set up and take the Battery.
         </p>
         <p><%= @text1%></p>
         <p><%=@text2%></p>
@@ -17,17 +17,17 @@
           <li>When prompted, enter your <b>Registration Key</b>.  This is your code to enter the test.  No one else may use this code, and you cannot enter the Ability Battery without it.</li><br> 
           <ul><li>&nbspYour <b >Registration Key</b> is <u style="color:red"><%= @registration_key%></u></li>
           </ul></li><br> 
-          <li>Please enter my name, <b><u><%= @coach.name%></b></u>, as your Highlands Affiliate</li>
-          <li>Make sure that you choose <b><u>[REPORT_TYPE]</b></u> when asked in the registration form. </li>
+          <li>Please enter <b><u><%= @coach.name%></b></u>, as your Highlands Affiliate</li>
+          <li>Make sure that you choose <b><u><%= @report_type%></b></u> when asked in the registration form. </li>
           <li>Follow the prompts during the test.  The entire battery will take approximately three hours; however, you do not need to take the entire test at one sitting. </li>
-          <li>My recommendations: Take the Ability Battery in a time and place where you won’t be distracted. Use headphones and a mouse (not trackpad).</li>
+          <li>Take the Ability Battery in a time and place where you won’t be distracted. Use headphones and a mouse (not trackpad).</li>
           <li> If you encounter any technical problems, please contact Technical Support at 1-866-528-3069.</li>
-          <li>You will not receive a report upon completion. It will come to me and I will hand you a copy when we meet for your debrief. If we are meeting via phone, I will send you the reports just prior to our call.</li>
+          <li>You will not receive a report upon completion. It will to to your coach who will hand you a copy when you meet for your debrief. If you are meeting via phone, your coach will send you the reports just prior to the call.</li>
         </ol>
         
         <p><%=@text3%></p>
         <p><%=@closing_text%></p>
-        <p><%= @coach.name%></p>
+        <p>The Jody Michael Associates team</p>
 
 
    <form action="<%=@send_callback_method%>" method="post" >
@@ -39,6 +39,7 @@
       <input type="hidden" name="text2" value="<%= @text2%>">
       <input type="hidden" name="text3" value="<%= @text3%>">
       <input type="hidden" name="registration_key" value="<%= @registration_key%>">
+      <input type="hidden" name="report_type" value="<%= @report_type%>">
       <input type="hidden" name="template" value="<%= @template%>">
     </div>
     <div class="form-actions">
