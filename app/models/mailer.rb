@@ -224,7 +224,7 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
         attachments['Tips - Highlands Ability Battery.pdf'] = File.read('public/images/Tips - Highlands Ability Battery.pdf')
         
           mail( 
-          :to      =>  @email,
+          :to      =>  @email, @coach.email)
           :from    => ENV['KELLY_USER'],
           :subject => "Your Highlands Ability Battery Key Code and Instructions",
         ) do |format|
