@@ -307,7 +307,8 @@ post '/preview_hab_email' do
   get_params(params)
   #substitute coach-email with @coach.email
   if @coach
-    @text3.gsub("coach-email", @coach.email)
+    @text3 = @text3.gsub("coach-email", @coach.email)
+    puts "@text3 #{@text3}"
   end
 
   erb :preview_hab_email
@@ -321,7 +322,8 @@ post '/send_hab_email' do
   puts "params:  #{params}"
   #substitute coach-email with @coach.email
   if @coach
-    @text3.gsub("coach-email", @coach.email)
+    @text3 = @text3.gsub("coach-email", @coach.email)
+    puts "@text3 #{@text3}"
   end
   @registration_key = params[:registration_key]
   @report_type = params[:report_type]
