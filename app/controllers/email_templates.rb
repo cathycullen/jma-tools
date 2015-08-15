@@ -227,9 +227,9 @@ def populate_hab_template
   @errors = []
   @preview_callback_method = "/preview_hab_email"
   @send_callback_method = "/send_hab_email"
-  @text1 = "Please register ASAP. This gets you into our system, but you can begin later whenever you are ready."
+  @text1 = "Please register ASAP. This gets you into our system, but you can begin later, whenever you are ready."
   @text2 = ""
-  @text3 = "When you finish the Ability Battery, please send your coach an email at [Coach Email] to advise.] If you have any questions, please contact your coach directly.
+  @text3 = "When you finish the Ability Battery, please send your coach an email at coach-email to advise. If you have any questions, please contact your coach directly.
 
 "
   @closing_text = "We look forward to working with you on the Highlands Ability Battery."
@@ -305,6 +305,10 @@ post '/preview_hab_email' do
   @report_type = params[:report_type]
  
   get_params(params)
+  #substitute coach-email with @coach.email
+  if @coach
+    @text3.gsub("coach-email", @coach.email)
+  end
 
   erb :preview_hab_email
 end
@@ -315,6 +319,10 @@ post '/send_hab_email' do
   get_params(params)
   show_param_results
   puts "params:  #{params}"
+  #substitute coach-email with @coach.email
+  if @coach
+    @text3.gsub("coach-email", @coach.email)
+  end
   @registration_key = params[:registration_key]
   @report_type = params[:report_type]
   puts "post /send_hab_email: registration key: #{@registration_key} report_type: #{@report_type}  coach: #{@coach.name}"
