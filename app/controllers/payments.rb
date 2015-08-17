@@ -50,7 +50,7 @@ post '/weekly_payment_entries' do
         end
       end
       if row[CATEGORY]
-        category_name = (row[CATEGORY].gsub /"/, '')
+        category_name = (row[CATEGORY].gsub /"/, '').split.each{|i| i.capitalize!}.join(' ')
         puts "Category Name:  #{category_name}"
         category = Category.find_by_name(category_name)
         if category.nil?
