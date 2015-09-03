@@ -194,7 +194,7 @@ def populate_post_workshop_email
   @preview_callback_method = "/preview_post_workshop_email"
   @send_callback_method = "/send_post_workshop_email"
   @greeting = "I hope you all enjoyed the Accountability Mirror workshop!"
-  @text1 = "Attached is your Accountability Mirror post-workshop email homework template that can be filled out on your computer.  It is due "
+  @text1 = "Attached is your post-workshop homework template email homework template that can be filled out on your computer.  It is due "
   
   @text2 = "To earn your free follow-up session, remember to complete all the questions in the attachment (for either a personal or professional goal), and don't forget the Conversations for Accountability piece of the homework.  This piece can be submitted in your email response or as another attachment."
  
