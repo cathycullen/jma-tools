@@ -196,12 +196,12 @@ def populate_post_workshop_email
   @greeting = "I hope you all enjoyed the Accountability Mirror workshop!"
   @text1 = "Attached is your post-workshop homework template that can be filled out on your computer.  It is due "
   
-  @text2 = "To earn your free 30-minute follow-up session, remember to complete all the questions in the attachment (for either a personal or professional goal), and don't forget the Conversations for Accountability piece of the homework.  This piece can be submitted in your email response or as another attachment."
+  @text2 = "To earn your free follow-up session, remember to complete all the questions in the attachment (for either a personal or professional goal), and don't forget the Conversations for Accountability piece of the homework.  This piece can be submitted in your email response or as another attachment."
  
   @text3 = "Once you submit, Jody will review for completion and we will get back to you to confirm if you qualify.
 
 Thank you and good luck with your goals!"
-@closing_text = "Best Regards,"
+@closing_text = "Best regards,"
 end
 
 def populate_perceptual_lens_email
@@ -452,7 +452,7 @@ get '/accountability_mirror_post_workshop' do
     if @workshop
       @template = "accountability_mirror_post_workshop"
       populate_post_workshop_email
-      erb :post_workshop_template2
+      erb :post_workshop_template
     end
   end
 end
