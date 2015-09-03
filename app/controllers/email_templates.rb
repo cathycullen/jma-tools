@@ -177,7 +177,10 @@ def populate_pre_workshop_email
 "
   @text1 = "4860 N. Paulina
 
+
 Chicago, IL 60640
+
+This is a residential building.
 Please let yourself in the middle door at the top of the stairs.  Street parking is available."
   @text2 = "There will be Starbucks coffee and snacks available during workshop breaks, and lunch will be provided. It is advisable to eat a full breakfast before you arrive."
   @text3 = "I’d like to give you an idea of what to expect when you arrive.  We will begin by doing a quick group icebreaker exercise so that we can all get to know each other a little and become comfortable with one another right away. I believe this will make the rest of the day more enjoyable for everyone.

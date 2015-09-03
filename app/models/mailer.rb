@@ -278,7 +278,7 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
         mail( 
           :to      =>  @email,
           :from    => ENV['JMA_FROM_ADDRESS'],
-          :subject => "Welcome To Jody Michael Associates",
+          :subject => "JMA Accountability Mirror Workshop Info & Pre-work",
         ) do |format|
           format.html
           format.text
@@ -315,11 +315,11 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
         }
         #need a list of recipient emails here
         puts "sending email to #{@name}"
-        attachments['JMA_getting_results.pdf'] = File.read('public/images/JMA_Getting_Results.pdf')
+        attachments['JMA_getting_results.pdf'] = File.read('public/images/JMA_Goal_Matrix_Form.pdf')
         mail( 
           :to      =>  @email,
           :from    => ENV['JMA_FROM_ADDRESS'],
-          :subject => "Welcome To Jody Michael Associates",
+          :subject => "Accountability Mirror post-workshop homework",
         ) do |format|
           format.html
           format.text
