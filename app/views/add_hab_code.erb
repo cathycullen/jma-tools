@@ -1,0 +1,100 @@
+<div class="container" style= "margin-bottom: 50px;">
+  
+  <!-- upper section -->
+  <div class="row">
+    <div class="col-sm-2">
+      <!-- left -->
+      <h3><i class="glyphicon glyphicon-flash"></i> Links</h3> 
+      <hr>
+      <ul class="nav nav-stacked">
+        <li><a href="/new_workshop"><i class="glyphicon glyphicon-plus"></i> Add Workshop</a></li>
+        <li><a href="/workshops"><i class="glyphicon glyphicon-briefcase"></i> Workshops</a></li>
+        <li><a href="/coaches"><i class="glyphicon glyphicon-bullhorn"></i> Coaches</a></li>
+        <li><a href="/hab_codes"><i class="glyphicon glyphicon-bullhorn"></i> Hab Codes</a></li>
+        <li><a href="/categories"><i class="glyphicon glyphicon-align-justify"></i> Categories</a></li>
+        <li><a href="/logs"><i class="glyphicon glyphicon-align-justify"></i> Logs</a></li>
+    </div><!-- /span-2 -->
+    <div class="col-sm-5">
+      <h3><i class="glyphicon glyphicon-plus"></i> &nbsp Hab Code</h3>  
+      <hr>
+      <div class="row">
+       <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <i class="glyphicon glyphicon-plus pull-right"></i>
+              <h4>Add Hab Code</h4>
+            </div>
+          </div>
+          <div class="panel-body">
+            <form class="form form-vertical" action="<%=@submit_callback%>" method="post" >  
+       
+              <fieldset>
+                <br>
+                <% if !@errors.empty? %>
+                   <legend style="color: red;  font-weight: bold; font-size: 14px;"
+                    <p>The Following Errors Were Encountered: </p>
+                    <% @errors.each do |e| %>
+                      <p><%=e%></p>
+                    <% end %>
+                  </legend>
+                <% end %>
+                <div class="control-group" >
+                  <div class = "row">
+                  <div class="col-md-6">
+                    <label class="control-label" for="textarea">Coach</label>  
+                      <select name="coach[]" class="form-control" >
+                        <% @coaches.each do |coach|%>         
+                            <% if @coach_id == coach.id%>
+                              <option value="<%= coach.id %>" selected><%= coach.name %></option>
+                            <%else%>
+                              <option value="<%= coach.id %>"><%= coach.name %></option>
+                            <% end %>
+                          <% end %>
+                      </select>
+                  </div>
+                  <div class = "row">
+                    <div class = "col-md-12">
+                      <label class="control-label" for="textarea">Code</label> 
+                      <input type="text" class="form-control" name="code"  title="Code" required >
+                    </div>
+                  </div>
+                  <div class = "row">
+                    <div class = "col-md-12">
+                      <label class="control-label" for="textarea">First Name</label> 
+                      <input type="text" class="form-control" name="first_name"  title="First Name" required >
+                    </div>
+                  </div>
+                  <div class = "row">
+                    <div class = "col-md-12">
+                      <label class="control-label" for="textarea">Last Name</label> 
+                      <input type="text" class="form-control" name="last_name"  title="Last Name" required >
+                    </div>
+                  </div>
+                <div class = "row">
+                  <div class = "col-md-5">
+                    <label class="control-label" for="textarea">Email</label>
+                    <input type="text" class="form-control" name="email" title="Email"  placeholder="Email">
+                  </div>  
+                </div>
+                <div class = "row">
+                  <div class = "col-md-5">
+                    <label class="control-label" for="textarea">Date Sent</label>
+                    <input type="text" class="form-control" name="date_sent" title="Date Sent">
+                  </div>  
+                </div>
+              </div>
+              </fieldset>
+              <hr>
+                <div class="form-actions">
+                  <button type="submit" value="Submit" name="commit" class="btn btn-success">Save</button>
+                  <button type="reset" class="btn" onclick="history.go(-1);">Cancel</button>
+                </div>
+            </form>
+          </div><!-- panel body -->
+      </div><!-- panel default -->
+      </div><!-- row -->
+    </div><!-- col sm 10-->
+       <hr>
+  </div><!-- row -->
+  
+</div><!--/container-->
