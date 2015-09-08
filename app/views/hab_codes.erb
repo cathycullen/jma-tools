@@ -41,16 +41,37 @@
               <tr>
                 <td><%= entry[:id]%></td>
                 <td><%= entry[:code] %></td>
-                <td>Coach Name</td>
+                <td><%=entry.coach.name%></td>
                 <td><%= entry[:first_name] %></td>
                 <td><%= entry[:last_name] %></td>
-                <td><%= entry[:date_sent] %></td>
-                <td><%= entry[:registered] %></td>
-                <td><%= entry[:completed] %></td>
-                <td><%= entry[:debriefed] %></td>
-                <td><%= entry[:reports_sent] %></td>
+                <% if !entry[:date_sent].nil? %>
+                  <td><%= entry[:date_sent].strftime("%m/%d/%Y") %></td>
+                <% else %>
+                  <td></td>
+                <% end %>
+                <% if entry[:registered] == true  %>
+                  <td span class="glyphicon glyphicon-ok"></span></td>
+                <% else %>
+                  <td>No</td>
+                <% end  %>
+                <% if entry[:completed] %>
+                  <td span class="glyphicon glyphicon-ok"></span></td>
+                <% else %>
+                  <td>No</td>
+                <% end  %>
+                 <% if entry[:debriefed] %>
+                  <td span class="glyphicon glyphicon-ok"></span></td>
+                <% else %>
+                  <td>No</td>
+                <% end  %>
+                 <% if entry[:reports_sent] %>
+                  <td span class="glyphicon glyphicon-ok"></span></td>
+                <% else %>
+                  <td>No</td>
+                <% end  %>
+                
                 <td>
-                <a href="/edit_hab_codeid=<%= entry[:id]%>" class="btn btn-primary btn-sm">
+                <a href="/edit_hab_code?id=<%= entry[:id]%>" class="btn btn-primary btn-sm">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
                 <a href="/delete_hab_code?id=<%= entry[:id]%>" class="btn btn-danger btn-sm">

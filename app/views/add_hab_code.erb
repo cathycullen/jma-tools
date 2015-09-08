@@ -14,7 +14,7 @@
         <li><a href="/categories"><i class="glyphicon glyphicon-align-justify"></i> Categories</a></li>
         <li><a href="/logs"><i class="glyphicon glyphicon-align-justify"></i> Logs</a></li>
     </div><!-- /span-2 -->
-    <div class="col-sm-5">
+    <div class="col-sm-6">
       <h3><i class="glyphicon glyphicon-plus"></i> &nbsp Hab Code</h3>  
       <hr>
       <div class="row">
@@ -27,7 +27,6 @@
           </div>
           <div class="panel-body">
             <form class="form form-vertical" action="<%=@submit_callback%>" method="post" >  
-       
               <fieldset>
                 <br>
                 <% if !@errors.empty? %>
@@ -40,44 +39,41 @@
                 <% end %>
                 <div class="control-group" >
                   <div class = "row">
-                  <div class="col-md-6">
-                    <label class="control-label" for="textarea">Coach</label>  
-                      <select name="coach[]" class="form-control" >
-                        <% @coaches.each do |coach|%>         
-                            <% if @coach_id == coach.id%>
-                              <option value="<%= coach.id %>" selected><%= coach.name %></option>
-                            <%else%>
-                              <option value="<%= coach.id %>"><%= coach.name %></option>
+                    <div class="col-md-6">
+                      <label class="control-label" for="textarea">Coach</label>  
+                        <select name="coach_id" class="form-control" >
+                          <% @coaches.each do |coach|%>         
+                              <% if @coach_id == coach.id%>
+                                <option value="<%= coach.id %>" selected><%= coach.name %></option>
+                              <%else%>
+                                <option value="<%= coach.id %>"><%= coach.name %></option>
+                              <% end %>
                             <% end %>
-                          <% end %>
-                      </select>
-                  </div>
-                  <div class = "row">
-                    <div class = "col-md-12">
+                        </select>
+                    </div>
+                    <div class = "col-md-6">
                       <label class="control-label" for="textarea">Code</label> 
                       <input type="text" class="form-control" name="code"  title="Code" required >
                     </div>
                   </div>
                   <div class = "row">
-                    <div class = "col-md-12">
+                    <div class = "col-md-6">
                       <label class="control-label" for="textarea">First Name</label> 
                       <input type="text" class="form-control" name="first_name"  title="First Name" required >
                     </div>
-                  </div>
                   <div class = "row">
-                    <div class = "col-md-12">
+                    <div class = "col-md-6">
                       <label class="control-label" for="textarea">Last Name</label> 
                       <input type="text" class="form-control" name="last_name"  title="Last Name" required >
                     </div>
                   </div>
                 <div class = "row">
-                  <div class = "col-md-5">
+                  <div class = "col-md-6">
                     <label class="control-label" for="textarea">Email</label>
-                    <input type="text" class="form-control" name="email" title="Email"  placeholder="Email">
-                  </div>  
-                </div>
+                    <input type="text" class="form-control" name="email" title="Email" >
+                  </div> 
                 <div class = "row">
-                  <div class = "col-md-5">
+                  <div class = "col-md-6">
                     <label class="control-label" for="textarea">Date Sent</label>
                     <input type="text" class="form-control" name="date_sent" title="Date Sent">
                   </div>  
