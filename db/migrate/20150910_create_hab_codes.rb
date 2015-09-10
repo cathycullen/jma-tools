@@ -7,7 +7,8 @@ class CreateHabCodes < ActiveRecord::Migration
       t.string :email, :unique => true
       t.datetime  :date_sent
       t.boolean :registered, :default => false
-      t.boolean :completed, :default => false
+      t.boolean :assigned, :default => false
+      t.datetime  :completed
       t.boolean :debriefed, :default => false
       t.boolean :report_sent, :default => false
       t.references :coach
