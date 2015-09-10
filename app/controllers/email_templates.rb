@@ -246,6 +246,41 @@ get '/hab_email_template' do
   erb :hab_template
 end
 
+get '/hab_email_template_auto_populate' do
+  redirect "/login" unless session[:user_id]
+  #populate default text for email template and show template
+  populate_hab_template
+
+  @template = "hab"
+  erb :hab_template_autopopulate
+end
+
+
+get '/email_hab_code' do
+  redirect "/login" unless session[:user_id]
+
+    @errors = []
+    populate_hab_template
+
+    @template = "hab"
+    puts "/email_hab #{params}"
+     if !params[:id].nil?
+      @hab_code = HabCode.find(params[:id])
+      if !@hab_code.nil?
+        erb :hab_template_auto_populate
+      else
+        puts "/email_hab_code params :id not found "
+        @on_complete_msg =   "No hab Id provided. Unable to email."
+        @on_complete_redirect=  "/hab_codes"
+        @on_complete_method=  "get"
+        erb :done
+      end
+    end
+  end
+
+
+
+
 get '/pay_per_session_email_template' do
   redirect "/login" unless session[:user_id]
   #populate default text for email template and show template
@@ -471,6 +506,7 @@ post '/preview_pre_workshop_email' do
   if temp_greeting.size == 2 
     @greeting1 = temp_greeting[0]
     @greeting2 = temp_greeting[1]
+    puts "greeting1: **#{@greeting1}**  **#{@greeting2}**"
   end
 
   erb :preview_pre_workshop_email

@@ -1,0 +1,98 @@
+<section id="forms" style="margin-left: 10%;">
+    <div class="col-md-10">
+      <br>
+      <form class="form-horizontal well" action="<%= @preview_callback_method %>" method="post" >
+        <fieldset>
+          <legend><%= @template.humanize.titleize%> Template</legend>
+          <div class="control-group" >
+            <div class="col-md-12">
+
+              <div clsss="row">
+                <div class="col-md-6">
+                  <label class="control-label" for="textarea">Name</label> 
+                  <input type="text" class="form-control" name="name" title="Enter Recipients Name" value="<%= @hab_code.first_name %>" required >
+                </div>
+                <div class="col-md-6">
+                  <label class="control-label" for="textarea">Email</label>
+                  <input type="text" class="form-control" name="email"  title="Enter Recipients Email" value="<%= @hab_code.email %>" required >
+                </div>            
+              </div>
+              <div clsss="row">
+                <div class="col-md-6">
+                  <label class="control-label" for="textarea">Coach</label>  
+                  <select name="coach_name" class="form-control" style="width:100%; ">
+                    <% coaches.each do |coach|%>    
+                      <% if @hab_code.coach_id == coach.id  %> 
+                        <option value="<%= coach.name %>" selected><%= coach.name %></option>  
+                      <% else %>
+                        <option value="<%= coach.name %>"><%= coach.name %></option>
+                      <% end %>
+                    <% end %>
+                  </select>
+                </div>  
+                <div class="col-md-6">
+                  <label class="control-label" for="textarea">Registration Key</label>
+                  <input type="text" class="form-control" name="registration_key"  title="Enter Registration Key" value="<%= @hab_code.code %>"  required >
+                </div>         
+              </div>
+              <div clsss="row">
+                <div class="col-md-6">
+                  <label class="control-label" for="textarea">Report Type</label>  
+                  <select name="report_type" class="form-control" style="width:100%; ">
+                      <option value="ADULT">ADULT</option>
+                      <option value="STUDENT">STUDENT</option>
+                      <option value="LEADER">LEADER</option>
+                      <option value="LAWYER">LAWYER</option>
+                  </select>
+                </div>        
+              </div>
+              <br>
+             
+              <div clsss="row">
+                <label class="control-label" for="textarea">Text 1</label>
+                <textarea class="form-control" name="text1" rows="3"><%=@text1 %>
+                </textarea>        
+              </div>
+              <div clsss="row">
+                <label class="control-label" for="textarea">Text 2</label>
+                <textarea class="form-control" name="text2" rows="3"><%=@text2 %>
+                </textarea>    
+              </div>
+              <div clsss="row">
+                <label class="control-label" for="textarea">Text 3</label>
+                <textarea class="form-control" name="text3" rows="7"><%=@text3 %>
+                </textarea>    
+              </div>
+              <div clsss="row">
+                <label class="control-label" for="textarea">Closing Text</label>
+                <textarea class="form-control" name="closing_text" rows="2"><%=@closing_text %>
+                </textarea>      
+              </div>
+                
+                <input type="hidden" name="template" value="<%= @template %>">
+              <hr>
+
+              <input type="hidden" name="send_callback_method" value="<%= @send_callback_method%>">
+              <div class="form-actions">
+                <button type="submit" class="btn btn-success">Preview</button>
+                <button type="reset" class="btn">Cancel</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+</section>
+<!--
+  <script type='text/javascript' src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type='text/javascript' src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+  <script type='text/javascript'>
+  $(document).ready(function() {
+  
+  });
+  </script>
+        
+    </body>
+</html>
+
+-->

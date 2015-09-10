@@ -40,37 +40,41 @@
                 <% end %>
                 <div class="control-group" >
                   <div class = "row">
-                    <div class = "col-md-12">
+                    <div class = "col-md-8">
                       <label class="control-label" for="textarea">Code</label> 
                       <input type="text" class="form-control" name="code"  title="Code" value="<%=@hab_code.code%>" required >
                     </div>
-                    <div class = "col-md-12">
+                    <div class = "col-md-8">
                       <label class="control-label" for="textarea">Coach</label>  
                       <select name="coach_id" class="form-control" >
                         <% @coaches.each do |coach|%>  
-                          <% if @hab_code.coach.name == coach.name %>       
-                              <option value="<%= coach.id %>" selected><%= coach.name %></option>
+                          <% if @hab_code.coach.nil?  %>
+                            <option value="<%= coach.id %>"><%= coach.name %></option>
                           <% else %>
-                              <option value="<%= coach.id %>"><%= coach.name %></option>
+                            <% if @hab_code.coach.name == coach.name %>       
+                                <option value="<%= coach.id %>" selected><%= coach.name %></option>
+                            <% else %>
+                                <option value="<%= coach.id %>"><%= coach.name %></option>
+                            <% end %>
                           <% end %>
                         <% end %>
                       </select>
                     </div>
 
                       
-                    <div class = "col-md-12">
+                    <div class = "col-md-8">
                       <label class="control-label" for="textarea">First Name</label> 
                       <input type="text" class="form-control" name="first_name"  title="First Name" value="<%=@hab_code.first_name%>" required >
                     </div>
-                    <div class = "col-md-12">
+                    <div class = "col-md-8">
                       <label class="control-label" for="textarea">Last Name</label> 
                       <input type="text" class="form-control" name="last_name"  title="Last Name" value="<%=@hab_code.last_name%>" required >
                     </div>
-                    <div class = "col-md-12">
+                    <div class = "col-md-8">
                       <label class="control-label" for="textarea">Email</label> 
                       <input type="text" class="form-control" name="email"  title="Email" value="<%=@hab_code.email%>" required >
                     </div>
-                    <div class = "col-md-12">
+                    <div class = "col-md-8">
                       <label class="control-label" for="textarea">Date Sent</label> 
                       <% if @hab_code.date_sent.nil? %>
                       <input type="text" class="form-control" name="date_sent"  title="Date Sent" value="" >
@@ -78,7 +82,7 @@
                       <input type="text" class="form-control" name="date_sent"  title="Date Sent" value="<%=@hab_code.date_sent.strftime("%m/%d/%Y")%>" >
                       <% end %>
                     </div>
-                    <div class = "col-md-12">
+                    <div class = "col-md-8">
                       <label class="control-label" for="textarea">Registered</label> 
                       <select name="registered" class="form-control" >
                         <% if @hab_code.registered == true %>
@@ -90,19 +94,15 @@
                         <% end %>
                       </select >
                     </div>
-                    <div class = "col-md-12">
+                    <div class = "col-md-8">
                       <label class="control-label" for="textarea">Completed</label> 
-                      <select name="completed" class="form-control" >
-                        <% if @hab_code.completed %>
-                          <option value="true" selected>yes</option>
-                          <option value="false" >no</option>
-                        <% else %>
-                          <option value="true" >yes</option>
-                          <option value="false" selected>no</option>
-                        <% end %>
-                      </select >
+                      <% if @hab_code.completed.nil? %>
+                      <input type="text" class="form-control" name="completed"  title="Completed" value="" >
+                      <% else %>
+                      <input type="text" class="form-control" name="completed"  title="Completed" value="<%=@hab_code.completed.strftime("%m/%d/%Y")%>" >
+                      <% end %>
                     </div>
-                    <div class = "col-md-12">
+                    <div class = "col-md-8">
                       <label class="control-label" for="textarea">Debriefed</label> 
                       <select name="debriefed" class="form-control" >
                         <% if @hab_code.debriefed %>
@@ -114,7 +114,7 @@
                         <% end %>
                       </select >
                     </div>
-                    <div class = "col-md-12">
+                    <div class = "col-md-8">
                       <label class="control-label" for="textarea">Report Sent</label> 
                       <select name="report_sent" class="form-control" >
                         <% if @hab_code.report_sent  %>
@@ -125,19 +125,6 @@
                           <option value="false" selected>no</option>
                         <% end %>
                       </select >
-                    </div>
-
-                    <div class = "col-md-12">
-                      <label class="control-label" for="textarea">Completed</label> 
-                      <input type="text" class="form-control" name="completed"  title="Completed" value="<%=@hab_code.completed%>">
-                    </div>
-                    <div class = "col-md-12">
-                      <label class="control-label" for="textarea">Debriefed</label> 
-                      <input type="text" class="form-control" name="debriefed"  title="Debriefed" value="<%=@hab_code.debriefed%>">
-                    </div>
-                    <div class = "col-md-12">
-                      <label class="control-label" for="textarea">Report Sent</label> 
-                      <input type="text" class="form-control" name="report_sent"  title="Report Sent" value="<%=@hab_code.report_sent%>">
                     </div>
                   </div>
               </fieldset>
