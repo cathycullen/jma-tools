@@ -97,7 +97,7 @@ post '/save_hab' do
 end
 
 
-get '/delete_hab_code' do
+get '/old_delete_hab_code' do
   redirect "/login" unless session[:user_id]
 
     @errors = []
@@ -121,6 +121,48 @@ get '/delete_hab_code' do
       erb :done
     end
   end
+
+
+  get '/delete_hab_code' do
+  redirect "/login" unless session[:user_id]
+    @errors = []
+    @submit_callback = "/delete_hab_code"
+    puts "/delete_hab_code get"
+    if !params[:id].nil?
+      @hab_code = HabCode.find(params[:id])
+      puts "deleting hab_code for #{@hab_code.code}, #{@hab_code.first_name}, #{@hab_code.last_name}"
+      erb :delete_hab_code
+    else
+      puts "Unable to find hab_code id for delete #{params[:id]}"
+      @on_complete_msg = "Unable to Delete Hab Code.  hab code not Found for id #{params[:id]}"
+      @on_complete_redirect=  "/hab_codes"
+      @on_complete_method=  "get"
+      erb :done
+    end
+  end
+
+
+  post '/delete_hab_code' do
+  redirect "/login" unless session[:user_id]
+    puts "/hab_code post called"
+    @errors = []
+    if !params[:id].nil?
+      @hab_code = HabCode.find(params[:id])
+      puts "deleting hab_code for #{@hab_code.code}, #{@hab_code.first_name}, #{@hab_code.last_name}"
+      Log.new_entry "Hab Code deleted #{@hab_code.code }, #{@hab_code.first_name}, $#{@hab_code.last_name}, #{Date.today}"
+      @hab_code.delete
+
+      puts "HabCode Was Deleted {@hab_code.id}"
+      @on_complete_msg = "Hab Code Was Deleted"
+    else
+      puts "Unable to Delete Hab Code.  Hab Code not Found for id #{params[:id]}"
+      @on_complete_msg = "Unable to Delete Hab Code.  Hab Code not Found for id #{params[:id]}"
+    end
+    @on_complete_redirect=  "/hab_codes"
+    @on_complete_method=  "get"
+    erb :done
+  end
+
 
 
 get '/edit_hab_code' do
