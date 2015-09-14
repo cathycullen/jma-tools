@@ -51,7 +51,7 @@ end
       @workshop = Workshop.new 
       @workshop.name = @name
       @workshop.workshop_type = @workshop_type
-      @workshop.workshop_date = Date.strptime(@workshop_date, "%m/%d/%Y") 
+      @workshop.workshop_date = Date.strptime(@workshop_date, "%m/%e/%Y") 
       
       if @workshop.save!
         Log.new_entry "New workshop added: #{@workshop.name} Date: #{@workshop.workshop_date}"
@@ -75,7 +75,7 @@ end
         @workshop.name = params[:name]
 
         @workshop.workshop_type = params[:workshop_type]
-        @workshop.workshop_date = Date.strptime(params[:date], "%m/%d/%Y")
+        @workshop.workshop_date = Date.strptime(params[:date], "%m/%e/%Y")
         if @workshop.save
           Log.new_entry "Workshop saved: #{@workshop.name} Date: #{@workshop.workshop_date} Type: #{@workshop.workshop_type}"
           redirect "/workshops"
