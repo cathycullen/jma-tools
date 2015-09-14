@@ -76,7 +76,7 @@
                     </div>
                     <div class = "col-md-8">
                       <label class="control-label" for="textarea">Date Sent</label> 
-                      <% if @hab_code.completed.nil? %>
+                      <% if @hab_code.date_sent.nil? %>
                         <input type="text" class="form-control" name="date_sent"  title="Date Sent"  id="dp1"  value="" > 
                       <% else %>
                         <input type="text" class="form-control" name="date_sent"  title="Date Sent"  id="dp1"  value="<%=@hab_code.date_sent.strftime("%m/%e/%Y")%>" > 

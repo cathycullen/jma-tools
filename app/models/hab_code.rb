@@ -13,7 +13,7 @@ def find_by_id(id)
 end
 
 def self.get_assigned()
-  HabCode.where(:assigned => true).order('date_sent')
+  HabCode.where(:assigned => true).order('first_name')
 end
 
 
