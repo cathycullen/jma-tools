@@ -28,6 +28,7 @@ require './lib/terse_params_logger'
 require 'csv'
 require './lib/arrow_payment'
 require 'chartkick'
+require 'time'
 
 use TerseParamsLogger
 

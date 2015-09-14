@@ -46,7 +46,9 @@
   <script>
     $(function(){
       window.prettyPrint && prettyPrint();
-      $('#dp1').datepicker();
+      $('#dp1').datepicker({
+        format: 'mm/dd/yyyy'
+      });
       $('#dp2').datepicker();
       $('#dp3').datepicker();
       

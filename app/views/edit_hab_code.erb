@@ -76,11 +76,12 @@
                     </div>
                     <div class = "col-md-8">
                       <label class="control-label" for="textarea">Date Sent</label> 
-                      <% if @hab_code.date_sent.nil? %>
-                      <input type="text" class="form-control" name="date_sent"  title="Date Sent" value="" >
+                      <% if @hab_code.completed.nil? %>
+                        <input type="text" class="form-control" name="date_sent"  title="Date Sent"  id="dp1"  value="" > 
                       <% else %>
-                      <input type="text" class="form-control" name="date_sent"  title="Date Sent" value="<%=@hab_code.date_sent.strftime("%m/%d/%Y")%>" >
+                        <input type="text" class="form-control" name="date_sent"  title="Date Sent"  id="dp1"  value="<%=@hab_code.date_sent%>" > 
                       <% end %>
+
                     </div>
                     <div class = "col-md-8">
                       <label class="control-label" for="textarea">Registered</label> 
@@ -97,9 +98,9 @@
                     <div class = "col-md-8">
                       <label class="control-label" for="textarea">Completed</label> 
                       <% if @hab_code.completed.nil? %>
-                      <input type="text" class="form-control" name="completed"  title="Completed" value="" >
+                        <input type="text" class="form-control" name="completed"  title="Completed"  id="dp1"  value="" > 
                       <% else %>
-                      <input type="text" class="form-control" name="completed"  title="Completed" value="<%=@hab_code.completed.strftime("%m/%d/%Y")%>" >
+                        <input type="text" class="form-control" name="completed"  title="Completed"  id="dp1"  value="<%=@hab_code.completed.strftime("%m/%d/%Y")%>" > 
                       <% end %>
                     </div>
                     <div class = "col-md-8">

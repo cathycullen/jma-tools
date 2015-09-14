@@ -1,4 +1,4 @@
-get '/hab_codes' do
+ get '/hab_codes' do
   redirect "/login" unless session[:user_id]
   @errors = []
   @hab_codes = HabCode.all.order('id')
@@ -37,7 +37,10 @@ post '/save_new_hab_code' do
       @hab_code.completed = params[:completed]
       @hab_code.debriefed = params[:debriefed]
       @hab_code.report_sent = params[:report_sent]
-      @hab_code.date_sent = params[:date_sent]
+      if !params[:date_sent].nil?
+        @hab_code.date_sent = DateTime.strptime(params[:date_sent], '%m/%d/%Y')  
+        puts "Date sent:  #{params[:date_sent]}  #{@hab_code.date_sent.to_date}"
+      end
       if @hab_date_sent.nil?
         @hab_code.assigned = true
       end
@@ -74,7 +77,10 @@ post '/save_hab' do
       @hab_code.completed = params[:completed]
       @hab_code.debriefed = params[:debriefed]
       @hab_code.report_sent = params[:report_sent]
-      @hab_code.date_sent = params[:date_sent]
+      if !params[:date_sent].nil?
+        @hab_code.date_sent = DateTime.strptime(params[:date_sent], '%m/%d/%Y')  
+        puts "Date sent:  #{params[:date_sent]}  #{@hab_code.date_sent.to_date}"
+      end
       if @hab_date_sent.nil?
         @hab_code.assigned = true
       end

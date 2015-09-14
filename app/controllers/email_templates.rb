@@ -580,12 +580,10 @@ if @email_all
   # get all guests associated with workshop
   #send email to each attendee
 
-  if @email_all
+  if @email_all == "1"
+    puts "sending to all attendees  #{@email_all} #{@email_all.class}  #{@email_all == 1}  #{@email_all == true}  #{@email_all == "1"}"
     @attendees = Guest.where(:workshop_id => @workshop_id)
-  else
-    @attendees = Guest.find_by_email(params[:email])
-  end
-    @attendees.each do | guest|
+     @attendees.each do | guest|
       email = Mailer.send_post_workshop_email(
         guest.email,
         @appt_date_formatted,
@@ -602,6 +600,29 @@ if @email_all
       email.deliver
       Log.new_entry "Post workshop email sent to #{guest.name} #{guest.email}"
     end
+  else
+    puts "sending to one attendee params[:email]"
+    if !params[:email].nil?
+      email = Mailer.send_post_workshop_email(
+      params[:email],
+      @appt_date_formatted,
+      @payment_date_formatted,
+      @appt_start,
+      @greeting,
+      @text1,
+      @text2,
+      @text3,
+      @template,
+      @closing_text
+      )
+      puts "sending post workshop email to #{params[:email]}"
+      email.deliver
+      Log.new_entry "Post workshop email sent to  #{params[:email]}"
+    else
+      puts "params[:email] is nil"
+    end 
+  end
+   
   #redirect to some thank you page
   @on_complete_msg = "Post Workshop Email Sent."
   @on_complete_redirect=  "/edit_workshop"
