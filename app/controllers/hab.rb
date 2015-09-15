@@ -34,10 +34,17 @@ post '/save_new_hab_code' do
       @hab_code.last_name = params[:last_name]
       @hab_code.first_name = params[:first_name]
       @hab_code.registered = params[:registered]
-      @hab_code.completed = params[:completed]
       @hab_code.debriefed = params[:debriefed]
       @hab_code.report_sent = params[:report_sent]
+<<<<<<< Updated upstream
       @hab_code.date_sent = params[:date_sent]
+=======
+      if !params[:date_sent].nil?
+        @hab_code.date_sent = DateTime.strptime(params[:date_sent], '%m/%d/%Y')  
+        puts "Date sent:  #{params[:date_sent]}  #{@hab_code.date_sent.to_date}"
+      end
+
+>>>>>>> Stashed changes
       if @hab_date_sent.nil?
         @hab_code.assigned = true
       end
@@ -71,10 +78,20 @@ post '/save_hab' do
       @hab_code.last_name = params[:last_name]
       @hab_code.first_name = params[:first_name]
       @hab_code.registered = params[:registered]
-      @hab_code.completed = params[:completed]
       @hab_code.debriefed = params[:debriefed]
       @hab_code.report_sent = params[:report_sent]
+<<<<<<< Updated upstream
       @hab_code.date_sent = params[:date_sent]
+=======
+      if !params[:date_sent].nil?
+        @hab_code.date_sent = DateTime.strptime(params[:date_sent], '%m/%d/%Y')  
+        puts "Date sent:  #{params[:date_sent]}  #{@hab_code.date_sent.to_date}"
+      end
+      if !params[:completed].nil?
+        @hab_code.completed = DateTime.strptime(params[:completed], '%m/%d/%Y')  
+        puts "Completed:  #{params[:completed]}  #{@hab_code.completed.to_date}"
+      end
+>>>>>>> Stashed changes
       if @hab_date_sent.nil?
         @hab_code.assigned = true
       end
