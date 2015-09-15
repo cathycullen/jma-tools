@@ -98,9 +98,9 @@
                     <div class = "col-md-8">
                       <label class="control-label" for="textarea">Completed</label> 
                       <% if @hab_code.completed.nil? %>
-                        <input type="text" class="form-control" name="completed"  title="Completed"  id="dp1"  value="" > 
+                        <input type="text" class="form-control" name="completed"  title="Completed"  id="dp2"  value="" > 
                       <% else %>
-                        <input type="text" class="form-control" name="completed"  title="Completed"  id="dp1"  value="<%=@hab_code.completed.strftime("%m/%d/%Y")%>" > 
+                        <input type="text" class="form-control" name="completed"  title="Completed"  id="dp2"  value="<%=@hab_code.completed.strftime("%m/%d/%Y")%>" > 
                       <% end %>
                     </div>
                     <div class = "col-md-8">
