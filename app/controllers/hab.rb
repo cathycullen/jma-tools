@@ -37,14 +37,14 @@ post '/save_new_hab_code' do
       @hab_code.debriefed = params[:debriefed]
       @hab_code.report_sent = params[:report_sent]
 
-      if !params[:date_sent].nil?
+      if !params[:date_sent].nil? && params[:date_sent].size > 0
         @hab_code.date_sent = DateTime.strptime(params[:date_sent], '%m/%d/%Y')  
         puts "Date sent:  #{params[:date_sent]}  #{@hab_code.date_sent.to_date}"
       end
-      if @hab_date_sent.nil?
+      if @hab_date_sent.nil? 
         @hab_code.assigned = true
       end
-      if !params[:completed].nil?
+      if !params[:completed].nil?  && params[:completed].size > 0
         @hab_code.completed = DateTime.strptime(params[:completed], '%m/%d/%Y')  
         puts "Completed:  #{params[:completed]}  #{@hab_code.completed.to_date}"
       end
@@ -81,11 +81,11 @@ post '/save_hab' do
       @hab_code.debriefed = params[:debriefed]
       @hab_code.report_sent = params[:report_sent]
 
-      if !params[:date_sent].nil?
+      if !params[:date_sent].nil?  && params[:date_sent].size > 0
         @hab_code.date_sent = DateTime.strptime(params[:date_sent], '%m/%d/%Y')  
         puts "Date sent:  #{params[:date_sent]}  #{@hab_code.date_sent.to_date}"
       end
-      if !params[:completed].nil?
+      if !params[:completed].nil?  && params[:completed].size > 0
         @hab_code.completed = DateTime.strptime(params[:completed], '%m/%d/%Y')  
         puts "Completed:  #{params[:completed]}  #{@hab_code.completed.to_date}"
       end
