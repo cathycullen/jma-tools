@@ -137,7 +137,7 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
           :password       => ENV['JMA_PASS'],
           :enable_starttls_auto => true,
         }
-        puts "send_email coach #{coach.name} amount #{amount} date #{@appt_date_formatted} payment date #{@payment_date_formatted} start #{@appt_start} end #{@appt_end}"
+        puts "send_email closing_text #{@closing_text} location #{@location}  coach #{coach.name} amount #{amount} date #{@appt_date_formatted} payment date #{@payment_date_formatted} start #{@appt_start} end #{@appt_end}"
         mail( 
           :to      =>  @email,
           :from    => ENV['JMA_FROM_ADDRESS'],

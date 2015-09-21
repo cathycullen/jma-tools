@@ -54,28 +54,42 @@
     <% end %>
      <p><b><%=@text3%></b></p>
     <br>
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="well">
-          <p><b><u>Downtown Office</u></b></p>
-          <p>405 N. Wabash, Suite 2615</p>
-          <p>Chicago, IL  60611</p>
+    <% if !(@location == "SandySprings") %>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="well">
+            <p><b><u>Downtown Office</u></b></p>
+            <p>405 N. Wabash, Suite 2615</p>
+            <p>Chicago, IL  60611</p>
+           </div>
          </div>
        </div>
-     </div>
-     <p><%=@text4%></p>
-    <br>
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="well">
-          <p><b><u>North Side Office</u></b></p>
-          <p>4860 N Paulina St</p>
-          <p>Chicago, IL  60640</p>
+       <p><%=@text4%></p>
+      <br>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="well">
+            <p><b><u>North Side Office</u></b></p>
+            <p>4860 N Paulina St</p>
+            <p>Chicago, IL  60640</p>
+           </div>
          </div>
        </div>
-     </div>
+      <p><%=@text5%></p>
+       <% else %><div class="row">
+        <div class="col-lg-12">
+          <div class="well">
+            <p><b><u>Sandy Springs Office</u></b></p>
+            <p></p>
+            <p>Perimeter Ridge Office Park</p>
+            <p>750 Hammond Dr NE</p>
+            <p>Building 15, Suite 350</p>
+            <p>Atlanta, GA 30328</p>
+           </div>
+         </div>
+       </div>
+      <% end %>
      
-    <p><%=@text5%></p>
     <div class="row">
       <div class="col-lg-12">
         <div class="well">
@@ -94,7 +108,12 @@
      </div>
     <p><%=@closing_text%></p>
     <p>Best regards,</p>
-    <p>Kelly</p>
+    <% if !(@location == "SandySprings") %>
+     <p>Kelly</p>
+    <% else %>
+      <p>Nancy</p>
+    <% end %>
+
    <form action="<%=@send_callback_method%>" method="post" >
     <div >
       <input type="hidden" name="name" value="<%= @name%>">
@@ -117,6 +136,7 @@
       <input type="hidden" name="interview_text3" value="<%= @interview_text3%>">
       <input type="hidden" name="template" value="<%= @template%>">
       <input type="hidden" name="payment_text" value="<%= @payment_text%>">
+      <input type="hidden" name="closing_text" value="<%= @closing_text%>">
     </div>
     <div class="form-actions">
       <button type="submit" class="btn btn-success" title="Select to Email to Client">Send</button>

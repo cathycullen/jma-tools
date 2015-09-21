@@ -319,10 +319,15 @@ get '/initial_contact_with_pricing_email_template'  do
   end
 
 post '/preview' do
-  puts "@payment_date_formatted:  #{@payment_date_formatted}"
   # read user parameters, display preview of email
  
   get_params(params)
+  puts "@payment_date_formatted:  #{@payment_date_formatted}  LOCATION:  #{@location} closing text: #{@closing_text}"
+  if !(@location == "SandySprings") 
+    puts "location is NOT SandySprings"
+  else 
+    puts "location is SandySprings"
+  end
   erb :preview
 end
 
