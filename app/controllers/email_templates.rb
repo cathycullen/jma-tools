@@ -323,7 +323,7 @@ post '/preview' do
  
   get_params(params)
   puts "@payment_date_formatted:  #{@payment_date_formatted}  LOCATION:  #{@location} closing text: #{@closing_text}"
-  if !(@location == "SandySprings") 
+  if !(@location == "Sandy Springs") 
     puts "location is NOT SandySprings"
   else 
     puts "location is SandySprings"
