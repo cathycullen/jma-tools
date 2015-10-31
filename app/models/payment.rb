@@ -56,7 +56,7 @@ class Payment < ActiveRecord::Base
     Payment.where(:payment_date => (Time.now.beginning_of_day..Time.now.end_of_day), :status => PAID).sum(:amount)
   end
   def self.total_payments
-    Payment.where(:status => PAID).sum(:amount)
+    Payment.where(:status => PAID).includes(:coach).includes(:category).sum(:amount)
   end
   def self.delete_invalid_entries
     Payment.where(:status => ERROR).delete_all
@@ -70,7 +70,8 @@ class Payment < ActiveRecord::Base
   def self.delete_pending_entries
     Payment.where(:status => PENDING).delete_all
   end
-  def self.filter_entries(name, coach, category, transaction_type, start_date, end_date)
+
+  def self.filter_entries_old(name, coach, category, transaction_type, start_date, end_date)
     if start_date.nil?
     if !name.nil?
       self.search(name)
@@ -81,6 +82,19 @@ class Payment < ActiveRecord::Base
       self.filter_entries_by_date(coach, category, transaction_type, start_date, end_date)
     end
   end
+
+  def self.filter_entries(name, coach, category, transaction_type, start_date, end_date)
+    if start_date.nil?
+    if !name.nil?
+      self.search(name)
+    else
+      Payment.includes(:category, :coach).where(coach_id: coach, category_id: category, transaction_type: transaction_type).order('payment_date desc')
+    end
+    else
+      self.filter_entries_by_date(coach, category, transaction_type, start_date, end_date)
+    end
+  end
+  
 
   def self.filter_entries_by_date(coach, category, transaction_type, start_date, end_date)
     if end_date.nil?
@@ -130,7 +144,7 @@ class Payment < ActiveRecord::Base
   end
 
   def self.category_group_names(coach, category, transaction_type)
-    categories = Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).group(:category_id).sum('amount')
+    categories = Payment.where(coach_id: coach, category_id: category, transaction_type: transaction_type, :status => PAID).includes(:category).group(:category_id).sum('amount')
     category_names = Hash.new
     categories.each do |entry|
       category_names.store Category.find_by_id(entry[0]).name, entry[1]

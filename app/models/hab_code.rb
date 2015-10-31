@@ -2,7 +2,7 @@ class HabCode < ActiveRecord::Base
   # Remember to create a migration!
   #add validation
   validates_presence_of :code
-  belongs_to :coach
+  belongs_to :coach 
 
 def find_by_code(code)
   HabCode.where(:code => code).first
@@ -13,12 +13,12 @@ def find_by_id(id)
 end
 
 def self.get_assigned()
-  HabCode.where(:assigned => true).order('first_name')
+  HabCode.where(:assigned => true).includes(:coach).order('first_name')
 end
 
 
 def self.get_unassigned()
-  HabCode.where(:assigned => false).order('code')
+  HabCode.where(:assigned => false).includes(:coach).order('code')
 end
 
 end
