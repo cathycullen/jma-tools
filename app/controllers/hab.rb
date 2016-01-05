@@ -24,7 +24,7 @@ post '/save_new_hab_code' do
     #if !@coach_id.nil?
     #  coach = Coach.find(@coach.id)
     #end
-
+    puts "/save_new_hab_code"
     @hab_code = HabCode.find_by_code(@code)
     puts "is hab_code nil #{@hab_code.nil?}"
     if @hab_code.nil?
@@ -205,7 +205,7 @@ post '/import_hab_codes' do
   puts "/import_hab_codes was called"
 
   csv_text = params['myfile'][:tempfile].read
-  csv = CSV.parse(csv_text, :headers=>true)
+  csv = CSV.parse(csv_text, :headers=>false)
    
   begin
     csv.each  do |row|
@@ -220,9 +220,6 @@ post '/import_hab_codes' do
         puts "code: #{code} "
         @hab_code = HabCode.new
         @hab_code.code = code
-        if @hab_date_sent.nil?
-          @hab_code.assigned = true
-        end
         @hab_code.save
         puts "hab_code #{@hab_code.code}"
       end

@@ -2,6 +2,7 @@ class HabCode < ActiveRecord::Base
   # Remember to create a migration!
   #add validation
   validates_presence_of :code
+  validates :code, uniqueness: true
   belongs_to :coach 
 
 def find_by_code(code)
