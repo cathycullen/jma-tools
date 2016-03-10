@@ -23,6 +23,7 @@ require 'action_mailer'
 require 'sinatra'
 require "sinatra/reloader" if development?
 require 'sinatra/cookies'
+require 'sinatra/respond_to'
 require 'bcrypt'
 require './lib/terse_params_logger'
 require 'csv'
@@ -33,6 +34,7 @@ require 'time'
 use TerseParamsLogger
 
 require 'erb'
+Sinatra::Application.register Sinatra::RespondTo
 
 # Some helper constants for path-centric logic
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))

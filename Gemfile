@@ -27,6 +27,7 @@ gem 'activerecord', '~>4.1'
 
 gem 'rake'
 gem 'shotgun'
+gem 'sinatra-respond_to', '~> 0.9.0'
 
 gem 'data_mapper'
 gem 'dm-postgres-adapter'

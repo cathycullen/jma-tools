@@ -1,3 +1,5 @@
+
+
  get '/hab_codes' do
   redirect "/login" unless session[:user_id]
   @errors = []
@@ -38,14 +40,14 @@ post '/save_new_hab_code' do
       @hab_code.report_sent = params[:report_sent]
 
       if !params[:date_sent].nil? && params[:date_sent].size > 0
-        @hab_code.date_sent = DateTime.strptime(params[:date_sent], '%m/%d/%Y')  
+        @hab_code.date_sent = DateTime.strptime(params[:date_sent], '%m/%d/%Y')
         puts "Date sent:  #{params[:date_sent]}  #{@hab_code.date_sent.to_date}"
       end
-      if @hab_date_sent.nil? 
+      if @hab_date_sent.nil?
         @hab_code.assigned = true
       end
       if !params[:completed].nil?  && params[:completed].size > 0
-        @hab_code.completed = DateTime.strptime(params[:completed], '%m/%d/%Y')  
+        @hab_code.completed = DateTime.strptime(params[:completed], '%m/%d/%Y')
         puts "Completed:  #{params[:completed]}  #{@hab_code.completed.to_date}"
       end
       @hab_code.coach_id = params[:coach_id]
@@ -82,11 +84,11 @@ post '/save_hab' do
       @hab_code.report_sent = params[:report_sent]
 
       if !params[:date_sent].nil?  && params[:date_sent].size > 0
-        @hab_code.date_sent = DateTime.strptime(params[:date_sent], '%m/%d/%Y')  
+        @hab_code.date_sent = DateTime.strptime(params[:date_sent], '%m/%d/%Y')
         puts "Date sent:  #{params[:date_sent]}  #{@hab_code.date_sent.to_date}"
       end
       if !params[:completed].nil?  && params[:completed].size > 0
-        @hab_code.completed = DateTime.strptime(params[:completed], '%m/%d/%Y')  
+        @hab_code.completed = DateTime.strptime(params[:completed], '%m/%d/%Y')
         puts "Completed:  #{params[:completed]}  #{@hab_code.completed.to_date}"
       end
       if @hab_date_sent.nil?
@@ -124,7 +126,7 @@ get '/old_delete_hab_code' do
         else
           @on_complete_msg = "Error.  Unable to delete hab."
         end
-      else 
+      else
         @on_complete_msg =  "hab not found id: #{params[:id]}"
       end
     else
@@ -206,7 +208,7 @@ post '/import_hab_codes' do
 
   csv_text = params['myfile'][:tempfile].read
   csv = CSV.parse(csv_text, :headers=>false)
-   
+
   begin
     csv.each  do |row|
       amount = 0
@@ -216,7 +218,7 @@ post '/import_hab_codes' do
       else
         puts "row[CODE] blank "
       end
-      if !code.nil? 
+      if !code.nil?
         puts "code: #{code} "
         @hab_code = HabCode.new
         @hab_code.code = code
@@ -225,8 +227,8 @@ post '/import_hab_codes' do
       end
     end
 
-    puts "Done importing codes" 
-    
+    puts "Done importing codes"
+
     @on_complete_redirect=  "/hab_codes"
     @on_complete_method=  "get"
     erb :done
@@ -258,7 +260,7 @@ post '/initialize_hab_codes' do
 
   csv_text = params['myfile'][:tempfile].read
   csv = CSV.parse(csv_text, :headers=>true)
-   
+
   begin
     csv.each  do |row|
 
@@ -274,7 +276,7 @@ post '/initialize_hab_codes' do
 
       if row[CODE] != nil then
         code = row[CODE].gsub(/['$]/, "").gsub(/"/, '')
-        if !code.nil? 
+        if !code.nil?
           puts "code: #{code} "
           @hab_code = HabCode.new
           @hab_code.code = code
@@ -319,7 +321,7 @@ post '/initialize_hab_codes' do
           end
           @hab_code.registered = registered
         end
-      else 
+      else
         puts "registered is nil"
       end
       if row[COMPLETED] != nil then
@@ -356,7 +358,7 @@ post '/initialize_hab_codes' do
       end
 
 
-      if !code.nil? 
+      if !code.nil?
         if @hab_code.date_sent.nil?
           @hab_code.assigned = false
           puts "assigned"
@@ -368,8 +370,8 @@ post '/initialize_hab_codes' do
       end
     end
 
-    puts "Done importing codes" 
-    
+    puts "Done importing codes"
+
     @on_complete_redirect=  "/hab_codes"
     @on_complete_method=  "get"
     erb :done
@@ -378,4 +380,9 @@ post '/initialize_hab_codes' do
       puts "rescue caught while reading hab codes from #{params['myfile'][:filename]} : #{e.message}"
     end
   end
-   
+  get '/export_hab' do
+   respond_to do |format|
+     format.html
+     format.csv { HabCode.as_csv }
+   end
+end
